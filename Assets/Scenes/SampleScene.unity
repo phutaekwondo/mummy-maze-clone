@@ -235,8 +235,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundMaterial: {fileID: 2100000, guid: 8a5c09aa0cc0af748ac936ebb698f588, type: 2}
-  widthSize: 5
-  heightSize: 5
 --- !u!1001 &651213891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -554,6 +552,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5858d82d5d8ca344abe3fbd180441827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ground: {fileID: 174752228}
+  player: {fileID: 651213897}
+  widthSteps: 5
+  heightSteps: 5
 --- !u!4 &1854286326
 Transform:
   m_ObjectHideFlags: 0
