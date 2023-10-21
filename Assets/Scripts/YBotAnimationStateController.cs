@@ -1,29 +1,26 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class YBotAnimationStateController : MonoBehaviour
 {
     private Animator animator;
-    private int isWalkingParameterRef;
+    private int isForwardPressRef;
+    private int isShiftPressRef;
 
     private void Awake() 
     {
         this.animator = GetComponent<Animator>();
-        this.isWalkingParameterRef = Animator.StringToHash("isWalking");
+        this.isForwardPressRef = Animator.StringToHash("isForwardPress");
+        this.isShiftPressRef = Animator.StringToHash("isShiftPress");
     }
 
     private void Update() 
     {
-        bool isForwardPressed = Input.GetKey("w");
-        bool isWakingAlready = this.animator.GetBool(this.isWalkingParameterRef);
+        bool isForward = Input.GetKey(KeyCode.W);
+        bool isShift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        if (!isWakingAlready && isForwardPressed) 
-        {
-            this.animator.SetBool(this.isWalkingParameterRef, true);
-        }
-        else if (isWakingAlready && !isForwardPressed) 
-        {
-            this.animator.SetBool(this.isWalkingParameterRef, false);
-        }
+        this.animator.SetBool(isForwardPressRef,isForward);
+        this.animator.SetBool(isShiftPressRef,isShift);
     }
 }
