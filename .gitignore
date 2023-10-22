@@ -61,3 +61,7 @@ Thumbs.db.meta
 
 # VS Code
 *.vscode
+Assets/Tween/Demo
+Assets/Tween/Demo.meta
+Assets/Tween/Readme.txt.meta
+Assets/Tween/Readme.txt
