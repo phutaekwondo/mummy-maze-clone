@@ -1,11 +1,27 @@
-using System.Numerics;
 using UnityEngine;
+
 
 public class Ground : MonoBehaviour
 {
+    const int PLANE_SIZE = 10;
     [SerializeField] private Material groundMaterial;
-    int widthSize = 5;
-    int heightSize = 5;
+    private int widthSize = 5;
+    private int heightSize = 5;
+    
+    public Vector3 GetPosition(int x, int y)
+    {
+        float horizontalStepSize = PLANE_SIZE / widthSize;
+        float verticalStepSize = PLANE_SIZE / heightSize;
+
+        float topZ = this.gameObject.transform.position.z + (PLANE_SIZE / 2) - (verticalStepSize / 2);
+        float leftX = this.gameObject.transform.position.x - (PLANE_SIZE / 2) + (horizontalStepSize / 2);
+
+        return new Vector3(
+            leftX + horizontalStepSize * x,
+            this.gameObject.transform.position.y,
+            topZ + y * verticalStepSize
+        );
+    }
     
     public void SetSize(int width, int height)
     {
