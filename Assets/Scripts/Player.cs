@@ -13,16 +13,17 @@ public class Player : MonoBehaviour
         this.animStateController = this.GetComponent<YBotAnimationStateController>();
     }
 
+    public void MoveOneCell(EnumMoveDirection direction, Action<ITween<Vector3>> onCompleted = null)
+    {
+        this.cellOrdinate.Move(direction);
+        Vector3 toPosition = CellPositionGetter.Instance.GetCellPosition(this.cellOrdinate);
+        this.WalkToPosition(toPosition, onCompleted);
+    }
+
     public void SetCellPosition(CellOrdinate cellOrdinate)
     {
         Vector3 position = CellPositionGetter.Instance.GetCellPosition(cellOrdinate);
         this.gameObject.transform.position = position;
-    }
-
-    public void WalkToCell(CellOrdinate cellOrdinate, Action<ITween<Vector3>> onCompleted = null)
-    {
-        Vector3 toPosition = CellPositionGetter.Instance.GetCellPosition(cellOrdinate);
-        this.WalkToPosition(toPosition, onCompleted);
     }
 
     private void WalkToPosition(Vector3 position, Action<ITween<Vector3>> onCompleted = null)
@@ -76,5 +77,4 @@ public class Player : MonoBehaviour
     {
         this.gameObject.transform.forward = walkDirection.normalized;
     }
-
 }

@@ -1,4 +1,5 @@
 using System;
+using DigitalRuby.Tween;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -19,12 +20,12 @@ public class GameManager : MonoBehaviour
     private void Awake() 
     {
         this.ground.SetSize(this.widthSteps, this.heightSteps);
-        this.player.SetCellPosition(new CellOrdinate());
-        this.player.WalkToCell(new CellOrdinate(4,4));
+        this.player.SetCellPosition(new CellOrdinate(0,0));
     }
 
     private void Update()
     {
+        this.HandleInput();
     }
 
     private void HandleInput()
@@ -47,5 +48,30 @@ public class GameManager : MonoBehaviour
         if (playerInput == EnumPlayerInput.None) {
             return;
         }
+
+        Action<ITween<Vector3>> onPlayerMoveCompleted = (v) =>
+        {
+            this.state = GameState.Idle;
+        };
+
+        switch(playerInput)
+        {
+            case EnumPlayerInput.MoveUp:
+                this.player.MoveOneCell(EnumMoveDirection.Up, onPlayerMoveCompleted);
+                break;
+            case EnumPlayerInput.MoveLeft:
+                this.player.MoveOneCell(EnumMoveDirection.Left, onPlayerMoveCompleted);
+                break;
+            case EnumPlayerInput.MoveRight:
+                this.player.MoveOneCell(EnumMoveDirection.Right, onPlayerMoveCompleted);
+                break;
+            case EnumPlayerInput.MoveDown:
+                this.player.MoveOneCell(EnumMoveDirection.Down, onPlayerMoveCompleted);
+                break;
+            default: 
+                break;
+        }
+
+        this.state = GameState.PlayerWalking;
     }
 }
