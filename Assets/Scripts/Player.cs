@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float walkSpeed = 2;
+    private CellOrdinate cellOrdinate = new CellOrdinate(0,0);
     private YBotAnimationStateController animStateController;
 
     private void Awake() 
@@ -12,12 +13,19 @@ public class Player : MonoBehaviour
         this.animStateController = this.GetComponent<YBotAnimationStateController>();
     }
 
-    public void SetPosition(Vector3 position) 
+    public void SetCellPosition(CellOrdinate cellOrdinate)
     {
+        Vector3 position = CellPositionGetter.Instance.GetCellPosition(cellOrdinate);
         this.gameObject.transform.position = position;
     }
 
-    public void WalkToPosition(Vector3 position, Action<ITween<Vector3>> onCompleted = null)
+    public void WalkToCell(CellOrdinate cellOrdinate, Action<ITween<Vector3>> onCompleted = null)
+    {
+        Vector3 toPosition = CellPositionGetter.Instance.GetCellPosition(cellOrdinate);
+        this.WalkToPosition(toPosition, onCompleted);
+    }
+
+    private void WalkToPosition(Vector3 position, Action<ITween<Vector3>> onCompleted = null)
     {
 
         this.RotateForWalk(position - this.gameObject.transform.position);
@@ -68,4 +76,5 @@ public class Player : MonoBehaviour
     {
         this.gameObject.transform.forward = walkDirection.normalized;
     }
+
 }

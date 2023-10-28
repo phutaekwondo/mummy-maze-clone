@@ -7,6 +7,11 @@ public class Ground : MonoBehaviour
     [SerializeField] private Material groundMaterial;
     private int widthSize = 5;
     private int heightSize = 5;
+
+    public Vector3 GetCellPosition(CellOrdinate cellOrdinate) 
+    {
+        return GetCellPosition(cellOrdinate.x, cellOrdinate.y);
+    }
     
     public Vector3 GetCellPosition(int x, int y)
     {
