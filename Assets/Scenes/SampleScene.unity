@@ -345,6 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b0a50fdadb1754199669a45ff6be2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,8 +555,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ground: {fileID: 174752228}
   player: {fileID: 651213897}
-  widthSteps: 5
-  heightSteps: 5
+  widthSteps: 4
+  heightSteps: 4
 --- !u!4 &1854286326
 Transform:
   m_ObjectHideFlags: 0

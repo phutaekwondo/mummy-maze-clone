@@ -10,6 +10,6 @@ public class GameManager : MonoBehaviour
     private void Awake() 
     {
         this.ground.SetSize(this.widthSteps, this.heightSteps);
-        this.player.SetPosition(this.ground.GetPosition(0,0));
+        this.player.SetPosition(this.ground.GetCellPosition(0,0));
     }
 }
