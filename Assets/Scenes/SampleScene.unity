@@ -244,6 +244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 641713949}
+  - component: {fileID: 641713950}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -268,6 +269,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &641713950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641713948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a938766ca956d47bb58686ffe28cd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelInfo: {fileID: 11400000, guid: 4774723ecb7cf2244a33693ad27c2756, type: 2}
+  levelBuilder: {fileID: 887953853}
 --- !u!1001 &651213891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -502,8 +517,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c378c5799cf64ea656a0ef055ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelInfo: {fileID: 11400000, guid: 4774723ecb7cf2244a33693ad27c2756, type: 2}
   ground: {fileID: 174752228}
+  wallPrefab: {fileID: 4778104951832624529, guid: 1a46a608d49843e4384a535ecb019c68, type: 3}
 --- !u!4 &887953854
 Transform:
   m_ObjectHideFlags: 0

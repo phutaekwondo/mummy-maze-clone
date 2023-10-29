@@ -3,19 +3,15 @@ using UnityEngine;
 
 public class LevelBuilder : MonoBehaviour
 {
-    [SerializeField] private LevelInfo levelInfo;
     [SerializeField] private Ground ground;
     [SerializeField] private GameObject wallPrefab;
+    private LevelInfo levelInfo;
     private uint widthSteps = 5;
     private uint heightSteps = 5;
 
-    private void Start() 
+    public void BuildLevel(LevelInfo levelInfo)
     {
-        this.BuildLevel();
-    }
-
-    private void BuildLevel()
-    {
+        this.levelInfo = levelInfo;
         this.widthSteps = this.heightSteps = levelInfo.groundSize;
         this.ground.SetSize(this.widthSteps, this.heightSteps);
         this.BuildWalls();
