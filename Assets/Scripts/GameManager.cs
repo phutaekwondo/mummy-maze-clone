@@ -9,17 +9,13 @@ public class GameManager : MonoBehaviour
         PlayerWalking,
     };
 
-    [SerializeField] private Ground ground;
     [SerializeField] private Player player;
     [SerializeField] private InputHandler inputHanlder;
-    [SerializeField] int widthSteps = 5;
-    [SerializeField] int heightSteps = 5;
 
     private GameState state = GameState.Idle;
 
     private void Awake() 
     {
-        this.ground.SetSize(this.widthSteps, this.heightSteps);
         this.player.SetCellPosition(new CellOrdinate(0,0));
     }
 

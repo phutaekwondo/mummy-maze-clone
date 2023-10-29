@@ -84,7 +84,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HorizontalSteps: 4
+    - _HorizontalSteps: 5
     - _HorizontalStepsAmount: 5
     - _Metallic: 0
     - _Mode: 0
@@ -94,7 +94,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _VerticalSteps: 4
+    - _VerticalSteps: 5
     - _VerticalStepsAmount: 5
     - _ZWrite: 1
     m_Colors:
