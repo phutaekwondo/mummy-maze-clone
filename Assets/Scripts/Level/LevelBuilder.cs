@@ -6,7 +6,8 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField] int heightSteps = 5;
     [SerializeField] private Ground ground;
 
-    private void Awake() {
+    private void Awake() 
+    {
         this.ground.SetSize(this.widthSteps, this.heightSteps);
     }
 }

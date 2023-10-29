@@ -15,11 +15,14 @@ public class Ground : MonoBehaviour
     
     public Vector3 GetCellPosition(int x, int y)
     {
-        float horizontalStepSize = PLANE_SIZE / this.widthSize;
-        float verticalStepSize = PLANE_SIZE / this.heightSize;
+        float scaledPlaneSizeX = PLANE_SIZE * this.gameObject.transform.localScale.x;
+        float scaledPlaneSizeZ = PLANE_SIZE * this.gameObject.transform.localScale.z;
 
-        float topZ = this.gameObject.transform.position.z + (PLANE_SIZE / 2) - (verticalStepSize / 2);
-        float leftX = this.gameObject.transform.position.x - (PLANE_SIZE / 2) + (horizontalStepSize / 2);
+        float horizontalStepSize = scaledPlaneSizeX / this.widthSize;
+        float verticalStepSize   = scaledPlaneSizeZ / this.heightSize;
+
+        float leftX = this.gameObject.transform.position.x - (scaledPlaneSizeX / 2) + (horizontalStepSize / 2);
+        float topZ = this.gameObject.transform.position.z + (scaledPlaneSizeZ / 2) - (verticalStepSize / 2);
 
         return new Vector3(
             leftX + horizontalStepSize * x,
