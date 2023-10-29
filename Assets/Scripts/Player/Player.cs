@@ -16,13 +16,13 @@ public class Player : MonoBehaviour
     public void MoveOneCell(EnumMoveDirection direction, Action<ITween<Vector3>> onCompleted = null)
     {
         this.cellOrdinate.Move(direction);
-        Vector3 toPosition = CellPositionGetter.Instance.GetCellPosition(this.cellOrdinate);
+        Vector3 toPosition = CellTransformGetter.Instance.GetCellPosition(this.cellOrdinate);
         this.WalkToPosition(toPosition, onCompleted);
     }
 
     public void SetCellPosition(CellOrdinate cellOrdinate)
     {
-        Vector3 position = CellPositionGetter.Instance.GetCellPosition(cellOrdinate);
+        Vector3 position = CellTransformGetter.Instance.GetCellPosition(cellOrdinate);
         this.gameObject.transform.position = position;
     }
 
