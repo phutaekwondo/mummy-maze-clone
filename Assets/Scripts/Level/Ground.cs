@@ -5,8 +5,8 @@ public class Ground : MonoBehaviour
 {
     const float PLANE_SIZE = 10;
     [SerializeField] private Material groundMaterial;
-    private int widthSize = 5;
-    private int heightSize = 5;
+    private uint widthSize = 5;
+    private uint heightSize = 5;
 
     public Vector3 GetCellPosition(CellOrdinate cellOrdinate) 
     {
@@ -31,7 +31,7 @@ public class Ground : MonoBehaviour
         );
     }
     
-    public void SetSize(int width, int height)
+    public void SetSize(uint width, uint height)
     {
         this.widthSize = width;
         this.heightSize = height;

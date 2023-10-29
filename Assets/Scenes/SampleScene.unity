@@ -215,7 +215,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 174752223}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.8724905, y: -0.2695315, z: 3.8118505}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -259,7 +259,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641713948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8724905, y: 0.2695315, z: -3.8118505}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -502,8 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c378c5799cf64ea656a0ef055ecc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthSteps: 5
-  heightSteps: 5
+  levelInfo: {fileID: 11400000, guid: 4774723ecb7cf2244a33693ad27c2756, type: 2}
   ground: {fileID: 174752228}
 --- !u!4 &887953854
 Transform:
@@ -659,7 +658,7 @@ GameObject:
   - component: {fileID: 1210585626}
   - component: {fileID: 1210585627}
   m_Layer: 0
-  m_Name: CellPositionGetter
+  m_Name: CellTransformGetter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

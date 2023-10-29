@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d987c35c30901549a9b5d441500324d, type: 3}
+  m_Name: Level_1
+  m_EditorClassIdentifier: 
+  groundSize: 6
+  walls:
+  - {x: 4, y: 10}
+  - {x: 6, y: 7}
+  - {x: 7, y: 13}
+  - {x: 8, y: 14}
+  - {x: 9, y: 15}
+  - {x: 12, y: 13}
+  - {x: 14, y: 15}
+  - {x: 15, y: 21}
+  - {x: 17, y: 23}
+  - {x: 18, y: 19}
+  - {x: 20, y: 26}
+  - {x: 26, y: 32}
+  - {x: 27, y: 33}
