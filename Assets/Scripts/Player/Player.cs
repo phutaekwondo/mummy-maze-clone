@@ -20,8 +20,9 @@ public class Player : MonoBehaviour
         this.WalkToPosition(toPosition, onCompleted);
     }
 
-    public void SetCellPosition(CellOrdinate cellOrdinate)
+    public void SetCellOrdinate(CellOrdinate cellOrdinate)
     {
+        this.cellOrdinate = cellOrdinate;
         Vector3 position = CellTransformGetter.Instance.GetCellPosition(cellOrdinate);
         this.gameObject.transform.position = position;
     }

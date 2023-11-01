@@ -5,8 +5,13 @@ public class Level : MonoBehaviour
     [SerializeField] LevelInfo levelInfo;
     [SerializeField] LevelBuilder levelBuilder;
 
-    private void Start() 
+    public void BuildLevel() 
     {
         this.levelBuilder.BuildLevel(this.levelInfo);
+    }
+
+    public CellOrdinate GetPlayerStartPosition() 
+    {
+        return new CellOrdinate(this.levelInfo.playerStartPosition.x, this.levelInfo.playerStartPosition.y);
     }
 }
