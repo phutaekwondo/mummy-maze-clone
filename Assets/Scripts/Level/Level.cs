@@ -15,6 +15,11 @@ public class Level : MonoBehaviour
         return new CellOrdinate(this.levelInfo.playerStartPosition.x, this.levelInfo.playerStartPosition.y);
     }
 
+    public CellOrdinate GetEnemyStartPosition() 
+    {
+        return new CellOrdinate(this.levelInfo.enemyStartPosition.x, this.levelInfo.enemyStartPosition.y);
+    }
+
     public bool IsBlocked(CellOrdinate cell, EnumMoveDirection direction) 
     {
         CellOrdinate destinate = cell.GetDestinateOrdinate(direction);

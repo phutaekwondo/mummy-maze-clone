@@ -1,14 +1,19 @@
 public class Enemy : Character
 {
-    DoctorAnimStateController animController;
+    DoctorAnimStateController animStateController;
+
+    private void Awake() 
+    {
+        this.animStateController = this.GetComponent<DoctorAnimStateController>();
+    }
 
     protected override void PlayMovementAnimation()
     {
-        this.animController.StartRun();
+        this.animStateController.StartRun();
     }
 
     protected override void StopMovementAnimation()
     {
-        this.animController.StartIdle();
+        this.animStateController.StartIdle();
     }
 }

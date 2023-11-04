@@ -1,15 +1,20 @@
 using System;
+using System.Diagnostics;
 using DigitalRuby.Tween;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
     enum GameState {
         Idle,
         PlayerWalking,
+        EnemyMoving,
     };
 
     [SerializeField] private Player player;
+    [SerializeField] private Enemy enemy;
     [SerializeField] private InputHandler inputHanlder;
     [SerializeField] private Level level;
 
@@ -19,11 +24,30 @@ public class GameManager : MonoBehaviour
     {
         this.level.BuildLevel();
         this.player.SetCellOrdinate(this.level.GetPlayerStartPosition());
+        this.enemy.SetCellOrdinate(this.level.GetEnemyStartPosition());
     }
 
     private void Update()
     {
         this.HandleInput();
+    }
+
+    private void EnterState(GameState state)
+    {
+        this.state = state;
+        switch(state)
+        {
+            case GameState.EnemyMoving:
+                Action<ITween<Vector3>> onEnemyMoveCompleted = (v) =>
+                {
+                    this.EnterState(GameState.Idle);
+                };
+
+                this.enemy.MoveOneCell(EnumMoveDirection.Down, onEnemyMoveCompleted);
+                break;
+            default:
+                break;
+        }
     }
 
     private void HandleInput()
@@ -49,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         Action<ITween<Vector3>> onPlayerMoveCompleted = (v) =>
         {
-            this.state = GameState.Idle;
+            this.EnterState(GameState.EnemyMoving);
         };
 
         EnumMoveDirection moveDirection = EnumMoveDirection.None;
@@ -75,7 +99,7 @@ public class GameManager : MonoBehaviour
         if (moveDirection != EnumMoveDirection.None && !this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection))
         {
             this.player.MoveOneCell(moveDirection, onPlayerMoveCompleted);
-            this.state = GameState.PlayerWalking;
+            this.EnterState(GameState.PlayerWalking);
         }
     }
 }
