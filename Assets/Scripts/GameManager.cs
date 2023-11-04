@@ -52,24 +52,35 @@ public class GameManager : MonoBehaviour
             this.state = GameState.Idle;
         };
 
+        EnumMoveDirection moveDirection = EnumMoveDirection.None;
+
         switch(playerInput)
         {
             case EnumPlayerInput.MoveUp:
-                this.player.MoveOneCell(EnumMoveDirection.Up, onPlayerMoveCompleted);
+                moveDirection = EnumMoveDirection.Up;
                 break;
             case EnumPlayerInput.MoveLeft:
-                this.player.MoveOneCell(EnumMoveDirection.Left, onPlayerMoveCompleted);
+                moveDirection = EnumMoveDirection.Left;
                 break;
             case EnumPlayerInput.MoveRight:
-                this.player.MoveOneCell(EnumMoveDirection.Right, onPlayerMoveCompleted);
+                moveDirection = EnumMoveDirection.Right;
                 break;
             case EnumPlayerInput.MoveDown:
-                this.player.MoveOneCell(EnumMoveDirection.Down, onPlayerMoveCompleted);
+                moveDirection = EnumMoveDirection.Down;
                 break;
             default: 
                 break;
         }
 
-        this.state = GameState.PlayerWalking;
+        if (moveDirection != EnumMoveDirection.None && !this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection))
+        {
+            this.player.MoveOneCell(moveDirection, onPlayerMoveCompleted);
+            this.state = GameState.PlayerWalking;
+            Debug.Log("move");
+        }
+        else {
+            Debug.Log("Dont MOve");
+        }
+
     }
 }

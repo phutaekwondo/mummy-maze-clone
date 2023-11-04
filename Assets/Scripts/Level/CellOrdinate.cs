@@ -8,6 +8,31 @@ public class CellOrdinate
         this.y = y;
     }
 
+    public CellOrdinate GetDestinateOrdinate(EnumMoveDirection direction)
+    {
+        CellOrdinate destinate = new CellOrdinate(this.x, this.y);
+
+        switch(direction) 
+        {
+            case EnumMoveDirection.Up:
+                destinate.y -= 1;
+                break;
+            case EnumMoveDirection.Left:
+                destinate.x -= 1;
+                break;
+            case EnumMoveDirection.Right:
+                destinate.x += 1;
+                break;
+            case EnumMoveDirection.Down:
+                destinate.y += 1;
+                break;
+            default: 
+                break;
+        }
+
+        return destinate;
+    }
+
     public void Move(EnumMoveDirection direction) 
     {
         switch(direction) 

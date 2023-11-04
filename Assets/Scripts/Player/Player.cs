@@ -13,6 +13,11 @@ public class Player : MonoBehaviour
         this.animStateController = this.GetComponent<YBotAnimationStateController>();
     }
 
+    public CellOrdinate GetCellOrdinate()
+    {
+        return this.cellOrdinate;
+    }
+
     public void MoveOneCell(EnumMoveDirection direction, Action<ITween<Vector3>> onCompleted = null)
     {
         this.cellOrdinate.Move(direction);
