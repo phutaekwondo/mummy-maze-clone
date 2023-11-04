@@ -1,6 +1,4 @@
 using UnityEngine;
-using DigitalRuby.Tween;
-using UnityEditor.UI;
 
 [RequireComponent(typeof(Animator))]
 public class YBotAnimationStateController : MonoBehaviour
