@@ -76,11 +76,6 @@ public class GameManager : MonoBehaviour
         {
             this.player.MoveOneCell(moveDirection, onPlayerMoveCompleted);
             this.state = GameState.PlayerWalking;
-            Debug.Log("move");
         }
-        else {
-            Debug.Log("Dont MOve");
-        }
-
     }
 }
