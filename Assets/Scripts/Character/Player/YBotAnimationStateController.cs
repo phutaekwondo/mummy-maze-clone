@@ -5,7 +5,6 @@ public class YBotAnimationStateController : MonoBehaviour
 {
     private Animator animator;
 
-    private int stateRef;
     private int isWalkingRef;
 
     private void Awake() 
