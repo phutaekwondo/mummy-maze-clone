@@ -11,31 +11,12 @@ public class Player : Character
         this.animStateController = this.GetComponent<YBotAnimationStateController>();
     }
 
-    override public void MoveOneCell(EnumMoveDirection direction, Action<ITween<Vector3>> onCompleted = null)
-    {
-        this.cellOrdinate.Move(direction);
-        Vector3 toPosition = CellTransformGetter.Instance.GetCellPosition(this.cellOrdinate);
-
-        this.PlayWalkAnimation();
-        Action<ITween<Vector3>> totalOnCompleted = (v) => 
-        {
-            if (onCompleted != null)
-            {
-                onCompleted(v);
-            }
-            this.StopWalkAnimation();
-        };
-
-        this.RotateToMovementDirection(toPosition - this.gameObject.transform.position);
-        this.TweenToPosition(toPosition, totalOnCompleted);
-    }
-
-    private void PlayWalkAnimation()
+    override protected void PlayMovementAnimation()
     {
         this.animStateController.StartWalk();
     }
 
-    private void StopWalkAnimation()
+    override protected void StopMovementAnimation()
     {
         this.animStateController.StartIdle();
     }

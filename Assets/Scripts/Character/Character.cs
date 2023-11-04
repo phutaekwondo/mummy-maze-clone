@@ -7,7 +7,27 @@ abstract public class Character : MonoBehaviour
     [SerializeField] protected float walkSpeed = 2;
     protected CellOrdinate cellOrdinate = new CellOrdinate(0,0);
 
-    abstract public void MoveOneCell(EnumMoveDirection direction, Action<ITween<Vector3>> onCompleted = null);
+    abstract protected void PlayMovementAnimation();
+    abstract protected void StopMovementAnimation();
+
+    virtual public void MoveOneCell(EnumMoveDirection direction, Action<ITween<Vector3>> onCompleted = null)
+    {
+        this.cellOrdinate.Move(direction);
+        Vector3 toPosition = CellTransformGetter.Instance.GetCellPosition(this.cellOrdinate);
+
+        this.PlayMovementAnimation();
+        Action<ITween<Vector3>> totalOnCompleted = (v) => 
+        {
+            if (onCompleted != null)
+            {
+                onCompleted(v);
+            }
+            this.StopMovementAnimation();
+        };
+
+        this.RotateToMovementDirection(toPosition - this.gameObject.transform.position);
+        this.TweenToPosition(toPosition, totalOnCompleted);
+    }
 
     public CellOrdinate GetCellOrdinate()
     {
@@ -23,7 +43,6 @@ abstract public class Character : MonoBehaviour
 
     protected void RotateToMovementDirection(Vector3 direction)
     {
-        Debug.Log(direction);
         this.gameObject.transform.forward = direction.normalized;
     }
 
