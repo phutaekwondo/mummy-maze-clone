@@ -4,7 +4,7 @@ using DigitalRuby.Tween;
 
 abstract public class Character : MonoBehaviour
 {
-    [SerializeField] protected float walkSpeed = 2;
+    [SerializeField] protected float movementSpeed = 2;
     protected CellOrdinate cellOrdinate = new CellOrdinate(0,0);
 
     abstract protected void PlayMovementAnimation();
@@ -53,7 +53,7 @@ abstract public class Character : MonoBehaviour
             this.gameObject.transform.position = v.CurrentValue;
         };
 
-        float duration = (this.gameObject.transform.position - position).magnitude / this.walkSpeed;
+        float duration = (this.gameObject.transform.position - position).magnitude / this.movementSpeed;
 
         this.gameObject.Tween(
             "MovePlayer",
