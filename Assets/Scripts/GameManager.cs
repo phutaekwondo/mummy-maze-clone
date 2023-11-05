@@ -56,8 +56,6 @@ public class GameManager : MonoBehaviour
                 EnumPlayerInput playerInput = this.inputHanlder.GetPlayerInput();
                 this.HandlePlayerInput(playerInput);
                 break;
-            case GameState.PlayerWalking:
-                break;
             default:
                 break;
         }
