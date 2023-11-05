@@ -1,9 +1,6 @@
 using System;
-using System.Diagnostics;
 using DigitalRuby.Tween;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,7 +40,8 @@ public class GameManager : MonoBehaviour
                     this.EnterState(GameState.Idle);
                 };
 
-                this.enemy.MoveOneCell(EnumMoveDirection.Down, onEnemyMoveCompleted);
+                EnumMoveDirection enemyNextMove = this.enemy.FindNextMove(this.level, this.player.GetCellOrdinate());
+                this.enemy.MoveOneCell(enemyNextMove, onEnemyMoveCompleted);
                 break;
             default:
                 break;
