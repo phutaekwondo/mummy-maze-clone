@@ -29,6 +29,10 @@ public class Level : MonoBehaviour
 
     public bool IsBlocked(CellOrdinate cell_1, CellOrdinate cell_2)
     {
+        if (this.IsOutOfGround(cell_2)) {
+            return true;
+        }
+
         int cellIndex_1 = this.Parse2CellIndex(cell_1);
         int cellIndex_2 = this.Parse2CellIndex(cell_2);
 
@@ -43,6 +47,16 @@ public class Level : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool IsOutOfGround(CellOrdinate cellOrdinate)
+    {
+        return (
+            cellOrdinate.x < 0 ||
+            cellOrdinate.y < 0 ||
+            cellOrdinate.x >= this.levelInfo.groundSize ||
+            cellOrdinate.y >= this.levelInfo.groundSize
+        );
     }
 
     private int Parse2CellIndex(CellOrdinate cell) 
