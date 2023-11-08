@@ -24,9 +24,46 @@ public class LevelBuilder : MonoBehaviour
             CellOrdinate cell_1 = this.Parse2CellOrdinate(this.levelInfo.walls[i].x);
             CellOrdinate cell_2 = this.Parse2CellOrdinate(this.levelInfo.walls[i].y);
 
-            Wall newWall = Instantiate(this.wallPrefab, this.gameObject.transform.parent).GetComponent<Wall>();
-            newWall.SetWall(cell_1, cell_2);
+            this.SpawnAWall(cell_1, cell_2);
         }
+
+        this.BuildAroundWalls();
+    }
+
+    private void BuildAroundWalls() 
+    {
+        for (int i = 0; i < this.levelInfo.groundSize; i++)
+        {
+            //top
+            CellOrdinate cell_in  = new CellOrdinate(i, 0);
+            CellOrdinate cell_out = new CellOrdinate(i, -1);
+
+            this.SpawnAWall(cell_in, cell_out);
+
+            //left
+            cell_in  = new CellOrdinate(0,  i);
+            cell_out = new CellOrdinate(-1, i);
+
+            this.SpawnAWall(cell_in, cell_out);
+
+            //right
+            cell_in  = new CellOrdinate((int)this.levelInfo.groundSize - 1, i);
+            cell_out = new CellOrdinate((int)this.levelInfo.groundSize    , i);
+
+            this.SpawnAWall(cell_in, cell_out);
+
+            //bot
+            cell_in  = new CellOrdinate(i, (int)this.levelInfo.groundSize - 1);
+            cell_out = new CellOrdinate(i, (int)this.levelInfo.groundSize    );
+
+            this.SpawnAWall(cell_in, cell_out);
+        }
+    }
+
+    private void SpawnAWall(CellOrdinate cell_1, CellOrdinate cell_2)
+    {
+        Wall newWall = Instantiate(this.wallPrefab, this.gameObject.transform.parent).GetComponent<Wall>();
+        newWall.SetWall(cell_1, cell_2);
     }
 
     private CellOrdinate Parse2CellOrdinate(int cellIndex) 
