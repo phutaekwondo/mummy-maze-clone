@@ -14,6 +14,21 @@ public class Enemy : Character
 
     public EnumMoveDirection FindNextMove(Level level, CellOrdinate playerOrdinate)
     {
+        List<KeyValuePair<EnumMoveDirection, float>> distanceDiffs = this.GetTopBestMoves(level, playerOrdinate);
+
+        for (int i = 0; i < distanceDiffs.Count; i++)
+        {
+            if (!level.IsBlocked(this.cellOrdinate, distanceDiffs[i].Key))
+            {
+                return distanceDiffs[i].Key;
+            }
+        }
+
+        return EnumMoveDirection.None;
+    }
+
+    private List<KeyValuePair<EnumMoveDirection, float>> GetTopBestMoves(Level level, CellOrdinate playerOrdinate) 
+    {
         Dictionary<EnumMoveDirection, float> distanceDiffAfterMove = new Dictionary<EnumMoveDirection, float>();
         Vector3 enemyPosition = CellTransformGetter.Instance.GetCellPosition(this.cellOrdinate);
         Vector3 playerPosition = CellTransformGetter.Instance.GetCellPosition(playerOrdinate);
@@ -32,15 +47,7 @@ public class Enemy : Character
             return pair1.Value.CompareTo(pair2.Value);
         });
 
-        for (int i = 0; i < distanceDiffs.Count; i++)
-        {
-            if (!level.IsBlocked(this.cellOrdinate, distanceDiffs[i].Key))
-            {
-                return distanceDiffs[i].Key;
-            }
-        }
-
-        return EnumMoveDirection.None;
+        return distanceDiffs;
     }
 
     protected override void PlayMovementAnimation()
