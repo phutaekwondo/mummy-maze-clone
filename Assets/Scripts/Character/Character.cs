@@ -14,7 +14,7 @@ abstract public class Character : MonoBehaviour
         this.RotateToMovementDirection(direction);
     }
 
-    virtual public void MoveOneCell(EnumMoveDirection direction, Action<ITween<Vector3>> onCompleted = null)
+    virtual public void MoveOneCell(EnumMoveDirection direction, Action onCompleted = null)
     {
         this.cellOrdinate.Move(direction);
         Vector3 toPosition = CellTransformGetter.Instance.GetCellPosition(this.cellOrdinate);
@@ -24,7 +24,7 @@ abstract public class Character : MonoBehaviour
         {
             if (onCompleted != null)
             {
-                onCompleted(v);
+                onCompleted();
             }
             this.StopMovementAnimation();
         };

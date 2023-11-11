@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         switch(state)
         {
             case GameState.EnemyMoving:
-                Action<ITween<Vector3>> onEnemyMoveCompleted = (v) =>
+                Action onEnemyMoveCompleted = () =>
                 {
                     this.EnterState(GameState.Idle);
                 };
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Action<ITween<Vector3>> onPlayerMoveCompleted = (v) =>
+        Action onPlayerMoveCompleted = () =>
         {
             this.EnterState(GameState.EnemyMoving);
         };
