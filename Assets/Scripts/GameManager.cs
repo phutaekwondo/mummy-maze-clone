@@ -40,8 +40,7 @@ public class GameManager : MonoBehaviour
                     this.EnterState(GameState.Idle);
                 };
 
-                EnumMoveDirection enemyNextMove = this.enemy.FindNextMove(this.level, this.player.GetCellOrdinate());
-                this.enemy.MoveOneCell(enemyNextMove, onEnemyMoveCompleted);
+                this.enemy.MakeBestMove(level, this.player.GetCellOrdinate(), onEnemyMoveCompleted);
                 break;
             default:
                 break;

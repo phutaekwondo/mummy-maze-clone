@@ -12,9 +12,25 @@ public class Enemy : Character
         this.animStateController = this.GetComponent<DoctorAnimStateController>();
     }
 
-    public EnumMoveDirection FindNextMove(Level level, CellOrdinate playerOrdinate)
+    public void MakeBestMove(Level level, CellOrdinate playerOrdinate, Action callback = null)
     {
         List<KeyValuePair<EnumMoveDirection, float>> distanceDiffs = this.GetTopBestMoves(level, playerOrdinate);
+        EnumMoveDirection nextMove = this.FindNextMove(level, distanceDiffs);
+
+        if (nextMove == EnumMoveDirection.None) 
+        {
+            if (callback != null) callback();
+
+            this.ActBlocked(distanceDiffs[0].Key);
+        }
+        else 
+        {
+            this.MoveOneCell(nextMove, callback);
+        }
+    }
+
+    private EnumMoveDirection FindNextMove(Level level, List<KeyValuePair<EnumMoveDirection, float>> distanceDiffs)
+    {
 
         for (int i = 0; i < distanceDiffs.Count; i++)
         {
