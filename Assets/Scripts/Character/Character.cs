@@ -9,6 +9,10 @@ abstract public class Character : MonoBehaviour
 
     abstract protected void PlayMovementAnimation();
     abstract protected void StopMovementAnimation();
+    virtual public void ActBlocked(EnumMoveDirection direction) 
+    {
+        this.RotateToMovementDirection(direction);
+    }
 
     virtual public void MoveOneCell(EnumMoveDirection direction, Action<ITween<Vector3>> onCompleted = null)
     {
@@ -39,6 +43,16 @@ abstract public class Character : MonoBehaviour
         this.cellOrdinate = cellOrdinate;
         Vector3 position = CellTransformGetter.Instance.GetCellPosition(cellOrdinate);
         this.gameObject.transform.position = position;
+    }
+
+    protected void RotateToMovementDirection(EnumMoveDirection direction) 
+    {
+        CellOrdinate desCell = this.cellOrdinate.GetDestinateOrdinate(direction);
+        this.RotateToMovementDirection(
+            CellTransformGetter.Instance.GetCellPosition(desCell)
+            -
+            CellTransformGetter.Instance.GetCellPosition(this.cellOrdinate)
+        );
     }
 
     protected void RotateToMovementDirection(Vector3 direction)

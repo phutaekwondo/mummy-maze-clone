@@ -92,10 +92,14 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        if (moveDirection != EnumMoveDirection.None && !this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection))
+        bool isMovementBlocked = this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection);
+        if (moveDirection != EnumMoveDirection.None && !isMovementBlocked)
         {
             this.player.MoveOneCell(moveDirection, onPlayerMoveCompleted);
             this.EnterState(GameState.PlayerWalking);
+        }
+        else if (moveDirection != EnumMoveDirection.None && isMovementBlocked) {
+            this.player.ActBlocked(moveDirection);
         }
     }
 }

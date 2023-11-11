@@ -20,4 +20,10 @@ public class Player : Character
     {
         this.animStateController.StartIdle();
     }
+
+    override public void ActBlocked(EnumMoveDirection direction)
+    {
+        base.ActBlocked(direction);
+        this.animStateController.StartBlocked();
+    }
 }
