@@ -6,6 +6,7 @@ abstract public class Character : MonoBehaviour
 {
     [SerializeField] protected float movementSpeed = 2;
     protected CellOrdinate cellOrdinate = new CellOrdinate(0,0);
+    protected EnumMoveDirection lookDirection = EnumMoveDirection.Up;
 
     abstract protected void PlayMovementAnimation();
     abstract protected void StopMovementAnimation();
@@ -29,7 +30,7 @@ abstract public class Character : MonoBehaviour
             this.StopMovementAnimation();
         };
 
-        this.RotateToMovementDirection(toPosition - this.gameObject.transform.position);
+        this.RotateToMovementDirection(direction);
         this.TweenToPosition(toPosition, totalOnCompleted);
     }
 
@@ -47,6 +48,12 @@ abstract public class Character : MonoBehaviour
 
     protected void RotateToMovementDirection(EnumMoveDirection direction) 
     {
+        if (this.lookDirection == EnumMoveDirection.None) {
+            Debug.LogError("Cannot rotate Character to \'None\' direction");
+            return;
+        }
+        
+        this.lookDirection = direction;
         CellOrdinate desCell = this.cellOrdinate.GetDestinateOrdinate(direction);
         this.RotateToMovementDirection(
             CellTransformGetter.Instance.GetCellPosition(desCell)
