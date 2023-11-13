@@ -18,7 +18,7 @@ public class YBotTurnAnimState : StateMachineBehaviour
     {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
 
-        if (animator.IsInTransition(layerIndex) && !this.isEnteredTransition) 
+        if (animator.IsInTransition(layerIndex) && animator.GetCurrentAnimatorStateInfo(layerIndex).fullPathHash == stateInfo.fullPathHash && !this.isEnteredTransition) 
         {
             this.isEnteredTransition = true;
             YBotTurnAnimState.onEnterTransition.Invoke(animator.GetAnimatorTransitionInfo(layerIndex), this.turnType);
