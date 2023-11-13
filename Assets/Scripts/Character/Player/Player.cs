@@ -1,5 +1,3 @@
-using System;
-using DigitalRuby.Tween;
 using UnityEngine;
 
 public class Player : Character
@@ -9,6 +7,12 @@ public class Player : Character
     private void Awake() 
     {
         this.animStateController = this.GetComponent<YBotAnimationStateController>();
+        YBotTurnAnimState.onEnterTransition += this.onTurnAnimEnterTransition;
+    }
+
+    private void onTurnAnimEnterTransition(AnimatorTransitionInfo transitionInfo, ETurnType turnType)
+    {
+        this.TweenTurn(turnType, transitionInfo.duration);
     }
 
     override protected void PlayMovementAnimation()
