@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using DigitalRuby.Tween;
+using Unity.VisualScripting;
 
 abstract public class Character : MonoBehaviour
 {
@@ -13,6 +14,36 @@ abstract public class Character : MonoBehaviour
     virtual public void ActBlocked(EnumMoveDirection direction) 
     {
         this.RotateToMovementDirection(direction);
+    }
+
+    virtual protected void TweenTurn(ETurnType turnType, float duration, Action onCompleted = null)
+    {
+        Action<ITween<Vector3>> totalOnCompleted = (v) => 
+        {
+            if (onCompleted != null)
+            {
+                onCompleted();
+            }
+            this.lookDirection = EnumMoveDirectionHelper.TurnMoveDirection(this.lookDirection, turnType);
+        };
+
+        Vector3 desEulerAngles = this.gameObject.transform.eulerAngles;
+        switch(turnType) 
+        {
+            case ETurnType.Left:
+                desEulerAngles.y -= 90;
+                break;
+            case ETurnType.Right:
+                desEulerAngles.y += 90;
+                break;
+            case ETurnType.Back:
+                desEulerAngles.y += 180;
+                break;
+            default:
+                break;
+        }
+
+        this.TweenToRotation(desEulerAngles, duration, totalOnCompleted);
     }
 
     virtual public void MoveOneCell(EnumMoveDirection direction, Action onCompleted = null)
@@ -65,6 +96,24 @@ abstract public class Character : MonoBehaviour
     protected void RotateToMovementDirection(Vector3 direction)
     {
         this.gameObject.transform.forward = direction.normalized;
+    }
+
+    protected void TweenToRotation(Vector3 eulerAngles, float duration, Action<ITween<Vector3>> onCompleted = null)
+    {
+        Action<ITween<Vector3>> updateRotation= (v) =>
+        {
+            this.gameObject.transform.eulerAngles = v.CurrentValue;
+        };
+
+        this.gameObject.Tween(
+            "MovePlayer",
+            this.gameObject.transform.eulerAngles,
+            eulerAngles,
+            duration,
+            TweenScaleFunctions.Linear,
+            updateRotation,
+            onCompleted
+        );
     }
 
     protected void TweenToPosition(Vector3 position, Action<ITween<Vector3>> onCompleted)
