@@ -8,9 +8,6 @@ public class YBotAnimationStateController : MonoBehaviour
     private Animator animator;
 
     private int isWalkingRef;
-    private int isTurnLeftRef;
-    private int isTurnRightRef;
-    private int isTurnBackRef;
     private int isBlockedRef;
     private Dictionary<ETurnType, int> dictTurnRef = new Dictionary<ETurnType, int>();
 
