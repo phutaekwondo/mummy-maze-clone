@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviour
     private void Start() 
     {
         this.level.BuildLevel();
-        this.player.SetCellOrdinate(this.level.GetPlayerStartPosition());
-        this.enemy.SetCellOrdinate(this.level.GetEnemyStartPosition());
+        // this.player.SetCellOrdinate(this.level.GetPlayerStartPosition());
+        // this.enemy.SetCellOrdinate(this.level.GetEnemyStartPosition());
     }
 
     private void Update()
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
                     this.EnterState(GameState.Idle);
                 };
 
-                this.enemy.MakeBestMove(level, this.player.GetCellOrdinate(), onEnemyMoveCompleted);
+                // this.enemy.MakeBestMove(level, this.player.GetCellOrdinate(), onEnemyMoveCompleted);
                 break;
             default:
                 break;
@@ -91,14 +91,14 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        bool isMovementBlocked = this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection);
-        if (moveDirection != EnumMoveDirection.None && !isMovementBlocked)
-        {
-            this.player.MoveOneCell(moveDirection, onPlayerMoveCompleted);
-            this.EnterState(GameState.PlayerWalking);
-        }
-        else if (moveDirection != EnumMoveDirection.None && isMovementBlocked) {
-            this.player.ActBlocked(moveDirection);
-        }
+        // bool isMovementBlocked = this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection);
+        // if (moveDirection != EnumMoveDirection.None && !isMovementBlocked)
+        // {
+        //     this.player.MoveOneCell(moveDirection, onPlayerMoveCompleted);
+        //     this.EnterState(GameState.PlayerWalking);
+        // }
+        // else if (moveDirection != EnumMoveDirection.None && isMovementBlocked) {
+        //     this.player.ActBlocked(moveDirection);
+        // }
     }
 }
