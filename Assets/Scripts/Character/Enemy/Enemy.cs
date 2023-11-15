@@ -66,6 +66,14 @@ public class Enemy : Character
         return distanceDiffs;
     }
 
+    protected override void TurnAndMoveOneCell(EnumMoveDirection direction)
+    {
+        Debug.LogError("not implemeted yet");
+
+        this.RotateToMovementDirection(direction);
+        this.MoveTowardOneCell();
+    }
+
     protected override void PlayMovementAnimation()
     {
         this.animStateController.StartRun();

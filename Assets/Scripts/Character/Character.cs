@@ -8,9 +8,17 @@ abstract public class Character : MonoBehaviour
     [SerializeField] protected float movementSpeed = 2;
     protected CellOrdinate cellOrdinate = new CellOrdinate(0,0);
     protected EnumMoveDirection lookDirection = EnumMoveDirection.Up;
+    protected Action moveOneCellCallback = null;
 
     abstract protected void PlayMovementAnimation();
     abstract protected void StopMovementAnimation();
+    abstract protected void TurnAndMoveOneCell(EnumMoveDirection direction);
+
+    private void Start()
+    {
+        this.RotateToMovementDirection(this.lookDirection);
+    }
+
     virtual public void ActBlocked(EnumMoveDirection direction) 
     {
         this.RotateToMovementDirection(direction);
@@ -18,13 +26,12 @@ abstract public class Character : MonoBehaviour
 
     virtual protected void TweenTurn(ETurnType turnType, float duration, Action onCompleted = null)
     {
-        Action<ITween<Vector3>> totalOnCompleted = (v) => 
+        Action totalOnCompleted = () => 
         {
             if (onCompleted != null)
             {
                 onCompleted();
             }
-            this.lookDirection = EnumMoveDirectionHelper.TurnMoveDirection(this.lookDirection, turnType);
         };
 
         Vector3 desEulerAngles = this.gameObject.transform.eulerAngles;
@@ -48,21 +55,15 @@ abstract public class Character : MonoBehaviour
 
     virtual public void MoveOneCell(EnumMoveDirection direction, Action onCompleted = null)
     {
-        this.cellOrdinate.Move(direction);
-        Vector3 toPosition = CellTransformGetter.Instance.GetCellPosition(this.cellOrdinate);
+        this.moveOneCellCallback = onCompleted;
 
-        this.PlayMovementAnimation();
-        Action<ITween<Vector3>> totalOnCompleted = (v) => 
+        if (direction == this.lookDirection) 
         {
-            if (onCompleted != null)
-            {
-                onCompleted();
-            }
-            this.StopMovementAnimation();
-        };
+            this.MoveTowardOneCell();
+            return;
+        }
 
-        this.RotateToMovementDirection(direction);
-        this.TweenToPosition(toPosition, totalOnCompleted);
+        this.TurnAndMoveOneCell(direction);
     }
 
     public CellOrdinate GetCellOrdinate()
@@ -70,11 +71,37 @@ abstract public class Character : MonoBehaviour
         return this.cellOrdinate;
     }
 
+    protected void MoveTowardOneCell()
+    {
+        this.cellOrdinate.Move(this.lookDirection);
+        Vector3 toPosition = CellTransformGetter.Instance.GetCellPosition(this.cellOrdinate);
+
+        this.PlayMovementAnimation();
+
+        Action<ITween<Vector3>> totalOnCompleted = (v) => 
+        {
+            this.CallMoveOneCellCallback();
+            this.StopMovementAnimation();
+        };
+
+        this.TweenToPosition(toPosition, totalOnCompleted);
+    }
+
     public void SetCellOrdinate(CellOrdinate cellOrdinate)
     {
         this.cellOrdinate = cellOrdinate;
         Vector3 position = CellTransformGetter.Instance.GetCellPosition(cellOrdinate);
         this.gameObject.transform.position = position;
+    }
+
+    protected void CallMoveOneCellCallback()
+    {
+        if (this.moveOneCellCallback != null) 
+        {
+            this.moveOneCellCallback();
+        }
+
+        this.moveOneCellCallback = null;
     }
 
     protected void RotateToMovementDirection(EnumMoveDirection direction) 
@@ -98,21 +125,29 @@ abstract public class Character : MonoBehaviour
         this.gameObject.transform.forward = direction.normalized;
     }
 
-    protected void TweenToRotation(Vector3 eulerAngles, float duration, Action<ITween<Vector3>> onCompleted = null)
+    protected void TweenToRotation(Vector3 eulerAngles, float duration, Action onCompleted = null)
     {
         Action<ITween<Vector3>> updateRotation= (v) =>
         {
-            this.gameObject.transform.eulerAngles = v.CurrentValue;
+            this.gameObject.gameObject.transform.eulerAngles = v.CurrentValue;
         };
 
-        this.gameObject.Tween(
-            "MovePlayer",
+        Action<ITween<Vector3>> onTweenCompleted = (v) =>
+        {
+            if (onCompleted != null)
+            {
+                onCompleted();
+            }
+        };
+
+        this.gameObject.gameObject.Tween(
+            "RotatePlayer",
             this.gameObject.transform.eulerAngles,
             eulerAngles,
             duration,
             TweenScaleFunctions.Linear,
             updateRotation,
-            onCompleted
+            onTweenCompleted
         );
     }
 
@@ -120,12 +155,12 @@ abstract public class Character : MonoBehaviour
     {
         Action<ITween<Vector3>> updatePosition = (v) =>
         {
-            this.gameObject.transform.position = v.CurrentValue;
+            this.gameObject.gameObject.transform.position = v.CurrentValue;
         };
 
         float duration = (this.gameObject.transform.position - position).magnitude / this.movementSpeed;
 
-        this.gameObject.Tween(
+        this.gameObject.gameObject.Tween(
             "MovePlayer",
             this.gameObject.transform.position,
             position,

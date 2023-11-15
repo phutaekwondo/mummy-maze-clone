@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -17,15 +18,25 @@ public class YBotAnimationStateController : MonoBehaviour
         this.isWalkingRef = Animator.StringToHash("isWalking");
         this.isBlockedRef = Animator.StringToHash("isBlocked");
 
-        dictTurnRef[ETurnType.Left] = Animator.StringToHash("isTurnLeft");
-        dictTurnRef[ETurnType.Right] = Animator.StringToHash("isTurnRight");
-        dictTurnRef[ETurnType.Back] = Animator.StringToHash("isTurnBack");
+        this.dictTurnRef[ETurnType.Left] = Animator.StringToHash("isTurnLeft");
+        this.dictTurnRef[ETurnType.Right] = Animator.StringToHash("isTurnRight");
+        this.dictTurnRef[ETurnType.Back] = Animator.StringToHash("isTurnBack");
     }
 
     public void StartTurnAndWalk(ETurnType turnType)
     {
         this.animator.SetBool(this.dictTurnRef[turnType], true);
         this.animator.SetBool(this.isWalkingRef, true);
+    }
+
+    public void StopTurn()
+    {
+        List<int> refs = this.dictTurnRef.Values.ToList<int>();
+
+        refs.ForEach(delegate(int parameterRef) 
+        {
+            this.animator.SetBool(parameterRef, false);
+        });
     }
 
     public void StopTurn(ETurnType turnType)

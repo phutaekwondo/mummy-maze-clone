@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 public enum EnumMoveDirection 
 {
     None,
@@ -9,6 +10,39 @@ public enum EnumMoveDirection
 }
 
 public class EnumMoveDirectionHelper {
+    public static ETurnType GetTurnType(EnumMoveDirection orgDirection, EnumMoveDirection newDirection)
+    {
+        if (orgDirection == EnumMoveDirection.None || newDirection == EnumMoveDirection.None)
+        {
+            throw new System.Exception("orgDirection == None or newDirection == None");
+        }
+
+        List<EnumMoveDirection> orderedMoveDirection = new List<EnumMoveDirection> {
+            EnumMoveDirection.Up,
+            EnumMoveDirection.Right,
+            EnumMoveDirection.Down,
+            EnumMoveDirection.Left,
+        };
+
+        int orgIndex = orderedMoveDirection.IndexOf(orgDirection);
+        int newIndex = orderedMoveDirection.IndexOf(newDirection);
+
+        switch(newIndex - orgIndex) 
+        {
+            case 1:
+            case -3:
+                return ETurnType.Right;
+            case -1:
+            case 3:
+                return ETurnType.Left;
+            case 2:
+            case -2:
+                return ETurnType.Back;
+        }
+
+        return ETurnType.None;
+    }
+
     public static EnumMoveDirection TurnMoveDirection(EnumMoveDirection direction, ETurnType turnType) 
     {
         if (direction == EnumMoveDirection.None){

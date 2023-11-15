@@ -45,10 +45,13 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isTurnRight
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: isWalking
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2948448926572246053}
   m_Solo: 0
-  m_Mute: 1
+  m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25
@@ -96,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2983fb6cc36ba1248997b705254ac7e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnType: 2
+  turnType: 3
 --- !u!1102 &-5214415703948151208
 AnimatorState:
   serializedVersion: 6
@@ -137,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2983fb6cc36ba1248997b705254ac7e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnType: 0
+  turnType: 1
 --- !u!1102 &-3810467669169155043
 AnimatorState:
   serializedVersion: 6
@@ -334,31 +337,31 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isBlocked
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isTurnLeft
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isTurnRight
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isTurnBack
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -442,7 +445,7 @@ AnimatorStateMachine:
     m_Position: {x: 400, y: 460, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -885015675053498628}
-    m_Position: {x: -260, y: 190, z: 0}
+    m_Position: {x: -180, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8829121648720191622}
     m_Position: {x: 540, y: 230, z: 0}
@@ -482,7 +485,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.97
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -524,7 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2983fb6cc36ba1248997b705254ac7e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnType: 1
+  turnType: 2
 --- !u!1101 &7389585079375117153
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -561,9 +564,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.55713534
   m_TransitionOffset: 0
-  m_ExitTime: 0.8469388
+  m_ExitTime: 0.6588968
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
