@@ -57,12 +57,21 @@ abstract public class Character : MonoBehaviour
 
     virtual protected void Turn(EnumMoveDirection direction)
     {
+        ETurnType turnType = EnumMoveDirectionHelper.GetTurnType(this.lookDirection, direction);
+
+        Action<ETurnType, float> onEnterTurn2MoveTransition = (turnType, duration) =>
+        {
+            this.lookDirection = direction;
+            this.animStateController.StopTurnAnim();
+            this.TweenRotationByTurnType(turnType, duration);
+            this.MoveToward();
+        };
+
+        this.animStateController.StartTurnThenMoveAnim(turnType, onEnterTurn2MoveTransition);
     }
 
     virtual protected void MoveToward()
     {
-        Debug.Log("Player Move Toward");
-
         Action onMoveTowardComplete = () =>
         {
             this.animStateController.StopMoveAnim();
@@ -72,6 +81,48 @@ abstract public class Character : MonoBehaviour
 
         this.animStateController.StartMoveAnim();
         this.TweenPositionToward(onMoveTowardComplete);
+    }
+
+    protected void TweenRotationByTurnType(ETurnType turnType, float duration, Action onComplete = null) 
+    {
+        Vector3 desEulerAngles = this.gameObject.transform.eulerAngles;
+        switch(turnType) 
+        {
+            case ETurnType.Left:
+                desEulerAngles.y -= 90;
+                break;
+            case ETurnType.Right:
+                desEulerAngles.y += 90;
+                break;
+            case ETurnType.Back:
+                desEulerAngles.y += 180;
+                break;
+            default:
+                break;
+        }
+
+        Action<ITween<Vector3>> updateRotation= (v) =>
+        {
+            this.gameObject.gameObject.transform.eulerAngles = v.CurrentValue;
+        };
+
+        Action<ITween<Vector3>> onTweenCompleted = (v) =>
+        {
+            if (onComplete != null)
+            {
+                onComplete();
+            }
+        };
+
+        this.gameObject.gameObject.Tween(
+            this.gameObject.ToString() + "TweenRotation",
+            this.gameObject.transform.eulerAngles,
+            desEulerAngles,
+            duration,
+            TweenScaleFunctions.Linear,
+            updateRotation,
+            onTweenCompleted
+        );
     }
 
     protected void TweenPositionToward(Action onComplete = null)
@@ -95,11 +146,11 @@ abstract public class Character : MonoBehaviour
         float duration = (this.gameObject.transform.position - position).magnitude / this.moveSpeed;
 
         this.gameObject.gameObject.Tween(
-            "TweenPositionToward",
+            this.gameObject.ToString() + "TweenPositionToward",
             this.gameObject.transform.position,
             position,
             duration,
-            TweenScaleFunctions.Linear,
+            TweenScaleFunctions.SineEaseInOut,
             updatePosition,
             onTweenComplete
         );

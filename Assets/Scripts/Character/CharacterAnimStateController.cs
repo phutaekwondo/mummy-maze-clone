@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -12,7 +13,7 @@ abstract public class CharacterAnimStateController : MonoBehaviour
 
     abstract public void StartMoveAnim();
     abstract public void StopMoveAnim();
-    abstract public void StartTurnAnim(ETurnType turnType);
+    abstract public void StartTurnThenMoveAnim(ETurnType turnType, Action<ETurnType, float> onEnterTurn2MoveTransition);
     abstract public void StopTurnAnim();
     abstract public void StartBlockedAnim();
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,10 +9,13 @@ public class YBotAnimationStateController : CharacterAnimStateController
     private int isWalkingRef;
     private int isBlockedRef;
     private Dictionary<ETurnType, int> dictTurnRef = new Dictionary<ETurnType, int>();
+    private Action<ETurnType, float> onEnterTurn2MoveTransitionCallback;
 
     override protected void Awake()
     {
         base.Awake();
+
+        YBotTurnAnimState.onEnterTransition += this.onTurnAnimEnterTransition;
 
         this.isWalkingRef = Animator.StringToHash("isWalking");
         this.isBlockedRef = Animator.StringToHash("isBlocked");
@@ -21,8 +25,17 @@ public class YBotAnimationStateController : CharacterAnimStateController
         this.dictTurnRef[ETurnType.Back] = Animator.StringToHash("isTurnBack");
     }
 
-    override public void StartTurnAnim(ETurnType turnType)
+    private void onTurnAnimEnterTransition(AnimatorTransitionInfo transitionInfo, ETurnType turnType)
     {
+        if (this.onEnterTurn2MoveTransitionCallback != null)
+        {
+            this.onEnterTurn2MoveTransitionCallback(turnType, transitionInfo.duration);
+        }
+    }
+
+    override public void StartTurnThenMoveAnim(ETurnType turnType, Action<ETurnType, float> onEnterTurn2MoveTransition)
+    {
+        this.onEnterTurn2MoveTransitionCallback = onEnterTurn2MoveTransition;
         this.animator.SetBool(this.dictTurnRef[turnType], true);
         this.animator.SetBool(this.isWalkingRef, true);
     }
