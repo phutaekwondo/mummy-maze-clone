@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
+using UnityEngine;
+
 public enum EnumMoveDirection 
 {
     None,
@@ -83,5 +84,13 @@ public class EnumMoveDirectionHelper {
         }
 
         return orderedMoveDirection[moveDirIndex];
+    }
+
+    public static Vector3 GetVec3Direction(EnumMoveDirection direction) 
+    {
+        CellOrdinate cell_1 = new CellOrdinate(1,1);
+        CellOrdinate cell_2 = cell_1.GetDestinateOrdinate(direction);
+
+        return (CellTransformGetter.Instance.GetCellPosition(cell_2) - CellTransformGetter.Instance.GetCellPosition(cell_1)).normalized;
     }
 }

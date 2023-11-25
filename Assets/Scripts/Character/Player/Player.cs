@@ -3,11 +3,9 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private YBotAnimationStateController animStateController;
-
-    private void Awake() 
+    override protected void Awake() 
     {
-        this.animStateController = this.GetComponent<YBotAnimationStateController>();
+        base.Awake();
         YBotTurnAnimState.onEnterTransition += this.onTurnAnimEnterTransition;
     }
 

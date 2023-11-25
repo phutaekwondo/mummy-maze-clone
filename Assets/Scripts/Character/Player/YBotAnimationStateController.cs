@@ -3,18 +3,16 @@ using System.Data;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class YBotAnimationStateController : MonoBehaviour
+public class YBotAnimationStateController : CharacterAnimStateController
 {
-    private Animator animator;
-
     private int isWalkingRef;
     private int isBlockedRef;
     private Dictionary<ETurnType, int> dictTurnRef = new Dictionary<ETurnType, int>();
 
-    private void Awake() 
+    override protected void Awake()
     {
-        this.animator = GetComponent<Animator>();
+        base.Awake();
+
         this.isWalkingRef = Animator.StringToHash("isWalking");
         this.isBlockedRef = Animator.StringToHash("isBlocked");
 
@@ -23,13 +21,13 @@ public class YBotAnimationStateController : MonoBehaviour
         this.dictTurnRef[ETurnType.Back] = Animator.StringToHash("isTurnBack");
     }
 
-    public void StartTurnAndWalk(ETurnType turnType)
+    override public void StartTurnAnim(ETurnType turnType)
     {
         this.animator.SetBool(this.dictTurnRef[turnType], true);
         this.animator.SetBool(this.isWalkingRef, true);
     }
 
-    public void StopTurn()
+    override public void StopTurnAnim()
     {
         List<int> refs = this.dictTurnRef.Values.ToList<int>();
 
@@ -39,22 +37,17 @@ public class YBotAnimationStateController : MonoBehaviour
         });
     }
 
-    public void StopTurn(ETurnType turnType)
-    {
-        this.animator.SetBool(this.dictTurnRef[turnType], false);
-    }
-
-    public void StartIdle() 
+    override public void StopMoveAnim() 
     {
         this.animator.SetBool(this.isWalkingRef, false);
     }
 
-    public void StartWalk() 
+    override public void StartMoveAnim() 
     {
         this.animator.SetBool(this.isWalkingRef, true);
     }
 
-    public void StartBlocked()
+    override public void StartBlockedAnim()
     {
         this.animator.SetBool(this.isBlockedRef, true);
     }

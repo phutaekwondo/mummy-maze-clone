@@ -20,8 +20,9 @@ public class GameManager : MonoBehaviour
     private void Start() 
     {
         this.level.BuildLevel();
-        // this.player.SetCellOrdinate(this.level.GetPlayerStartPosition());
-        // this.enemy.SetCellOrdinate(this.level.GetEnemyStartPosition());
+        this.player.SetCellOrdinate(this.level.GetPlayerStartPosition());
+        this.player.SetLookDirection(EnumMoveDirection.Up);
+        this.enemy.SetCellOrdinate(this.level.GetEnemyStartPosition());
     }
 
     private void Update()
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
 
         Action onPlayerMoveCompleted = () =>
         {
-            this.EnterState(GameState.EnemyMoving);
+            this.EnterState(GameState.Idle);
         };
 
         EnumMoveDirection moveDirection = EnumMoveDirection.None;
@@ -91,7 +92,12 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        // bool isMovementBlocked = this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection);
+        bool isMovementBlocked = this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection);
+        if (!isMovementBlocked)
+        {
+            this.player.Move(moveDirection, onPlayerMoveCompleted);
+            this.EnterState(GameState.PlayerWalking);
+        }
         // if (moveDirection != EnumMoveDirection.None && !isMovementBlocked)
         // {
         //     this.player.MoveOneCell(moveDirection, onPlayerMoveCompleted);
