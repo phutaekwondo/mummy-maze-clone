@@ -1,14 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using UnityEngine;
 
 public class YBotAnimationStateController : CharacterAnimStateController
 {
+    private const string MOVE_STATE_NAME = "Walk"; 
+    private const string IDLE_STATE_NAME = "Idle"; 
+    private const string TURN_LEFT_STATE_NAME = "TurnLeft"; 
+    private const string TURN_RIGHT_STATE_NAME = "TurnRight"; 
+    private const string TURN_BACK_STATE_NAME = "TurnBack"; 
+    private const string BLOCKED_STATE_NAME = "Annoyed"; 
     private int isWalkingRef;
-    private int isBlockedRef;
-    private Dictionary<ETurnType, int> dictTurnRef = new Dictionary<ETurnType, int>();
+    private Dictionary<ETurnType, string> dictTurnRef = new Dictionary<ETurnType, string>();
     private Action<ETurnType, float> onEnterTurn2MoveTransitionCallback;
 
     override protected void Awake()
@@ -18,11 +24,9 @@ public class YBotAnimationStateController : CharacterAnimStateController
         YBotTurnAnimState.onEnterTransition += this.onTurnAnimEnterTransition;
 
         this.isWalkingRef = Animator.StringToHash("isWalking");
-        this.isBlockedRef = Animator.StringToHash("isBlocked");
-
-        this.dictTurnRef[ETurnType.Left] = Animator.StringToHash("isTurnLeft");
-        this.dictTurnRef[ETurnType.Right] = Animator.StringToHash("isTurnRight");
-        this.dictTurnRef[ETurnType.Back] = Animator.StringToHash("isTurnBack");
+        this.dictTurnRef[ETurnType.Left] = TURN_LEFT_STATE_NAME;
+        this.dictTurnRef[ETurnType.Right] = TURN_RIGHT_STATE_NAME;
+        this.dictTurnRef[ETurnType.Back] = TURN_BACK_STATE_NAME;
     }
 
     private void onTurnAnimEnterTransition(AnimatorTransitionInfo transitionInfo, ETurnType turnType)
@@ -36,18 +40,12 @@ public class YBotAnimationStateController : CharacterAnimStateController
     override public void StartTurnThenMoveAnim(ETurnType turnType, Action<ETurnType, float> onEnterTurn2MoveTransition)
     {
         this.onEnterTurn2MoveTransitionCallback = onEnterTurn2MoveTransition;
-        this.animator.SetBool(this.dictTurnRef[turnType], true);
         this.animator.SetBool(this.isWalkingRef, true);
+        this.animator.Play(this.dictTurnRef[turnType]);
     }
 
     override public void StopTurnAnim()
     {
-        List<int> refs = this.dictTurnRef.Values.ToList<int>();
-
-        refs.ForEach(delegate(int parameterRef) 
-        {
-            this.animator.SetBool(parameterRef, false);
-        });
     }
 
     override public void StopMoveAnim() 
@@ -57,11 +55,12 @@ public class YBotAnimationStateController : CharacterAnimStateController
 
     override public void StartMoveAnim() 
     {
+        this.animator.Play(MOVE_STATE_NAME);
         this.animator.SetBool(this.isWalkingRef, true);
     }
 
     override public void StartBlockedAnim()
     {
-        this.animator.SetBool(this.isBlockedRef, true);
+        this.animator.Play(BLOCKED_STATE_NAME);
     }
 }

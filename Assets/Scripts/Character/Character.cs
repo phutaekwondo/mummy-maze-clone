@@ -38,6 +38,7 @@ abstract public class Character : MonoBehaviour
         this.moveCallback = callback;
         if (this.lookDirection == direction) 
         {
+            this.animStateController.StartMoveAnim();
             this.MoveToward();
         }
         else
@@ -62,7 +63,6 @@ abstract public class Character : MonoBehaviour
         Action<ETurnType, float> onEnterTurn2MoveTransition = (turnType, duration) =>
         {
             this.lookDirection = direction;
-            this.animStateController.StopTurnAnim();
             this.TweenRotationByTurnType(turnType, duration);
             this.MoveToward();
         };
@@ -79,7 +79,6 @@ abstract public class Character : MonoBehaviour
             this.SetCellOrdinate(this.cellOrdinate.GetDestinateOrdinate(this.lookDirection));
         };
 
-        this.animStateController.StartMoveAnim();
         this.TweenPositionToward(onMoveTowardComplete);
     }
 
