@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
         EnemyMoving,
     };
 
-    [SerializeField] private Player player;
-    [SerializeField] private Enemy enemy;
     [SerializeField] private InputHandler inputHanlder;
     [SerializeField] private Level level;
 
@@ -20,9 +18,6 @@ public class GameManager : MonoBehaviour
     private void Start() 
     {
         this.level.BuildLevel();
-        this.player.SetCellOrdinate(this.level.GetPlayerStartPosition());
-        this.player.SetLookDirection(EnumMoveDirection.Up);
-        this.enemy.SetCellOrdinate(this.level.GetEnemyStartPosition());
     }
 
     private void Update()
@@ -35,16 +30,6 @@ public class GameManager : MonoBehaviour
         this.state = state;
         switch(state)
         {
-            case GameState.EnemyMoving:
-                Action onEnemyMoveCompleted = () =>
-                {
-                    this.EnterState(GameState.Idle);
-                };
-
-                // this.enemy.MakeBestMove(level, this.player.GetCellOrdinate(), onEnemyMoveCompleted);
-                break;
-            default:
-                break;
         }
     }
 
@@ -69,7 +54,7 @@ public class GameManager : MonoBehaviour
 
         Action onPlayerMoveCompleted = () =>
         {
-            this.EnterState(GameState.Idle);
+            this.EnterState(GameState.EnemyMoving);
         };
 
         EnumMoveDirection moveDirection = EnumMoveDirection.None;
@@ -92,19 +77,5 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        bool isMovementBlocked = this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection);
-        if (!isMovementBlocked)
-        {
-            this.player.Move(moveDirection, onPlayerMoveCompleted);
-            this.EnterState(GameState.PlayerWalking);
-        }
-        // if (moveDirection != EnumMoveDirection.None && !isMovementBlocked)
-        // {
-        //     this.player.MoveOneCell(moveDirection, onPlayerMoveCompleted);
-        //     this.EnterState(GameState.PlayerWalking);
-        // }
-        // else if (moveDirection != EnumMoveDirection.None && isMovementBlocked) {
-        //     this.player.ActBlocked(moveDirection);
-        // }
     }
 }

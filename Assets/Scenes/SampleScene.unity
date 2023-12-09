@@ -272,19 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0ce85df9302b2c46855e8a51a7b2c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
---- !u!114 &405786238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405786234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efbeafcc02cd9a341b928809593907ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &641713948
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,18 +406,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &651213895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 651213892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0748c9a866a93f6438354f753af0da6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &651213897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,7 +418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b0a50fdadb1754199669a45ff6be2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,8 +817,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5858d82d5d8ca344abe3fbd180441827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 651213897}
-  enemy: {fileID: 405786237}
   inputHanlder: {fileID: 891907873}
   level: {fileID: 641713950}
 --- !u!4 &1854286326
