@@ -9,4 +9,9 @@ public class CharacterTransformController : MonoBehaviour
         Vector3 position = CellTransformGetter.Instance.GetCellPosition(cellOrdinate);
         this.gameObject.transform.position = position;
     }
+
+    public void SetEulerAngles(EnumMoveDirection direction)
+    {
+        this.gameObject.transform.forward = EnumMoveDirectionHelper.GetVec3Direction(direction);
+    }
 }

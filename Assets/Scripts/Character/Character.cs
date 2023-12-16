@@ -19,9 +19,23 @@ abstract public class Character : MonoBehaviour
         }
     }
 
+    private void Start() 
+    {
+        this.characterAnimController.PlayIdle();
+        if (this.lookDirection == EnumMoveDirection.None)
+        {
+            this.SetLookDirection(EnumMoveDirection.Down);
+        }
+    }
     public void SetCellOrdinate(CellOrdinate cellOrdinate)
     {
         this.cellOrdinate = cellOrdinate;
         this.characterTransformController.SetPosition(cellOrdinate);
+    }
+
+    public void SetLookDirection(EnumMoveDirection direction)
+    {
+        this.lookDirection = direction;
+        this.characterTransformController.SetEulerAngles(direction);
     }
 }
