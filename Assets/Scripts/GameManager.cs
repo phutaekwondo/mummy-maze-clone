@@ -12,12 +12,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private InputHandler inputHanlder;
     [SerializeField] private Level level;
+    [SerializeField] private Player player;
 
     private GameState state = GameState.Idle;
 
     private void Start() 
     {
         this.level.BuildLevel();
+        this.player.SetCellOrdinate(this.level.GetPlayerStartPosition());
     }
 
     private void Update()
