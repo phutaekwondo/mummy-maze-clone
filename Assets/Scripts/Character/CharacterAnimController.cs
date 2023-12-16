@@ -20,4 +20,9 @@ public class CharacterAnimController : MonoBehaviour
     {
         this.animator.SetInteger(this.animIndexRef, IDLE_ANIM_INDEX);
     }
+
+    virtual public void PlayMove()
+    {
+        this.animator.SetInteger(this.animIndexRef, MOVE_ANIM_INDEX);
+    }
 }
