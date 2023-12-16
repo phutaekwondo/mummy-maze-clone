@@ -1,11 +1,15 @@
 using UnityEngine;
 using DigitalRuby.Tween;
 using System;
+using Unity.VisualScripting;
 
 abstract public class Character : MonoBehaviour
 {
     private CharacterTransformController characterTransformController;
+    private CharacterAnimController characterAnimController;
+
     private CellOrdinate cellOrdinate;
+    private EnumMoveDirection lookDirection = EnumMoveDirection.None;
 
     private void Awake() 
     {
@@ -27,6 +31,25 @@ abstract public class Character : MonoBehaviour
             this.SetLookDirection(EnumMoveDirection.Down);
         }
     }
+
+    public void Move(EnumMoveDirection direction, Action onMoveComplete = null) 
+    {
+        this.SetLookDirection(direction);
+        this.characterAnimController.PlayMove();
+
+        CellOrdinate desCell = this.cellOrdinate.GetDestinateOrdinate(direction);
+        Action onTweenComplete = () => {
+            this.cellOrdinate = desCell;
+            this.characterAnimController.PlayIdle();
+
+            if (onMoveComplete != null) 
+            {
+                onMoveComplete();
+            }
+        };
+        this.characterTransformController.TweenToCell(desCell, onTweenComplete);
+    }
+
     public void SetCellOrdinate(CellOrdinate cellOrdinate)
     {
         this.cellOrdinate = cellOrdinate;

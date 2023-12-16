@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     enum GameState {
         Idle,
-        PlayerWalking,
+        PlayerMoving,
         EnemyMoving,
     };
 
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
         Action onPlayerMoveCompleted = () =>
         {
-            this.EnterState(GameState.EnemyMoving);
+            this.EnterState(GameState.Idle);
         };
 
         EnumMoveDirection moveDirection = EnumMoveDirection.None;
@@ -79,5 +79,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        this.player.Move(moveDirection, onPlayerMoveCompleted);
+        this.EnterState(GameState.PlayerMoving);
     }
 }
