@@ -9,6 +9,7 @@ public class CharacterAnimController : MonoBehaviour
 {
     private const int IDLE_ANIM_INDEX = 0;
     private const int MOVE_ANIM_INDEX = 1;
+    private const int BLOCKED_ANIM_INDEX = 5;
     private Dictionary<ETurnType, int> TURN_ANIM_INDEX = new Dictionary<ETurnType, int>();
     private Animator animator;
     private int animIndexRef;
@@ -36,8 +37,14 @@ public class CharacterAnimController : MonoBehaviour
 
     virtual public void PlayTurn(ETurnType turnType, Action onTurnAnimComplete = null)
     {
-        this.animator.SetInteger(this.animIndexRef, TURN_ANIM_INDEX[turnType]);
         this.onAnimEnd = onTurnAnimComplete;
+        this.animator.SetInteger(this.animIndexRef, this.TURN_ANIM_INDEX[turnType]);
+    }
+
+    virtual public void PlayBlocked(Action onComplete = null)
+    {
+        this.onAnimEnd = onComplete;
+        this.animator.SetInteger(this.animIndexRef, BLOCKED_ANIM_INDEX);
     }
 
     public void CallOnAnimEnd() 
@@ -46,10 +53,6 @@ public class CharacterAnimController : MonoBehaviour
         {
             this.onAnimEnd();
             this.onAnimEnd = null;
-        }
-        else 
-        {
-            this.PlayIdle();
         }
     }
 }
