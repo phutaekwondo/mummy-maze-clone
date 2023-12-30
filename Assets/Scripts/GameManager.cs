@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputHandler inputHanlder;
     [SerializeField] private Level level;
     [SerializeField] private Player player;
+    [SerializeField] private Enemy enemy;
 
     private GameState state = GameState.Idle;
 
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     {
         this.level.BuildLevel();
         this.player.SetCellOrdinate(this.level.GetPlayerStartPosition());
+        this.enemy.SetCellOrdinate(this.level.GetEnemyStartPosition());
     }
 
     private void Update()

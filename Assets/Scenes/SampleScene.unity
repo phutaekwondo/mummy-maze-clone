@@ -845,6 +845,7 @@ MonoBehaviour:
   inputHanlder: {fileID: 891907873}
   level: {fileID: 641713950}
   player: {fileID: 651213897}
+  enemy: {fileID: 405786237}
 --- !u!4 &1854286326
 Transform:
   m_ObjectHideFlags: 0
