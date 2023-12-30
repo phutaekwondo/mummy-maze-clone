@@ -35,10 +35,9 @@ abstract public class Character : MonoBehaviour
     public void ActBlocked(EnumMoveDirection direction)
     {
         Action onTurnComplete = () => {
-            Action onBlockedAnimComplete = () => {
+            this.characterAnimController.PlayBlocked(() => {
                 this.characterAnimController.PlayIdle();
-            };
-            this.characterAnimController.PlayBlocked(onBlockedAnimComplete);
+            });
         };
 
         this.TurnToDirection(direction, onTurnComplete);
