@@ -32,22 +32,23 @@ abstract public class Character : MonoBehaviour
         }
     }
 
+    public void ActBlocked(EnumMoveDirection direction)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Move(EnumMoveDirection direction, Action onMoveComplete = null) 
     {
-        this.SetLookDirection(direction);
-        this.characterAnimController.PlayMove();
-
-        CellOrdinate desCell = this.cellOrdinate.GetDestinateOrdinate(direction);
-        Action onTweenComplete = () => {
-            this.cellOrdinate = desCell;
-            this.characterAnimController.PlayIdle();
-
-            if (onMoveComplete != null) 
-            {
-                onMoveComplete();
-            }
+        Action onTurnComplete = () => {
+            this.MoveToward(onMoveComplete);
         };
-        this.characterTransformController.TweenToCell(desCell, onTweenComplete);
+
+        this.TurnToDirection(direction, onTurnComplete);
+    }
+
+    public CellOrdinate GetCellOrdinate()
+    {
+        return this.cellOrdinate;
     }
 
     public void SetCellOrdinate(CellOrdinate cellOrdinate)
@@ -60,5 +61,45 @@ abstract public class Character : MonoBehaviour
     {
         this.lookDirection = direction;
         this.characterTransformController.SetEulerAngles(direction);
+    }
+
+    private void TurnToDirection(EnumMoveDirection direction, Action onTurnComplete = null)
+    {
+        Action callOnTurnComplete = () => {
+            if (onTurnComplete != null)
+            {
+                onTurnComplete();
+            }
+        };
+
+        if (direction == this.lookDirection)
+        {
+            callOnTurnComplete();
+            return;
+        }
+
+        ETurnType turnType = EnumMoveDirectionHelper.GetTurnType(this.lookDirection, direction);
+        Action onTurnAnimComplete = () => {
+            this.SetLookDirection(direction);
+            callOnTurnComplete();
+        };
+        this.characterAnimController.PlayTurn(turnType, onTurnAnimComplete);
+    }
+
+    private void MoveToward(Action onMoveComplete)
+    {
+        this.characterAnimController.PlayMove();
+
+        CellOrdinate desCell = this.cellOrdinate.GetDestinateOrdinate(this.lookDirection);
+        Action onTweenComplete = () => {
+            this.cellOrdinate = desCell;
+            this.characterAnimController.PlayIdle();
+
+            if (onMoveComplete != null) 
+            {
+                onMoveComplete();
+            }
+        };
+        this.characterTransformController.TweenToCell(desCell, onTweenComplete);
     }
 }

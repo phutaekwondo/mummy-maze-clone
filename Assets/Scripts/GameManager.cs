@@ -54,11 +54,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Action onPlayerMoveCompleted = () =>
-        {
-            this.EnterState(GameState.Idle);
-        };
-
         EnumMoveDirection moveDirection = EnumMoveDirection.None;
 
         switch(playerInput)
@@ -79,7 +74,26 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        this.player.Move(moveDirection, onPlayerMoveCompleted);
-        this.EnterState(GameState.PlayerMoving);
+        this.MovePlayer(moveDirection);
+    }
+
+    private void MovePlayer(EnumMoveDirection moveDirection)
+    {
+        Action onPlayerMoveCompleted = () =>
+        {
+            this.EnterState(GameState.Idle);
+        };
+
+        bool isBlocked = this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection);
+
+        if (isBlocked)
+        {
+            this.player.ActBlocked(moveDirection);
+        }
+        else
+        {
+            this.player.Move(moveDirection, onPlayerMoveCompleted);
+            this.EnterState(GameState.PlayerMoving);
+        }
     }
 }
