@@ -1,4 +1,4 @@
-![preview](https://raw.githubusercontent.com/phutaekwondo/billiard-unity/main/gifs/20240106-demo.gif)
+![preview](https://raw.githubusercontent.com/phutaekwondo/mummy-maze-clone/main/gifs/20240106-demo.gif)
 
 # Requirements
 - Unity Editor 2021.3.15f1
