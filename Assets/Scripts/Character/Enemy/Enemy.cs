@@ -21,5 +21,13 @@ public class Enemy : Character
         {
             this.Move(bestMove, onMoveComplete);
         }
+        else
+        {
+            this.ActBlocked(this.lookDirection);
+            if (onMoveComplete != null)
+            {
+                onMoveComplete();
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ abstract public class Character : MonoBehaviour
     private CharacterAnimController characterAnimController;
 
     private CellOrdinate cellOrdinate;
-    private EnumMoveDirection lookDirection = EnumMoveDirection.None;
+    protected EnumMoveDirection lookDirection = EnumMoveDirection.None;
 
     protected virtual void Awake() 
     {
