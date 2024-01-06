@@ -11,7 +11,7 @@ abstract public class Character : MonoBehaviour
     private CellOrdinate cellOrdinate;
     private EnumMoveDirection lookDirection = EnumMoveDirection.None;
 
-    private void Awake() 
+    protected virtual void Awake() 
     {
         this.characterAnimController = this.GetComponent<CharacterAnimController>();
         if (this.characterAnimController == null){

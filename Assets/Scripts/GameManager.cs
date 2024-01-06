@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour
         this.state = state;
         switch(state)
         {
+            case GameState.EnemyMoving:
+                this.enemy.MakeBestMove(this.player.GetCellOrdinate(), this.level, () => {
+                    this.EnterState(GameState.Idle);
+                });
+                break;
         }
     }
 
@@ -83,7 +88,7 @@ public class GameManager : MonoBehaviour
     {
         Action onPlayerMoveCompleted = () =>
         {
-            this.EnterState(GameState.Idle);
+            this.EnterState(GameState.EnemyMoving);
         };
 
         bool isBlocked = this.level.IsBlocked(this.player.GetCellOrdinate(), moveDirection);
