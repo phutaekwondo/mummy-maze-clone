@@ -6,28 +6,16 @@ using UnityEditor;
 
 public class Enemy : Character
 {
-    private EnemyMoveFinder enemyMoveFinder;
+    private EnemySequenceMovesMaker enemySequenceMovesMaker;
 
     protected override void Awake()
     {
         base.Awake();
-        this.enemyMoveFinder = this.GetComponent<EnemyMoveFinder>();
+        this.enemySequenceMovesMaker = this.GetComponent<EnemySequenceMovesMaker>();
     }
 
     public void MakeBestMove(CellOrdinate playerCellOrdinate, Level level, Action onMoveComplete = null) 
     {
-        EnumMoveDirection bestMove = this.enemyMoveFinder.GetEnemyBestMove(this.GetCellOrdinate(), playerCellOrdinate, level);
-        if (bestMove != EnumMoveDirection.None)
-        {
-            this.Move(bestMove, onMoveComplete);
-        }
-        else
-        {
-            this.ActBlocked(this.lookDirection);
-            if (onMoveComplete != null)
-            {
-                onMoveComplete();
-            }
-        }
+        this.enemySequenceMovesMaker.StartSequenceMoves(playerCellOrdinate, level, onMoveComplete); 
     }
 }
