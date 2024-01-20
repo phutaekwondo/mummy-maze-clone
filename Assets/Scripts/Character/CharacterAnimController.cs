@@ -13,8 +13,9 @@ public class CharacterAnimController : MonoBehaviour
     private Dictionary<ETurnType, int> TURN_ANIM_INDEX = new Dictionary<ETurnType, int>();
     private Animator animator;
     private int animIndexRef;
+    private int playingAnimIndex = -1;
 
-    Action onAnimEnd = null;
+    private Dictionary<int, Action> onAnimEndDict = new Dictionary<int, Action>();
 
     private void Awake() 
     {
@@ -27,32 +28,39 @@ public class CharacterAnimController : MonoBehaviour
 
     virtual public void PlayIdle()
     {
-        this.animator.SetInteger(this.animIndexRef, IDLE_ANIM_INDEX);
+        this.PlayAnimByIndex(IDLE_ANIM_INDEX);
     }
 
     virtual public void PlayMove()
     {
-        this.animator.SetInteger(this.animIndexRef, MOVE_ANIM_INDEX);
+        this.PlayAnimByIndex(MOVE_ANIM_INDEX);
     }
 
     virtual public void PlayTurn(ETurnType turnType, Action onTurnAnimComplete = null)
     {
-        this.onAnimEnd = onTurnAnimComplete;
-        this.animator.SetInteger(this.animIndexRef, this.TURN_ANIM_INDEX[turnType]);
+        this.PlayAnimByIndex(this.TURN_ANIM_INDEX[turnType],onTurnAnimComplete);
     }
 
     virtual public void PlayBlocked(Action onComplete = null)
     {
-        this.onAnimEnd = onComplete;
-        this.animator.SetInteger(this.animIndexRef, BLOCKED_ANIM_INDEX);
+        this.PlayAnimByIndex(BLOCKED_ANIM_INDEX,onComplete);
+    }
+
+    protected void PlayAnimByIndex(int animIndex, Action onComplete = null)
+    {
+        this.onAnimEndDict[animIndex] = onComplete;
+        this.animator.SetInteger(this.animIndexRef, animIndex);
+        this.playingAnimIndex = animIndex;
     }
 
     public void CallOnAnimEnd() 
     {
-        if (this.onAnimEnd != null)
+        if (this.onAnimEndDict.ContainsKey(this.playingAnimIndex))
         {
-            this.onAnimEnd();
-            this.onAnimEnd = null;
+            int tempAnimIndex = this.playingAnimIndex;
+            this.playingAnimIndex = -1;
+            this.onAnimEndDict[tempAnimIndex]?.Invoke();
+            this.onAnimEndDict[tempAnimIndex] = null;
         }
     }
 }
