@@ -7,6 +7,28 @@ public class EnemyMoveFinder : MonoBehaviour
 {
     public EnumMoveDirection GetEnemyBestMove(CellOrdinate enemyCellOrdinate, CellOrdinate playerCellOrdinate, Level level)
     {
+        List<KeyValuePair<EnumMoveDirection, float>> distanceDiffs = this.GetDistanceDiffAfterMove(enemyCellOrdinate, playerCellOrdinate);
+
+        for (int i = 0; i < distanceDiffs.Count; i++)
+        {
+            if (!level.IsBlocked(enemyCellOrdinate, distanceDiffs[i].Key))
+            {
+                return distanceDiffs[i].Key;
+            }
+        }
+
+        return EnumMoveDirection.None;
+    }
+
+    public EnumMoveDirection GetEnemyEnemyNoWallBestMove(CellOrdinate enemyCellOrdinate, CellOrdinate playerCellOrdinate)
+    {
+        List<KeyValuePair<EnumMoveDirection, float>> distanceDiffs = this.GetDistanceDiffAfterMove(enemyCellOrdinate, playerCellOrdinate);
+
+        return distanceDiffs[0].Key;
+    }
+
+    private List<KeyValuePair<EnumMoveDirection, float>> GetDistanceDiffAfterMove(CellOrdinate enemyCellOrdinate, CellOrdinate playerCellOrdinate)
+    {
         Dictionary<EnumMoveDirection, float> distanceDiffAfterMove = new Dictionary<EnumMoveDirection, float>();
         Vector3 enemyPosition = CellTransformGetter.Instance.GetCellPosition(enemyCellOrdinate);
         Vector3 playerPosition = CellTransformGetter.Instance.GetCellPosition(playerCellOrdinate);
@@ -25,14 +47,6 @@ public class EnemyMoveFinder : MonoBehaviour
             return pair1.Value.CompareTo(pair2.Value);
         });
 
-        for (int i = 0; i < distanceDiffs.Count; i++)
-        {
-            if (!level.IsBlocked(enemyCellOrdinate, distanceDiffs[i].Key))
-            {
-                return distanceDiffs[i].Key;
-            }
-        }
-
-        return EnumMoveDirection.None;
+        return distanceDiffs;
     }
 }

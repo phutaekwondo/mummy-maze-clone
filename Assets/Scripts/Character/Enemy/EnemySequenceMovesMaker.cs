@@ -33,7 +33,7 @@ public class EnemySequenceMovesMaker : MonoBehaviour
 
         if (bestMove == EnumMoveDirection.None)
         {
-            //blocked
+            this.controlledEnemy.ActBlocked(this.enemyMoveFinder.GetEnemyEnemyNoWallBestMove(this.controlledEnemy.GetCellOrdinate(), playerCellOrdinate));
             onComplete?.Invoke();
             return;
         }
