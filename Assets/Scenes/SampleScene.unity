@@ -617,6 +617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ground: {fileID: 174752228}
   wallPrefab: {fileID: 4778104951832624529, guid: 1a46a608d49843e4384a535ecb019c68, type: 3}
+  exitDoorPrefab: {fileID: 2868867197409617459, guid: a4cbc5b105aa57d47b8445728a35b98a, type: 3}
 --- !u!4 &887953854
 Transform:
   m_ObjectHideFlags: 0

@@ -61,4 +61,9 @@ public class CellOrdinate
     public void SetY(int y) {
         this.y = y;
     }
+
+    public bool Equals(CellOrdinate otherCell)
+    {
+        return this.x == otherCell.x && this.y == otherCell.y;
+    }
 }

@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelBuilder : MonoBehaviour
 {
     [SerializeField] private Ground ground;
     [SerializeField] private GameObject wallPrefab;
+    [SerializeField] private GameObject exitDoorPrefab;
     private LevelInfo levelInfo;
     private uint widthSteps = 5;
     private uint heightSteps = 5;
@@ -14,7 +16,15 @@ public class LevelBuilder : MonoBehaviour
         this.levelInfo = levelInfo;
         this.widthSteps = this.heightSteps = levelInfo.groundSize;
         this.ground.SetSize(this.widthSteps, this.heightSteps);
+        this.AddExitGate();
         this.BuildWalls();
+    }
+
+    private void AddExitGate()
+    {
+        ExitDoor exitDoor = Instantiate(this.exitDoorPrefab, this.gameObject.transform.parent).GetComponent<ExitDoor>();
+        List<CellOrdinate> exitDoorCellOrdinates = this.GetExitDoorCellOrdinates();
+        exitDoor.SetWall(exitDoorCellOrdinates[0], exitDoorCellOrdinates[1]);
     }
 
     private void BuildWalls()
@@ -62,6 +72,17 @@ public class LevelBuilder : MonoBehaviour
 
     private void SpawnAWall(CellOrdinate cell_1, CellOrdinate cell_2)
     {
+        List<CellOrdinate> exitDoorCellOrdinates = this.GetExitDoorCellOrdinates();
+        if (exitDoorCellOrdinates[0].Equals(cell_1) && exitDoorCellOrdinates[1].Equals(cell_2))
+        {
+            return;
+        }
+        if (exitDoorCellOrdinates[1].Equals(cell_1) && exitDoorCellOrdinates[0].Equals(cell_2))
+        {
+            return;
+        }
+
+
         Wall newWall = Instantiate(this.wallPrefab, this.gameObject.transform.parent).GetComponent<Wall>();
         newWall.SetWall(cell_1, cell_2);
     }
@@ -71,5 +92,26 @@ public class LevelBuilder : MonoBehaviour
         int xOrdinate = cellIndex % Convert.ToInt32(this.levelInfo.groundSize);
         int zOrdinate = cellIndex / Convert.ToInt32(this.levelInfo.groundSize);
         return new CellOrdinate(xOrdinate, zOrdinate);
+    }
+
+    private List<CellOrdinate> GetExitDoorCellOrdinates()
+    {
+        CellOrdinate cell_1 = new CellOrdinate(this.levelInfo.exitDoorCellOrdinate.x, this.levelInfo.exitDoorCellOrdinate.y);
+
+        bool isCell1LeftOrTop = this.levelInfo.exitDoorType == ExitDoorType.Horizontal ?
+                                this.levelInfo.exitDoorCellOrdinate.x == 0 :
+                                this.levelInfo.exitDoorCellOrdinate.y == 0;
+
+        int offset = isCell1LeftOrTop ? -1 : 1;
+
+        //get the other cell, depending on the exit door type, and the cell_1
+        CellOrdinate cell_2 = this.levelInfo.exitDoorType == ExitDoorType.Horizontal ?
+                                new CellOrdinate(this.levelInfo.exitDoorCellOrdinate.x, this.levelInfo.exitDoorCellOrdinate.y + offset) :
+                                new CellOrdinate(this.levelInfo.exitDoorCellOrdinate.x + offset, this.levelInfo.exitDoorCellOrdinate.y);
+                                
+        List<CellOrdinate> exitDoorCellOrdinates = new List<CellOrdinate>();
+        exitDoorCellOrdinates.Add(cell_1);
+        exitDoorCellOrdinates.Add(cell_2);
+        return exitDoorCellOrdinates;
     }
 }
