@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class LevelBuilder : MonoBehaviour
@@ -96,22 +97,56 @@ public class LevelBuilder : MonoBehaviour
 
     private List<CellOrdinate> GetExitDoorCellOrdinates()
     {
-        CellOrdinate cell_1 = new CellOrdinate(this.levelInfo.exitDoorCellOrdinate.x, this.levelInfo.exitDoorCellOrdinate.y);
+        CellOrdinate cell_1 = Parse2CellOrdinate(this.levelInfo.exitDoorCellIndex);
+        if (!this.isEdgeCell(cell_1))
+        {
+            throw new Exception("Exit door cell index must be on the edge of the ground!");
+        }
 
-        bool isCell1LeftOrTop = this.levelInfo.exitDoorType == ExitDoorType.Horizontal ?
-                                this.levelInfo.exitDoorCellOrdinate.x == 0 :
-                                this.levelInfo.exitDoorCellOrdinate.y == 0;
+        CellOrdinate cell_2;
 
-        int offset = isCell1LeftOrTop ? -1 : 1;
+        if (this.isCornerCell(cell_1))
+        {
+            cell_2 = this.GetOtherExitDoorCellOrdinate(cell_1, this.levelInfo.exitDoorType);
+        }
+        else
+        {
+            ExitDoorType exitDoorType = ExitDoorType.Horizontal;
+            if (cell_1.x == 0 || cell_1.x == this.widthSteps - 1)
+            {
+                exitDoorType = ExitDoorType.Vertical;
+            }
+            cell_2 = this.GetOtherExitDoorCellOrdinate(cell_1, exitDoorType);
+        }
 
-        //get the other cell, depending on the exit door type, and the cell_1
-        CellOrdinate cell_2 = this.levelInfo.exitDoorType == ExitDoorType.Horizontal ?
-                                new CellOrdinate(this.levelInfo.exitDoorCellOrdinate.x, this.levelInfo.exitDoorCellOrdinate.y + offset) :
-                                new CellOrdinate(this.levelInfo.exitDoorCellOrdinate.x + offset, this.levelInfo.exitDoorCellOrdinate.y);
-                                
         List<CellOrdinate> exitDoorCellOrdinates = new List<CellOrdinate>();
         exitDoorCellOrdinates.Add(cell_1);
         exitDoorCellOrdinates.Add(cell_2);
         return exitDoorCellOrdinates;
+    }
+
+    private CellOrdinate GetOtherExitDoorCellOrdinate(CellOrdinate cell, ExitDoorType exitDoorType)
+    {   
+        bool isCell1LeftOrTop = cell.x == 0 || cell.y == 0;
+        int offset = isCell1LeftOrTop ? -1 : 1;
+
+        CellOrdinate otherCell = exitDoorType == ExitDoorType.Horizontal ?
+                new CellOrdinate(cell.x, cell.y + offset) :
+                new CellOrdinate(cell.x + offset, cell.y);
+
+        return otherCell;
+    }
+
+    private bool isCornerCell(CellOrdinate cell)
+    {
+        return cell.x == 0 && cell.y == 0 ||
+               cell.x == 0 && cell.y == this.heightSteps - 1 ||
+               cell.x == this.widthSteps - 1 && cell.y == 0 ||
+               cell.x == this.widthSteps - 1 && cell.y == this.heightSteps - 1;
+    }
+
+    private bool isEdgeCell(CellOrdinate cell)
+    {
+        return cell.x == 0 || cell.x == this.widthSteps - 1 || cell.y == 0 || cell.y == this.heightSteps - 1;
     }
 }

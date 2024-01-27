@@ -13,6 +13,6 @@ public class LevelInfo : ScriptableObject
     public Vector2Int playerStartPosition;
     public Vector2Int enemyStartPosition;
     public List<Vector2Int> walls;
-    public Vector2Int exitDoorCellOrdinate;
+    public int exitDoorCellIndex;
     public ExitDoorType exitDoorType;
 }

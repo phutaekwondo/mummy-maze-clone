@@ -29,3 +29,5 @@ MonoBehaviour:
   - {x: 20, y: 26}
   - {x: 26, y: 32}
   - {x: 27, y: 33}
+  exitDoorCellIndex: 6
+  exitDoorType: 0
