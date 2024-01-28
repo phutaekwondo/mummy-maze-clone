@@ -1,48 +1,42 @@
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using System.Collections.Generic;
 
-public class EnemySequenceMovesMaker : MonoBehaviour
+public class EnemySequenceMovesMaker
 {
     private Enemy controlledEnemy;
     private EnemyMoveFinder enemyMoveFinder;
     private int moveLimitEachTurn = 2;
     private int moveCount = 0;
 
-    protected void Awake()
+    public EnemySequenceMovesMaker(Enemy controlledEnemy): base()
     {
-        this.enemyMoveFinder = this.GetComponent<EnemyMoveFinder>();
-        this.controlledEnemy = this.GetComponent<Enemy>();
+        this.controlledEnemy = controlledEnemy;
+        this.enemyMoveFinder = new EnemyMoveFinder();
     }
 
     public void StartSequenceMoves(CellOrdinate playerCellOrdinate, Level level, Action onComplete = null)
     {
         this.moveCount = 0;
-        this.RecursiveMakeMove(playerCellOrdinate, level, onComplete);
+        List<EnumMoveDirection> sequenceMoves = this.enemyMoveFinder.GetSequenceMoves(this.moveLimitEachTurn, this.controlledEnemy.GetCellOrdinate(), playerCellOrdinate, level);
+        this.RecursiveMakeMove(sequenceMoves, playerCellOrdinate, onComplete);
     }
 
-    private void RecursiveMakeMove(CellOrdinate playerCellOrdinate, Level level, Action onComplete = null)
+    public void RecursiveMakeMove(List<EnumMoveDirection> leftMoves, CellOrdinate playerCellOrdinate, Action onComplete = null)
     {
-        if (this.moveCount >= this.moveLimitEachTurn)
+        if (leftMoves.Count == 0)
         {
             onComplete?.Invoke();
             return;
         }
 
-        EnumMoveDirection bestMove = this.enemyMoveFinder.GetEnemyBestMove(this.controlledEnemy.GetCellOrdinate(), playerCellOrdinate, level);
+        EnumMoveDirection nextMove = leftMoves[0];
+        leftMoves.RemoveAt(0);
 
-        if (bestMove == EnumMoveDirection.None)
-        {
-            this.controlledEnemy.ActBlocked(this.enemyMoveFinder.GetEnemyEnemyNoWallBestMove(this.controlledEnemy.GetCellOrdinate(), playerCellOrdinate));
-            onComplete?.Invoke();
-            return;
-        }
-        else 
-        {
-            this.controlledEnemy.Move(bestMove, () => {
-                this.moveCount++;
-                this.RecursiveMakeMove(playerCellOrdinate, level, onComplete);
-            });
-        }
+        this.controlledEnemy.Move(nextMove, () => {
+            this.moveCount++;
+            this.RecursiveMakeMove(leftMoves, playerCellOrdinate, onComplete);
+        });
     }
 }

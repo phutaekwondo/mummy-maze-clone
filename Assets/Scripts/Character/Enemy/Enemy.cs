@@ -8,10 +8,9 @@ public class Enemy : Character
 {
     private EnemySequenceMovesMaker enemySequenceMovesMaker;
 
-    protected override void Awake()
+    Enemy(): base()
     {
-        base.Awake();
-        this.enemySequenceMovesMaker = this.GetComponent<EnemySequenceMovesMaker>();
+        this.enemySequenceMovesMaker = new EnemySequenceMovesMaker(this);
     }
 
     public void MakeBestMove(CellOrdinate playerCellOrdinate, Level level, Action onMoveComplete = null) 
