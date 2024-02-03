@@ -19,7 +19,11 @@ public class EnemySequenceMovesMaker
     public void StartSequenceMoves(CellOrdinate playerCellOrdinate, Level level, Action onComplete = null)
     {
         this.moveCount = 0;
-        List<EnumMoveDirection> sequenceMoves = this.enemyMoveFinder.GetSequenceMoves(this.moveLimitEachTurn, this.controlledEnemy.GetCellOrdinate(), playerCellOrdinate, level);
+        List<EnumMoveDirection> sequenceMoves = this.enemyMoveFinder.GetSequenceMoves(
+            this.moveLimitEachTurn, 
+            this.controlledEnemy.GetCellOrdinate(), 
+            playerCellOrdinate, 
+            level);
         this.RecursiveMakeMove(sequenceMoves, playerCellOrdinate, onComplete);
     }
 
