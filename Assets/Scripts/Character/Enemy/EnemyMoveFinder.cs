@@ -21,9 +21,11 @@ public class EnemyMoveFinder
         float closestDistance = this.GetPlayerDistanceAfterSequenceMoves(possibleSequences[closestToPlayerIndex], enemyCellOrdinate, playerCellOrdinate);
         for (int i = 1; i < possibleSequences.Count; i++)
         {
-            if (this.GetPlayerDistanceAfterSequenceMoves(possibleSequences[i], enemyCellOrdinate, playerCellOrdinate) < this.GetPlayerDistanceAfterSequenceMoves(possibleSequences[closestToPlayerIndex], enemyCellOrdinate, playerCellOrdinate))
+            float currentDistance = this.GetPlayerDistanceAfterSequenceMoves(possibleSequences[i], enemyCellOrdinate, playerCellOrdinate);
+            if (currentDistance < closestDistance)
             {
                 closestToPlayerIndex = i;
+                closestDistance = currentDistance;
             }
         }
 
