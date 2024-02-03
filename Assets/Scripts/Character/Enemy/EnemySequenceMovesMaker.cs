@@ -22,7 +22,24 @@ public class EnemySequenceMovesMaker
             this.controlledEnemy.GetCellOrdinate(), 
             playerCellOrdinate, 
             level);
-        this.RecursiveMakeMove(sequenceMoves, playerCellOrdinate, onComplete);
+        
+        int moveCount = sequenceMoves.Count;
+
+        Action onMovesComplete = () => {
+            if (moveCount < this.moveLimitEachTurn)
+            {
+                EnumMoveDirection lookToPlayerDirection = this.enemyMoveFinder.GetLookAtPlayerDirection(
+                    this.controlledEnemy.GetCellOrdinate(), 
+                    playerCellOrdinate
+                );
+                if (lookToPlayerDirection != EnumMoveDirection.None)
+                {
+                    this.controlledEnemy.ActBlocked(lookToPlayerDirection);
+                }
+            }
+            onComplete?.Invoke();
+        };
+        this.RecursiveMakeMove(sequenceMoves, playerCellOrdinate, onMovesComplete);
     }
 
     public void RecursiveMakeMove(List<EnumMoveDirection> leftMoves, CellOrdinate playerCellOrdinate, Action onComplete = null)
