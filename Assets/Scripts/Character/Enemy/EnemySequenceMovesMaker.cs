@@ -8,7 +8,6 @@ public class EnemySequenceMovesMaker
     private Enemy controlledEnemy;
     private EnemyMoveFinder enemyMoveFinder;
     private int moveLimitEachTurn = 2;
-    private int moveCount = 0;
 
     public EnemySequenceMovesMaker(Enemy controlledEnemy): base()
     {
@@ -18,7 +17,6 @@ public class EnemySequenceMovesMaker
 
     public void StartSequenceMoves(CellOrdinate playerCellOrdinate, Level level, Action onComplete = null)
     {
-        this.moveCount = 0;
         List<EnumMoveDirection> sequenceMoves = this.enemyMoveFinder.GetSequenceMoves(
             this.moveLimitEachTurn, 
             this.controlledEnemy.GetCellOrdinate(), 
@@ -39,7 +37,6 @@ public class EnemySequenceMovesMaker
         leftMoves.RemoveAt(0);
 
         this.controlledEnemy.Move(nextMove, () => {
-            this.moveCount++;
             this.RecursiveMakeMove(leftMoves, playerCellOrdinate, onComplete);
         });
     }
