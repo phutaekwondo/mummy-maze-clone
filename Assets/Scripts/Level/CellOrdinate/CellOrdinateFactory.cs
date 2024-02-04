@@ -2,7 +2,6 @@ using System;
 
 public class CellOrdinateFactory
 {
-    //make this singleton
     private static CellOrdinateFactory instance;
     public static CellOrdinateFactory Instance
     {
@@ -16,7 +15,7 @@ public class CellOrdinateFactory
         }
     }
 
-    public CellOrdinate GetCellOrdinate(Level level, int cellIndex)
+    public CellOrdinate GetCellOrdinateFromCellIndex(Level level, int cellIndex)
     {
         return Parse2CellOrdinate(level.GetGroundSize(), level.GetGroundSize(), cellIndex);
     }

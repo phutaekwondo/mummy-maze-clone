@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("You lose");
         }
+        if (resultType == ResultType.Win)
+        {
+            Debug.Log("You win");
+        }
     }
 
     private void EnterState(GameState state)

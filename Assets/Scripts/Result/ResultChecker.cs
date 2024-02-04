@@ -6,14 +6,19 @@ public class ResultChecker
         {
             return ResultType.Lose;
         }
+        if (IsReachGoal(level, playerCellOrdinate))
+        {
+            return ResultType.Win;
+        }
         else
         {
             return ResultType.None;
         }
     }
 
-    private bool IsAtExitGate(Level level, CellOrdinate cellOrdinate)
+    private bool IsReachGoal(Level level, CellOrdinate cellOrdinate)
     {
-        return false;
+        CellOrdinate exitGateCellOrdinate = level.GetGoalCellOrdinate();
+        return cellOrdinate.Equals(exitGateCellOrdinate);
     }
 }

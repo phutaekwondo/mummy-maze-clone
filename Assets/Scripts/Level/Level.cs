@@ -10,6 +10,11 @@ public class Level : MonoBehaviour
         this.levelBuilder.BuildLevel(this.levelInfo);
     }
 
+    public CellOrdinate GetGoalCellOrdinate() 
+    {
+        return CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(this, this.levelInfo.exitDoorCellIndex);
+    }
+
     public int GetGroundSize() 
     {
         return (int)this.levelInfo.groundSize;
