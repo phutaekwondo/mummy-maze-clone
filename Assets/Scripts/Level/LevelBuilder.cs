@@ -87,6 +87,7 @@ public class LevelBuilder : MonoBehaviour
         newWall.SetWall(cell_1, cell_2);
     }
 
+    //TODO: use CellOrdinateFactory
     private CellOrdinate Parse2CellOrdinate(int cellIndex) 
     {
         int xOrdinate = cellIndex % Convert.ToInt32(this.levelInfo.groundSize);
