@@ -38,6 +38,17 @@ public class Ground : MonoBehaviour
         this.SetMatrialStepsSize();
     }
 
+    //get width and height size
+    public uint GetWidthSize()
+    {
+        return this.widthSize;
+    }
+
+    public uint GetHeightSize()
+    {
+        return this.heightSize;
+    }
+
     public Vector3 GetCellSize()
     {
         float scaledPlaneSizeX = PLANE_SIZE * this.gameObject.transform.localScale.x;

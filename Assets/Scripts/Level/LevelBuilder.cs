@@ -32,8 +32,9 @@ public class LevelBuilder : MonoBehaviour
     {
         for(int i = 0; i < this.levelInfo.walls.Count; i++)
         {
-            CellOrdinate cell_1 = this.Parse2CellOrdinate(this.levelInfo.walls[i].x);
-            CellOrdinate cell_2 = this.Parse2CellOrdinate(this.levelInfo.walls[i].y);
+            CellOrdinate cell_1 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(this.ground, this.levelInfo.walls[i].x);
+            CellOrdinate cell_2 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(this.ground, this.levelInfo.walls[i].y);
+
 
             this.SpawnAWall(cell_1, cell_2);
         }
@@ -88,17 +89,9 @@ public class LevelBuilder : MonoBehaviour
         newWall.SetWall(cell_1, cell_2);
     }
 
-    //TODO: use CellOrdinateFactory
-    private CellOrdinate Parse2CellOrdinate(int cellIndex) 
-    {
-        int xOrdinate = cellIndex % Convert.ToInt32(this.levelInfo.groundSize);
-        int zOrdinate = cellIndex / Convert.ToInt32(this.levelInfo.groundSize);
-        return new CellOrdinate(xOrdinate, zOrdinate);
-    }
-
     private List<CellOrdinate> GetExitDoorCellOrdinates()
     {
-        CellOrdinate cell_1 = Parse2CellOrdinate(this.levelInfo.exitDoorCellIndex);
+        CellOrdinate cell_1 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(this.ground, this.levelInfo.exitDoorCellIndex);
         if (!this.isEdgeCell(cell_1))
         {
             throw new Exception("Exit door cell index must be on the edge of the ground!");
