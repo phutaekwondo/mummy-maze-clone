@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: do this class need to be a MonoBehaviour?
 public class LevelBuilder : MonoBehaviour
 {
     [SerializeField] private Ground ground;
