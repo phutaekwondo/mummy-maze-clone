@@ -15,11 +15,11 @@ public class GameManager : MonoBehaviour
 
     private GameState state = GameState.Idle;
     private ResultChecker resultChecker;
-    private InputHandler inputHandler;
+    private InputGetter inputGetter;
 
     public GameManager()
     {
-        this.inputHandler = new InputHandler();
+        this.inputGetter = new InputGetter();
         this.resultChecker = new ResultChecker();
     }
 
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         switch(this.state) 
         {
             case GameState.Idle: 
-                EnumPlayerInput playerInput = this.inputHandler.GetPlayerInput();
+                EnumPlayerInput playerInput = this.inputGetter.GetPlayerInput();
                 this.HandlePlayerInput(playerInput);
                 break;
             default:
