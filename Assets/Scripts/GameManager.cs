@@ -9,16 +9,17 @@ public class GameManager : MonoBehaviour
         EnemyMoving,
     };
 
-    [SerializeField] private InputHandler inputHanlder;
     [SerializeField] private Level level;
     [SerializeField] private Player player;
     [SerializeField] private Enemy enemy;
 
     private GameState state = GameState.Idle;
     private ResultChecker resultChecker;
+    private InputHandler inputHandler;
 
     public GameManager()
     {
+        this.inputHandler = new InputHandler();
         this.resultChecker = new ResultChecker();
     }
 
@@ -65,7 +66,7 @@ public class GameManager : MonoBehaviour
         switch(this.state) 
         {
             case GameState.Idle: 
-                EnumPlayerInput playerInput = this.inputHanlder.GetPlayerInput();
+                EnumPlayerInput playerInput = this.inputHandler.GetPlayerInput();
                 this.HandlePlayerInput(playerInput);
                 break;
             default:

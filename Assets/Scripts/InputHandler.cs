@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class InputHandler : MonoBehaviour
+public class InputHandler
 {
     Dictionary<KeyCode, EnumPlayerInput> keyMap = new Dictionary<KeyCode, EnumPlayerInput>();
 
-    private void Awake() 
+    public InputHandler()
     {
         this.keyMap[KeyCode.UpArrow] = EnumPlayerInput.MoveUp;
         this.keyMap[KeyCode.LeftArrow] = EnumPlayerInput.MoveLeft;
