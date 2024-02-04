@@ -1,5 +1,4 @@
 using System;
-using DigitalRuby.Tween;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +15,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Enemy enemy;
 
     private GameState state = GameState.Idle;
+    private ResultChecker resultChecker;
+
+    public GameManager()
+    {
+        this.resultChecker = new ResultChecker();
+    }
 
     private void Start() 
     {
@@ -27,6 +32,15 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         this.HandleInput();
+
+        //test
+        //TODO: implement the flow to check the result
+        //after each move of player and enemy
+        ResultType resultType = this.resultChecker.CheckResult(this.level, this.player.GetCellOrdinate(), this.enemy.GetCellOrdinate());
+        if (resultType == ResultType.Lose)
+        {
+            Debug.Log("You lose");
+        }
     }
 
     private void EnterState(GameState state)

@@ -10,6 +10,11 @@ public class Level : MonoBehaviour
         this.levelBuilder.BuildLevel(this.levelInfo);
     }
 
+    public int GetGroundSize() 
+    {
+        return (int)this.levelInfo.groundSize;
+    }
+
     public CellOrdinate GetPlayerStartPosition() 
     {
         return new CellOrdinate(this.levelInfo.playerStartPosition.x, this.levelInfo.playerStartPosition.y);
