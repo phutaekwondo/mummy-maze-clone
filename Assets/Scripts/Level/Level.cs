@@ -12,7 +12,7 @@ public class Level : MonoBehaviour
 
     public CellOrdinate GetGoalCellOrdinate() 
     {
-        return CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(this, this.levelInfo.exitDoorCellIndex);
+        return CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex((int)this.levelInfo.groundSize, this.levelInfo.exitDoorCellIndex);
     }
 
     public int GetGroundSize() 

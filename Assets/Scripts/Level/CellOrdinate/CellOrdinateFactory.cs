@@ -15,14 +15,9 @@ public class CellOrdinateFactory
         }
     }
 
-    public CellOrdinate GetCellOrdinateFromCellIndex(Ground ground, int cellIndex)
+    public CellOrdinate GetCellOrdinateFromCellIndex(int groundSquareSize, int cellIndex)
     {
-        return Parse2CellOrdinate((int)ground.GetWidthSize(), (int)ground.GetHeightSize(), cellIndex);
-    }
-
-    public CellOrdinate GetCellOrdinateFromCellIndex(Level level, int cellIndex)
-    {
-        return Parse2CellOrdinate(level.GetGroundSize(), level.GetGroundSize(), cellIndex);
+        return Parse2CellOrdinate(groundSquareSize, groundSquareSize, cellIndex);
     }
 
     private CellOrdinate Parse2CellOrdinate(int groundWidth,int groundHeight, int cellIndex) 
