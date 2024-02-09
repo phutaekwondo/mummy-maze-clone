@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class InputGetter
+public class PlayerInputGetter
 {
     Dictionary<KeyCode, EnumPlayerInput> keyMap = new Dictionary<KeyCode, EnumPlayerInput>();
 
-    public InputGetter()
+    public PlayerInputGetter()
     {
         this.keyMap[KeyCode.UpArrow] = EnumPlayerInput.MoveUp;
         this.keyMap[KeyCode.LeftArrow] = EnumPlayerInput.MoveLeft;

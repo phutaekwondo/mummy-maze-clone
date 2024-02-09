@@ -15,12 +15,14 @@ public class GameManager : MonoBehaviour
 
     private GameState state = GameState.Idle;
     private ResultChecker resultChecker;
-    private InputGetter inputGetter;
+    private PlayerInputGetter inputGetter;
+    private GameStateMachine gameStateMachine;
 
     public GameManager()
     {
-        this.inputGetter = new InputGetter();
+        this.inputGetter = new PlayerInputGetter();
         this.resultChecker = new ResultChecker();
+        this.gameStateMachine = new GameStateMachine(this);
     }
 
     private void Start() 
@@ -32,6 +34,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        this.gameStateMachine.Update();
+
+
+
+
         this.HandleInput();
 
         //test
