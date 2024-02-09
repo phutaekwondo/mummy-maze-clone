@@ -1,5 +1,3 @@
-using System;
-
 public class EnemyMoveGameState : CharacterMoveGameState
 {
     public EnemyMoveGameState(GameManager gameManager) : base(gameManager)
