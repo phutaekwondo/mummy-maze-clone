@@ -1,27 +1,16 @@
 using System;
 
-public class EnemyMoveGameState : GameState
+public class EnemyMoveGameState : CharacterMoveGameState
 {
-    private bool isEnemyMoveComplete = false;
     public EnemyMoveGameState(GameManager gameManager) : base(gameManager)
     {
+        this.defaultNextState = new IdleGameState(gameManager);
     }
 
     public override void Enter()
     {
-        this.isEnemyMoveComplete = false;
-        Action onEnemyMoveComplete = () => this.isEnemyMoveComplete = true;
-        this.gameManager.MoveEnemy(onEnemyMoveComplete);
-    }
-
-    public override IGameState Update()
-    {
-        if (this.isEnemyMoveComplete)
-        {
-            return new IdleGameState(this.gameManager);
-        }
-
-        return this;
+        base.Enter();
+        this.gameManager.MoveEnemy(this.onMoveComplete);
     }
 
     public override void Exit()

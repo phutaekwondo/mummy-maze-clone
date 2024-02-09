@@ -8,10 +8,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Enemy enemy;
 
     private GameStateMachine gameStateMachine;
+    private ResultChecker resultChecker;
 
     public GameManager()
     {
         this.gameStateMachine = new GameStateMachine(this);
+        this.resultChecker = new ResultChecker();
     }
 
     private void Start() 
@@ -43,5 +45,10 @@ public class GameManager : MonoBehaviour
         {
             this.player.Move(moveDirection, onComplete);
         }
+    }
+
+    public ResultType CheckResult()
+    {
+        return this.resultChecker.CheckResult(this.level, this.player.GetCellOrdinate(), this.enemy.GetCellOrdinate());
     }
 }
