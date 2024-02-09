@@ -1,29 +1,29 @@
-public class IdleGameState : IGameState
+public class IdleGameState : GameState
 {
     private PlayerInputGetter playerInputGetter;
-    public IdleGameState()
+    public IdleGameState(GameManager gameManager) : base(gameManager)
     {
         this.playerInputGetter = new PlayerInputGetter();
     }
 
-    public void Enter()
+    public override void Enter()
     {
     }
 
-    public IGameState Update()
+    public override IGameState Update()
     {
         EnumPlayerInput playerInput = playerInputGetter.GetPlayerInput();
         if (playerInput != EnumPlayerInput.None)
         {
             EnumMoveDirection playMoveDirection = this.GetMoveDirection(playerInput);
-            IGameState playerMoveState = new PlayerMoveState(playMoveDirection);
+            IGameState playerMoveState = new PlayerMoveState(this.gameManager, playMoveDirection);
             return playerMoveState;
         }
 
         return this;
     }
 
-    public void Exit()
+    public override void Exit()
     {
     }
 

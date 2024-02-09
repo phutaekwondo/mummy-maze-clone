@@ -1,15 +1,6 @@
-public class CharacterMoveGameState : IGameState
+public abstract class CharacterMoveGameState : GameState
 {
-    public virtual void Enter()
-    {
-    }
-
-    public virtual IGameState Update()
-    {
-        return this;
-    }
-
-    public virtual void Exit()
+    public CharacterMoveGameState(GameManager gameManager) : base(gameManager)
     {
     }
 }

@@ -6,7 +6,7 @@ public class GameStateMachine
     public GameStateMachine(GameManager gameManager)
     {
         this.gameManager = gameManager;
-        this.currentState = new IdleGameState();
+        this.currentState = new IdleGameState(gameManager);
     }
 
     public void TransitionTo(IGameState newState)
