@@ -3,12 +3,19 @@ using UnityEngine;
 public class GroundMouseDetect : MonoBehaviour
 {
     [SerializeField] private Ground ground;
+    private CellOrdinateCalculator cellOrdinateCalculator;
+
+    GroundMouseDetect()
+    {
+        this.cellOrdinateCalculator = new CellOrdinateCalculator();
+    }
 
     private void Update() 
     {
         Vector3 mouseGroundPosition = this.GetMouseOnGround();
+        CellOrdinate cellOrdinate = this.cellOrdinateCalculator.FromPosition(this.ground, mouseGroundPosition);
 
-        Debug.Log("Mouse position: " + mouseGroundPosition);
+        Debug.Log("Cell Ordinate: " + cellOrdinate.x + ", " + cellOrdinate.y);
     }
 
     private Vector3 GetMouseOnGround()
