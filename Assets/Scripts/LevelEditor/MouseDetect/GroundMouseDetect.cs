@@ -20,9 +20,4 @@ public class GroundMouseDetect : MonoBehaviour
 
         return ray.GetPoint(distance);
     }
-
-    private void OnMouseEnterCell(CellOrdinate cellOrdinate)
-    {
-        // Debug.Log("Cell clicked: " + cellOrdinate.x + ", " + cellOrdinate.y);
-    }
 }
