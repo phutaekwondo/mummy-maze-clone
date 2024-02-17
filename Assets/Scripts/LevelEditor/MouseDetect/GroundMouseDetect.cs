@@ -4,6 +4,7 @@ public class GroundMouseDetect : MonoBehaviour
 {
     [SerializeField] private Ground ground;
     private CellOrdinateCalculator cellOrdinateCalculator;
+    private CellOrdinate currentCellOrdinate;
 
     GroundMouseDetect()
     {
@@ -12,8 +13,30 @@ public class GroundMouseDetect : MonoBehaviour
 
     private void Update() 
     {
+        this.CheckMouseOnGround();
+    }
+
+    private void CheckMouseOnGround()
+    {
         Vector3 mouseGroundPosition = this.GetMouseOnGround();
         CellOrdinate cellOrdinate = this.cellOrdinateCalculator.FromPosition(this.ground, mouseGroundPosition);
+
+        if (cellOrdinate == null)
+        {
+            return;
+        }
+
+        if (this.currentCellOrdinate?.Equals(cellOrdinate) == true)
+        {
+            return;
+        }
+
+        this.OnCellOrdinateChanged(cellOrdinate);
+    }
+
+    private void OnCellOrdinateChanged(CellOrdinate cellOrdinate)
+    {
+        this.currentCellOrdinate = cellOrdinate;
 
         Debug.Log("Cell Ordinate: " + cellOrdinate.x + ", " + cellOrdinate.y);
     }

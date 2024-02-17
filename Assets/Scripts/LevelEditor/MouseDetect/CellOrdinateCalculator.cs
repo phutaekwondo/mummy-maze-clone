@@ -16,6 +16,11 @@ public class CellOrdinateCalculator
         float x = (position.x - cornerX) / cellSize.x;
         float y = (cornerZ - position.z) / cellSize.z;
 
+        if (x < 0 || x >= groundWidth || y < 0 || y >= groundLength)
+        {
+            return null;
+        }
+
         return new CellOrdinate((int)x, (int)y);
     }
 }
