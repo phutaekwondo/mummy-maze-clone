@@ -9,7 +9,6 @@ public class CellTransformGetter : MonoBehaviour
     private void Awake() 
     {
         CellTransformGetter.Instance = this;
-        DontDestroyOnLoad(this);
     }
 
     public Vector3 GetCellPosition(CellOrdinate cellOrdinate) 

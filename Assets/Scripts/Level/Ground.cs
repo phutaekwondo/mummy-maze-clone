@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Ground : MonoBehaviour
 {
-    const float PLANE_SIZE = 10;
     [SerializeField] private Material groundMaterial;
     private uint widthSize = 5;
     private uint heightSize = 5;
@@ -15,6 +14,7 @@ public class Ground : MonoBehaviour
     
     public Vector3 GetCellPosition(int x, int y)
     {
+        float PLANE_SIZE = UnityDefaultParameter.DEFAULT_PLANE_SIZE;
         float scaledPlaneSizeX = PLANE_SIZE * this.gameObject.transform.localScale.x;
         float scaledPlaneSizeZ = PLANE_SIZE * this.gameObject.transform.localScale.z;
 
@@ -51,6 +51,7 @@ public class Ground : MonoBehaviour
 
     public Vector3 GetCellSize()
     {
+        float PLANE_SIZE = UnityDefaultParameter.DEFAULT_PLANE_SIZE;
         float scaledPlaneSizeX = PLANE_SIZE * this.gameObject.transform.localScale.x;
         float scaledPlaneSizeZ = PLANE_SIZE * this.gameObject.transform.localScale.z;
 

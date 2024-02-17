@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    const float DEFAULT_CUBE_SIZE = 1; 
     [SerializeField] float thickness = 0.2f;
     private CellOrdinate blockedCell_1;
     private CellOrdinate blockedCell_2;
@@ -27,12 +26,17 @@ public class Wall : MonoBehaviour
 
     private void SetSize()
     {
+        float DEFAULT_SIZE = UnityDefaultParameter.DEFAULT_CUBE_SIZE;
         Vector3 cellSize = CellTransformGetter.Instance.GetCellSize();
         float scaleX = this.gameObject.transform.forward.x > this.gameObject.transform.forward.z ?
                         cellSize.z :
                         cellSize.x;
         
-        Vector3 newScale = new Vector3(scaleX, this.gameObject.transform.localScale.y, this.thickness);
+        scaleX = scaleX / DEFAULT_SIZE;
+        float scaleY = this.gameObject.transform.localScale.y / DEFAULT_SIZE;
+        float scaleZ = this.thickness / DEFAULT_SIZE;
+        
+        Vector3 newScale = new Vector3(scaleX, scaleY, scaleZ);
 
         this.gameObject.transform.localScale = newScale;
     }
