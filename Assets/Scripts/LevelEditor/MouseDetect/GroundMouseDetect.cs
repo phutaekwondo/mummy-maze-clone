@@ -3,27 +3,26 @@ using UnityEngine;
 public class GroundMouseDetect : MonoBehaviour
 {
     [SerializeField] private Ground ground;
-    [SerializeField] private GameObject cellMouseDetectorsParent;
-    [SerializeField] private GameObject cellMouseDetectorPrefab;
 
-    private void Start() 
+    private void Update() 
     {
-        this.SpawnCellMouseDetectors();
+        Vector3 mouseGroundPosition = this.GetMouseOnGround();
+
+        Debug.Log("Mouse position: " + mouseGroundPosition);
     }
 
-    private void SpawnCellMouseDetectors()
+    private Vector3 GetMouseOnGround()
     {
-        int widthSize = (int)this.ground.GetWidthSize();
-        int heightSize = (int)this.ground.GetHeightSize();
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane plane = new Plane(Vector3.up, this.ground.transform.position);
 
-        for (int x = 0; x < widthSize; x++)
-        {
-            for (int y = 0; y < heightSize; y++)
-            {
-                GameObject cellMouseDetector = Instantiate(this.cellMouseDetectorPrefab, this.cellMouseDetectorsParent.transform);
-                CellMouseDetector cellMouseDetectorComponent = cellMouseDetector.GetComponent<CellMouseDetector>();
-                cellMouseDetectorComponent.SetCell(new CellOrdinate(x, y));
-            }
-        }
+        plane.Raycast(ray, out float distance);
+
+        return ray.GetPoint(distance);
+    }
+
+    private void OnMouseEnterCell(CellOrdinate cellOrdinate)
+    {
+        // Debug.Log("Cell clicked: " + cellOrdinate.x + ", " + cellOrdinate.y);
     }
 }
