@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GroundMouseDetect : MonoBehaviour
@@ -5,10 +6,16 @@ public class GroundMouseDetect : MonoBehaviour
     [SerializeField] private Ground ground;
     private CellOrdinateCalculator cellOrdinateCalculator;
     private CellOrdinate currentCellOrdinate;
+    Action<CellOrdinate> onCellOrdinateChanged;
 
     GroundMouseDetect()
     {
         this.cellOrdinateCalculator = new CellOrdinateCalculator();
+    }
+
+    public void SetOnCellOrdinateChanged(Action<CellOrdinate> onCellOrdinateChanged)
+    {
+        this.onCellOrdinateChanged = onCellOrdinateChanged;
     }
 
     private void Update() 
@@ -21,12 +28,12 @@ public class GroundMouseDetect : MonoBehaviour
         Vector3 mouseGroundPosition = this.GetMouseOnGround();
         CellOrdinate cellOrdinate = this.cellOrdinateCalculator.FromPosition(this.ground, mouseGroundPosition);
 
-        if (cellOrdinate == null)
+        if (cellOrdinate == null && this.currentCellOrdinate == null)
         {
             return;
         }
 
-        if (this.currentCellOrdinate?.Equals(cellOrdinate) == true)
+        if (cellOrdinate != null && this.currentCellOrdinate?.Equals(cellOrdinate) == true)
         {
             return;
         }
@@ -37,8 +44,7 @@ public class GroundMouseDetect : MonoBehaviour
     private void OnCellOrdinateChanged(CellOrdinate cellOrdinate)
     {
         this.currentCellOrdinate = cellOrdinate;
-
-        Debug.Log("Cell Ordinate: " + cellOrdinate.x + ", " + cellOrdinate.y);
+        this.onCellOrdinateChanged?.Invoke(cellOrdinate);
     }
 
     private Vector3 GetMouseOnGround()
