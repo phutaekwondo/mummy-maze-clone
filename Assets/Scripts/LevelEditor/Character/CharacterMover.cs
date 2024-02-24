@@ -7,6 +7,11 @@ public class CharacterMover : MonoBehaviour
     private bool isFollowingMouse = false;
     public void SetCellOrdinate(CellOrdinate cellOrdinate)
     {
+        if (cellOrdinate == null)
+        {
+            return;
+        }
+
         Vector3 position = CellTransformGetter.Instance.GetCellPosition(cellOrdinate);
         this.gameObject.transform.position = position;
     }
