@@ -9,8 +9,25 @@ public class LevelEditorManager : MonoBehaviour
     private void Start() 
     {
         this.level.BuildLevel();
-        this.playerMover.SetCellOrdinate(this.level.GetPlayerStartPosition());
+        this.SetupPlayer();
+    }
 
-        this.cellTargetManager.RegisterCharacterMover(this.playerMover);
+    private void SetupPlayer()
+    {
+        this.playerMover.SetCellOrdinate(this.level.GetPlayerStartPosition());
+        this.playerMover.onStartBeingHeld = this.OnPlayerStartBeingHeld;
+        this.playerMover.onStopBeingHeld = this.OnPlayerStopBeingHeld;
+    }
+
+    private void OnPlayerStartBeingHeld(LevelEditor.CharacterMover playerMover)
+    {
+        this.cellTargetManager.SetEnable(true);
+        this.cellTargetManager.RegisterCharacterMover(playerMover);
+    }
+
+    private void OnPlayerStopBeingHeld(LevelEditor.CharacterMover playerMover)
+    {
+        this.cellTargetManager.UnregisterCharacterMover();
+        this.cellTargetManager.SetEnable(false);
     }
 }

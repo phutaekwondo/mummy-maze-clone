@@ -17,18 +17,14 @@ public class TargetCellPresent : MonoBehaviour
 
     public void SetCell(CellOrdinate cellOrdinate, Ground ground)
     {
-        if (cellOrdinate != null)
+        if (cellOrdinate == null)
         {
-            this.SetVisible(true);
-            this.SetPosition(cellOrdinate, ground);
+            return;
         }
-        else
-        {
-            this.SetVisible(false);
-        }
+        this.SetPosition(cellOrdinate, ground);
     }
 
-    private void SetVisible(bool visible)
+    public void SetVisible(bool visible)
     {
         this.gameObject.SetActive(visible);
     }

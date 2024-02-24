@@ -9,6 +9,12 @@ public class CellTargetManager : MonoBehaviour
 
     private CharacterMover characterMover;
 
+    public void SetEnable(bool enable)
+    {
+        this.targetCellPresent.SetVisible(enable);
+        this.groundMouseDetect.enable = enable;
+    }
+
     public void RegisterCharacterMover(LevelEditor.CharacterMover characterMover)
     {
         this.characterMover = characterMover;
@@ -23,10 +29,19 @@ public class CellTargetManager : MonoBehaviour
     {
         this.targetCellPresent.SetSize(ground);
         this.groundMouseDetect.SetOnCellOrdinateChanged(this.OnCellOrdinateChanged);
+
+        this.SetEnable(false);
     }
 
     private void OnCellOrdinateChanged(CellOrdinate cellOrdinate)
     {
+        if (cellOrdinate == null)
+        {
+            this.targetCellPresent.SetVisible(false);
+            return;
+        }
+
+        this.targetCellPresent.SetVisible(true);
         this.targetCellPresent.SetCell(cellOrdinate, this.ground);
         if (this.characterMover != null)
         {

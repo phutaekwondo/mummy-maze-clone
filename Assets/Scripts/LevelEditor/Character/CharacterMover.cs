@@ -1,10 +1,15 @@
+using System;
 using UnityEngine;
 
 namespace LevelEditor
 {
 public class CharacterMover : MonoBehaviour
 {
-    private bool isFollowingMouse = false;
+    private bool isBeingHeld = false;
+
+    public Action<CharacterMover> onStartBeingHeld { private get; set; }
+    public Action<CharacterMover> onStopBeingHeld { private get; set; }
+
     public void SetCellOrdinate(CellOrdinate cellOrdinate)
     {
         if (cellOrdinate == null)
@@ -20,38 +25,44 @@ public class CharacterMover : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            this.StopFollowMouse();
+            this.StopBeingHeld();
         }
-
-        Debug.Log("isFollowingMouse: " + this.isFollowingMouse);
     }
 
     private void OnMouseOver() 
     {
         if (Input.GetMouseButtonDown(0))
         {
-            this.StartFollowMouse();
+            this.StartBeingHeld();
         }
     }
 
-    private void StopFollowMouse() 
+    private void StopBeingHeld() 
     {
-        if (!this.isFollowingMouse)
+        if (!this.isBeingHeld)
         {
             return;
         }
 
-        this.isFollowingMouse = false;
+        this.isBeingHeld = false;
+        if (this.onStopBeingHeld != null)
+        {
+            this.onStopBeingHeld(this);
+        }
     }
 
-    private void StartFollowMouse() 
+    private void StartBeingHeld() 
     {
-        if (this.isFollowingMouse)
+        if (this.isBeingHeld)
         {
             return;
         }
 
-        this.isFollowingMouse = true;
+        this.isBeingHeld = true;
+        if (this.onStartBeingHeld != null)
+        {
+            this.onStartBeingHeld(this);
+        }
     }
 }
 }
