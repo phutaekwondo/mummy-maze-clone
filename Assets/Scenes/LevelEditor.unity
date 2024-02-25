@@ -429,6 +429,7 @@ MonoBehaviour:
   editModeButtons:
   - {fileID: 8405918639222958565}
   - {fileID: 1890423879}
+  visibilityChangeableWallPrefab: {fileID: 1499234959133048828, guid: ac804a89947f94740bc8d40b7c51c386, type: 3}
 --- !u!4 &748531994
 Transform:
   m_ObjectHideFlags: 0

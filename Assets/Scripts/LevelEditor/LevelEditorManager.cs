@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelEditorManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class LevelEditorManager : MonoBehaviour
     [SerializeField] private LevelEditor.CharacterMover playerMover;
     [SerializeField] private CellTargetManager cellTargetManager;
     [SerializeField] List<EditModeButton> editModeButtons = new List<EditModeButton>();
+    [SerializeField] GameObject visibilityChangeableWallPrefab;
 
     Dictionary<LevelEditModeType, LevelEditMode> levelEditModes = new Dictionary<LevelEditModeType, LevelEditMode>();
 
@@ -14,8 +16,15 @@ public class LevelEditorManager : MonoBehaviour
     {
         this.SetupScene();
         this.SetupLevelEditModeButtons();
+        this.SetupLevelEditModes();
+    }
 
+    private void SetupLevelEditModes()
+    {
         this.levelEditModes[LevelEditModeType.Characters] = new LevelEditModeCharacters(this.playerMover, this.cellTargetManager);
+        int groundSize = this.level.GetGroundSize();
+        this.levelEditModes[LevelEditModeType.Walls] = new LevelEditModeWalls(groundSize, groundSize, this.visibilityChangeableWallPrefab);
+        this.levelEditModes[LevelEditModeType.Walls].Activate();
     }
 
     private void SetupLevelEditModeButtons()
