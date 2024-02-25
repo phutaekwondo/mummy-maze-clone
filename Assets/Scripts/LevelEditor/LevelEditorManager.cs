@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelEditorManager : MonoBehaviour
@@ -5,29 +6,42 @@ public class LevelEditorManager : MonoBehaviour
     [SerializeField] private Level level;
     [SerializeField] private LevelEditor.CharacterMover playerMover;
     [SerializeField] private CellTargetManager cellTargetManager;
+    [SerializeField] List<EditModeButton> editModeButtons = new List<EditModeButton>();
+
+    Dictionary<LevelEditModeType, LevelEditMode> levelEditModes = new Dictionary<LevelEditModeType, LevelEditMode>();
 
     private void Start() 
     {
+        this.SetupScene();
+        this.SetupLevelEditModeButtons();
+
+        this.levelEditModes[LevelEditModeType.Characters] = new LevelEditModeCharacters(this.playerMover, this.cellTargetManager);
+    }
+
+    private void SetupLevelEditModeButtons()
+    {
+        foreach (var editModeButton in this.editModeButtons)
+        {
+            editModeButton.OnClickedAction = this.OnLevelEditButtonClicked;
+        }
+    }
+
+    private void SetupScene()
+    {
         this.level.BuildLevel();
-        this.SetupPlayer();
-    }
-
-    private void SetupPlayer()
-    {
         this.playerMover.SetCellOrdinate(this.level.GetPlayerStartPosition());
-        this.playerMover.onStartBeingHeld = this.OnPlayerStartBeingHeld;
-        this.playerMover.onStopBeingHeld = this.OnPlayerStopBeingHeld;
     }
 
-    private void OnPlayerStartBeingHeld(LevelEditor.CharacterMover playerMover)
+    private void OnLevelEditButtonClicked(LevelEditModeType levelEditModeType)
     {
-        this.cellTargetManager.SetEnable(true);
-        this.cellTargetManager.RegisterCharacterMover(playerMover);
-    }
+        foreach (var levelEditMode in this.levelEditModes.Values)
+        {
+            levelEditMode.Deactivate();
+        }
 
-    private void OnPlayerStopBeingHeld(LevelEditor.CharacterMover playerMover)
-    {
-        this.cellTargetManager.UnregisterCharacterMover();
-        this.cellTargetManager.SetEnable(false);
+        if (this.levelEditModes.ContainsKey(levelEditModeType))
+        {
+            this.levelEditModes[levelEditModeType].Activate();
+        }
     }
 }
