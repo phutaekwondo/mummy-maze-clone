@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace LevelEditor
@@ -14,24 +12,22 @@ public class WallBehaviour : MonoBehaviour
 
     private bool isInteractable = false;
     private WallBehaviourStateMachine stateMachine;
-    private Dictionary<WallBehaviourStateType, Material> stateMaterials = new Dictionary<WallBehaviourStateType, Material>();
+    private WallBehaviourStateColorize stateColorize;
 
     public WallBehaviour()
     {
         this.stateMachine = new WallBehaviourStateMachine(WallBehaviourStateType.IdleShowing, this.OnStateChanged);
     }
 
-    private void SetupStateMaterialsDict()
-    {
-        this.stateMaterials[WallBehaviourStateType.IdleShowing] = this.defaultMaterial;
-        this.stateMaterials[WallBehaviourStateType.IdleHiding] = this.invisibleMaterial;
-        this.stateMaterials[WallBehaviourStateType.ReadyToCreate] = this.targetToCreateMaterial;
-        this.stateMaterials[WallBehaviourStateType.ReadyToRemove] = this.targetToDestroyMaterial;
-    }
-
     private void Start() 
     {
-        this.SetupStateMaterialsDict();
+        this.stateColorize = new WallBehaviourStateColorize(
+            this.wallRenderer,
+            this.defaultMaterial,
+            this.invisibleMaterial,
+            this.targetToCreateMaterial,
+            this.targetToDestroyMaterial
+        );
     }
 
     private void OnMouseOver()
@@ -56,15 +52,10 @@ public class WallBehaviour : MonoBehaviour
         //TODO: set to default material
     }
 
-    private void ChangeMaterial(WallBehaviourStateType newState)
-    {
-        this.wallRenderer.sharedMaterial = this.stateMaterials[newState];
-    }
-
     private void OnStateChanged(WallBehaviourStateType newState)
     {
         Debug.Log("change to new state " + newState);
-        this.ChangeMaterial(newState);
+        this.stateColorize.SetState(newState);
     }
 }
 }
