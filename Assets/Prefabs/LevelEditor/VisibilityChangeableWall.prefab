@@ -67,27 +67,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: VisibilityChangeableWall
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4778104951832624531, guid: 1a46a608d49843e4384a535ecb019c68, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a46a608d49843e4384a535ecb019c68, type: 3}
 --- !u!1 &1499234959133048828 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4778104951832624529, guid: 1a46a608d49843e4384a535ecb019c68, type: 3}
   m_PrefabInstance: {fileID: 6233377037990249069}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6101487745890470156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499234959133048828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68ee77fab6eaa83428c3bcdb1d9e5d79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thickness: 0.2
 --- !u!65 &6806570017184947536
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -113,3 +99,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed9e7cd614052748aea91f993702827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wallRenderer: {fileID: 1499234959690928802}
+  defaultMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  invisibleMaterial: {fileID: 2100000, guid: ed313a9ce4acbca41b2960ba800b1048, type: 2}
+  targetToCreateMaterial: {fileID: 2100000, guid: 2ef1457c90d5fcf4597ee12dbfce0645, type: 2}
+  targetToDestroyMaterial: {fileID: 2100000, guid: ba9024b87c71b40448c4a765c6404607, type: 2}
+--- !u!23 &1499234959690928802 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4778104951325184207, guid: 1a46a608d49843e4384a535ecb019c68, type: 3}
+  m_PrefabInstance: {fileID: 6233377037990249069}
+  m_PrefabAsset: {fileID: 0}

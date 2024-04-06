@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LevelEditModeWalls : LevelEditMode
 {
-    List<VisibilityChangeableWall> visibilityChangeableWalls = new List<VisibilityChangeableWall>();
+    List<LevelEditor.WallBehaviour> wallBehaviours = new List<LevelEditor.WallBehaviour>();
 
     public LevelEditModeWalls(int groundWidth, int groundHeight, GameObject visibilityChangeableWallPrefab)
     {
@@ -46,7 +46,9 @@ public class LevelEditModeWalls : LevelEditMode
     private void SpawnOneVisibilityChangeableWall(CellOrdinate cell_1, CellOrdinate cell_2, GameObject visibilityChangeableWallPrefab)
     {
         GameObject visibilityChangeableWallGameObject = GameObject.Instantiate(visibilityChangeableWallPrefab);
-        VisibilityChangeableWall visibilityChangeableWall = visibilityChangeableWallGameObject.GetComponent<VisibilityChangeableWall>();
+        Wall visibilityChangeableWall = visibilityChangeableWallGameObject.GetComponent<Wall>();
         visibilityChangeableWall.SetWall(cell_1, cell_2);
+
+        this.wallBehaviours.Add(visibilityChangeableWallGameObject.GetComponent<LevelEditor.WallBehaviour>());
     }
 }
