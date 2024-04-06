@@ -29,12 +29,26 @@ public class WallBehaviour : MonoBehaviour
 
     private void OnMouseOver()
     {
-        this.stateMachine.OnMouseHover();
+        if (this.isInteractable)
+        {
+            this.stateMachine.OnMouseHover();
+        }
     }
 
     private void OnMouseExit()
     {
-        this.stateMachine.OnMouseLeave();
+        if (this.isInteractable)
+        {
+            this.stateMachine.OnMouseLeave();
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        if (this.isInteractable)
+        {
+            this.stateMachine.OnMouseClicked();
+        }
     }
 
     public void Activate()

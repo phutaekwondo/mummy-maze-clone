@@ -12,10 +12,18 @@ public class LevelEditModeWalls : LevelEditMode
 
     public void Activate()
     {
+        for (int i = 0; i < this.wallBehaviours.Count; i++)
+        {
+            this.wallBehaviours[i].Activate();
+        }
     }
 
     public void Deactivate()
     {
+        for (int i = 0; i < this.wallBehaviours.Count; i++)
+        {
+            this.wallBehaviours[i].Deactivate();
+        }
     }
 
     private void SpawnVisibilityChangeableWalls(int groundWidth, int groundHeight, GameObject visibilityChangeableWallPrefab)
