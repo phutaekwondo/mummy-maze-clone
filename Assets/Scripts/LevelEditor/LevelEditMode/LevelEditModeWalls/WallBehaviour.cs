@@ -14,11 +14,6 @@ public class WallBehaviour : MonoBehaviour
     private WallBehaviourStateMachine stateMachine;
     private WallBehaviourStateColorize stateColorize;
 
-    public WallBehaviour()
-    {
-        this.stateMachine = new WallBehaviourStateMachine(WallBehaviourStateType.IdleShowing, this.OnStateChanged);
-    }
-
     private void Start() 
     {
         this.stateColorize = new WallBehaviourStateColorize(
@@ -28,6 +23,8 @@ public class WallBehaviour : MonoBehaviour
             this.targetToCreateMaterial,
             this.targetToDestroyMaterial
         );
+
+        this.stateMachine = new WallBehaviourStateMachine(WallBehaviourStateType.IdleHiding, this.OnStateChanged);
     }
 
     private void OnMouseOver()
@@ -54,7 +51,6 @@ public class WallBehaviour : MonoBehaviour
 
     private void OnStateChanged(WallBehaviourStateType newState)
     {
-        Debug.Log("change to new state " + newState);
         this.stateColorize.SetState(newState);
     }
 }

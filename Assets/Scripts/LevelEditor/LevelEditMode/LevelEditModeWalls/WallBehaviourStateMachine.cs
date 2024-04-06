@@ -10,8 +10,8 @@ namespace LevelEditor
 
         public WallBehaviourStateMachine(WallBehaviourStateType state, Action<WallBehaviourStateType> onEnterState = null)
         {
-            this.state = state;
             this.onEnterState = onEnterState;
+            this.EnterState(state);
         }
 
         private void EnterState(WallBehaviourStateType state)
