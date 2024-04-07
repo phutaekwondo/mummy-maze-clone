@@ -1,9 +1,10 @@
-using UnityEngine;
-
-public class PlayButtonHandler: MonoBehaviour
+namespace MainMenu
 {
-    public void OnClick()
+    public class PlayButtonHandler: ButtonHandler
     {
-        MummyMaze.SceneManager.Instance.LoadScene(MummyMaze.Scene.Game);
+        public override void OnClick()
+        {
+            MummyMaze.SceneManager.Instance.LoadScene(MummyMaze.Scene.Game);
+        }
     }
 }

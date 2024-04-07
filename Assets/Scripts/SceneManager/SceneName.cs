@@ -6,6 +6,7 @@ namespace MummyMaze
     {
         MainMenu,
         Game,
+        LevelEditor,
     }
 
     public static class SceneName
@@ -14,6 +15,7 @@ namespace MummyMaze
         {
             { MummyMaze.Scene.MainMenu, "MainMenu" },
             { MummyMaze.Scene.Game, "Game" },
+            { MummyMaze.Scene.LevelEditor, "LevelEditor" },
         };
 
         public static string GetSceneName(MummyMaze.Scene scene)

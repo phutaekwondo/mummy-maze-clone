@@ -24,7 +24,6 @@ public class LevelEditorManager : MonoBehaviour
         this.levelEditModes[LevelEditModeType.Characters] = new LevelEditModeCharacters(this.playerMover, this.cellTargetManager);
         int groundSize = this.level.GetGroundSize();
         this.levelEditModes[LevelEditModeType.Walls] = new LevelEditModeWalls(groundSize, groundSize, this.visibilityChangeableWallPrefab);
-        this.levelEditModes[LevelEditModeType.Walls].Activate();
     }
 
     private void SetupLevelEditModeButtons()
