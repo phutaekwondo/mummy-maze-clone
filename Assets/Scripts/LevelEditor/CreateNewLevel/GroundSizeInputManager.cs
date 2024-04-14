@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ namespace LevelEditor
         [SerializeField] private Button decreaseButton;
         [SerializeField] private Button increaseButton;
 
+        private Action<int> onGroundSizeChanged;
+
         private int groundSize = 5;
         private const int MIN_GROUND_SIZE = 2;
         private const int MAX_GROUND_SIZE = 10;
@@ -18,6 +21,11 @@ namespace LevelEditor
         {
             this.UpdateGroundSize(5);
             this.RegisterButtonListeners();
+        }
+
+        public void RegisterOnGroundSizeChanged(Action<int> onGroundSizeChanged)
+        {
+            this.onGroundSizeChanged = onGroundSizeChanged;
         }
 
         private void RegisterButtonListeners()
@@ -53,6 +61,8 @@ namespace LevelEditor
         {
             this.groundSize = newGroundSize;
             this.groundSizeText.text = this.groundSize.ToString();
+
+            this.onGroundSizeChanged?.Invoke(this.groundSize);
         }
     }
 }
