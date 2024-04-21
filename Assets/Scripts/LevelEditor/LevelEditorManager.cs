@@ -1,14 +1,15 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using LevelEditor;
 using UnityEngine;
 
 public class LevelEditorManager : MonoBehaviour
 {
-    [SerializeField] private Level level;
+    [SerializeField] private LevelEditor.EditingLevel editingLevel;
     [SerializeField] private LevelEditor.CharacterMover playerMover;
     [SerializeField] private CellTargetManager cellTargetManager;
     [SerializeField] List<EditModeButton> editModeButtons = new List<EditModeButton>();
     [SerializeField] GameObject visibilityChangeableWallPrefab;
+    [SerializeField] CreateLevelManager createLevelManager;
 
     Dictionary<LevelEditModeType, LevelEditMode> levelEditModes = new Dictionary<LevelEditModeType, LevelEditMode>();
 
@@ -17,12 +18,18 @@ public class LevelEditorManager : MonoBehaviour
         this.SetupScene();
         this.SetupLevelEditModeButtons();
         this.SetupLevelEditModes();
+        this.RegisterEvents();
+    }
+
+    private void RegisterEvents()
+    {
+        this.createLevelManager.RegisterOnLevelCreatingFinished(this.OnLevelCreatingFinished);
     }
 
     private void SetupLevelEditModes()
     {
         this.levelEditModes[LevelEditModeType.Characters] = new LevelEditModeCharacters(this.playerMover, this.cellTargetManager);
-        int groundSize = this.level.GetGroundSize();
+        int groundSize = this.editingLevel.GetGroundSize();
         this.levelEditModes[LevelEditModeType.Walls] = new LevelEditModeWalls(groundSize, groundSize, this.visibilityChangeableWallPrefab);
     }
 
@@ -36,8 +43,8 @@ public class LevelEditorManager : MonoBehaviour
 
     private void SetupScene()
     {
-        this.level.BuildLevel();
-        this.playerMover.SetCellOrdinate(this.level.GetPlayerStartPosition());
+        this.editingLevel.BuildLevel();
+        this.playerMover.SetCellOrdinate(this.editingLevel.GetPlayerStartPosition());
     }
 
     private void OnLevelEditButtonClicked(LevelEditModeType levelEditModeType)
@@ -51,5 +58,10 @@ public class LevelEditorManager : MonoBehaviour
         {
             this.levelEditModes[levelEditModeType].Activate();
         }
+    }
+
+    private void OnLevelCreatingFinished(CreateLevelModel createLevelModel)
+    {
+        this.editingLevel.ApplyCreateLevelModel(createLevelModel);
     }
 }

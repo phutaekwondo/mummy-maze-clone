@@ -15,4 +15,17 @@ public class LevelInfo : ScriptableObject
     public List<Vector2Int> walls;
     public int exitDoorCellIndex;
     public ExitDoorType exitDoorType;
+
+    public LevelInfo Clone()
+    {
+        LevelInfo levelInfo = CreateInstance<LevelInfo>();
+        levelInfo.groundSize = this.groundSize;
+        levelInfo.playerStartPosition = this.playerStartPosition;
+        levelInfo.enemyStartPosition = this.enemyStartPosition;
+        levelInfo.walls = new List<Vector2Int>(this.walls);
+        levelInfo.exitDoorCellIndex = this.exitDoorCellIndex;
+        levelInfo.exitDoorType = this.exitDoorType;
+
+        return levelInfo;
+    }
 }

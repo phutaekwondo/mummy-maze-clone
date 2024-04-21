@@ -73,10 +73,12 @@ public class LevelBuilder : MonoBehaviour
         }
     }
 
-    private void SpawnAWall(CellOrdinate cell_1, CellOrdinate cell_2, GameObject prefab)
+    protected virtual Wall SpawnAWall(CellOrdinate cell_1, CellOrdinate cell_2, GameObject prefab)
     {
         Wall newWall = Instantiate(prefab, this.gameObject.transform.parent).GetComponent<Wall>();
         newWall.SetWall(cell_1, cell_2);
+
+        return newWall;
     }
 
     private List<CellOrdinate> GetExitDoorCellOrdinates(int groundSize, int exitDoorCellIndex, ExitDoorType exitDoorType)

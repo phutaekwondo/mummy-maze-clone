@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField] LevelInfo levelInfo;
-    [SerializeField] LevelBuilder levelBuilder;
+    [SerializeField] protected LevelInfo levelInfo;
+    [SerializeField] protected LevelBuilder levelBuilder;
 
     public void BuildLevel() 
     {
