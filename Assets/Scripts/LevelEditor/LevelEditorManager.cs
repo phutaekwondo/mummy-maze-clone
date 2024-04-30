@@ -63,5 +63,6 @@ public class LevelEditorManager : MonoBehaviour
     private void OnLevelCreatingFinished(CreateLevelModel createLevelModel)
     {
         this.editingLevel.ApplyCreateLevelModel(createLevelModel);
+        this.playerMover.SetCellOrdinate(this.editingLevel.GetPlayerStartPosition());
     }
 }
