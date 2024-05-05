@@ -1,13 +1,11 @@
-public class LevelEditModeCharacters : LevelEditMode
-{
-    private LevelEditor.CharacterMover playerMover;
-    private CellTargetManager cellTargetManager;
+using UnityEngine;
+using System.Collections.Generic;
+using LevelEditor;
 
-    public LevelEditModeCharacters(LevelEditor.CharacterMover playerMover, CellTargetManager cellTargetManager)
-    {
-        this.playerMover = playerMover;
-        this.cellTargetManager = cellTargetManager;
-    }
+public class LevelEditModeCharacters : LevelEditModeBase
+{
+    [SerializeField] private LevelEditor.CharacterMover playerMover;
+    [SerializeField] private CellTargetManager cellTargetManager;
 
     private void OnPlayerStartBeingHeld(LevelEditor.CharacterMover playerMover)
     {
@@ -26,13 +24,18 @@ public class LevelEditModeCharacters : LevelEditMode
         this.cellTargetManager.SetEnable(false);
     }
 
-    public void Activate()
+    public override void Setup(EditingLevel editingLevel)
+    {
+        this.playerMover.SetCellOrdinate(editingLevel.GetPlayerStartPosition());
+    }
+
+    public override void Activate()
     {
         this.playerMover.onStartBeingHeld = this.OnPlayerStartBeingHeld;
         this.playerMover.onStopBeingHeld = this.OnPlayerStopBeingHeld;
     }
 
-    public void Deactivate()
+    public override void Deactivate()
     {
         this.StopHoldingPlayer();
         this.playerMover.onStartBeingHeld = null;

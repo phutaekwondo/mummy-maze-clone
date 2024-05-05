@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 9164eedb5009d524fb4b205ce6f750b0
+guid: cf829268f460e9d4d9f575c33021bb43
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - visibilityChangeableWallPrefab: {fileID: 1499234959133048828, guid: ac804a89947f94740bc8d40b7c51c386, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

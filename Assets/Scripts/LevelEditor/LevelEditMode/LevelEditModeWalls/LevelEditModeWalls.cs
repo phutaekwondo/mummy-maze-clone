@@ -1,16 +1,24 @@
 using System.Collections.Generic;
+using LevelEditor;
 using UnityEngine;
 
-public class LevelEditModeWalls : LevelEditMode
+public class LevelEditModeWalls : LevelEditModeBase
 {
+    public GameObject visibilityChangeableWallPrefab;
     List<LevelEditor.WallBehaviour> wallBehaviours = new List<LevelEditor.WallBehaviour>();
 
-    public LevelEditModeWalls(int groundWidth, int groundHeight, GameObject visibilityChangeableWallPrefab)
+    private void SpawnWalls(int groundWidth, int groundHeight)
     {
-        this.SpawnVisibilityChangeableWalls(groundWidth, groundHeight, visibilityChangeableWallPrefab);
+        this.SpawnVisibilityChangeableWalls(groundWidth, groundHeight, this.visibilityChangeableWallPrefab);
     }
 
-    public void Activate()
+    public override void Setup(EditingLevel editingLevel)
+    {
+        int groundSize= editingLevel.GetGroundSize();
+        this.SpawnWalls(groundSize, groundSize);
+    }
+
+    public override void Activate()
     {
         for (int i = 0; i < this.wallBehaviours.Count; i++)
         {
@@ -18,7 +26,7 @@ public class LevelEditModeWalls : LevelEditMode
         }
     }
 
-    public void Deactivate()
+    public override void Deactivate()
     {
         for (int i = 0; i < this.wallBehaviours.Count; i++)
         {
