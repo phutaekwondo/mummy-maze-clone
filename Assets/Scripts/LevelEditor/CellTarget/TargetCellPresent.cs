@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class TargetCellPresent : MonoBehaviour
 {
-    public void SetSize(Ground ground)
+    public void SetSize(Vector3 cellSize)
     {
         float DEFAULT_SIZE = UnityDefaultParameter.DEFAULT_CUBE_SIZE;
-        Vector3 cellSize = ground.GetCellSize();
 
         float scaleX = cellSize.x / DEFAULT_SIZE;
         float scalez = cellSize.z / DEFAULT_SIZE;

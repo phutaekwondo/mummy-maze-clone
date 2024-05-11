@@ -4,6 +4,12 @@ public class Level : MonoBehaviour
 {
     [SerializeField] protected LevelInfo levelInfo;
     [SerializeField] protected LevelBuilder levelBuilder;
+    [SerializeField] protected Ground ground;
+
+    public Vector3 GetGroundCellSize()
+    {
+        return this.ground.GetCellSize();
+    }
 
     public void BuildLevel() 
     {

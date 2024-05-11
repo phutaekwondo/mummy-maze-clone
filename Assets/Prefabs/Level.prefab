@@ -160,6 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelInfo: {fileID: 11400000, guid: 4774723ecb7cf2244a33693ad27c2756, type: 2}
   levelBuilder: {fileID: 1377864747336266250}
+  ground: {fileID: 1377864746354960979}
 --- !u!1 &1377864747336266251
 GameObject:
   m_ObjectHideFlags: 0

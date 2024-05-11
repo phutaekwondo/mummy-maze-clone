@@ -27,6 +27,7 @@ public class LevelEditModeCharacters : LevelEditModeBase
     public override void Setup(EditingLevel editingLevel)
     {
         this.playerMover.SetCellOrdinate(editingLevel.GetPlayerStartPosition());
+        this.cellTargetManager.SetUpPresent(editingLevel.GetGroundCellSize());
     }
 
     public override void Activate()

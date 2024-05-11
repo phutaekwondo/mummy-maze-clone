@@ -25,9 +25,14 @@ public class CellTargetManager : MonoBehaviour
         this.characterMover = null;
     }
 
+    public void SetUpPresent(Vector3 cellSize)
+    {
+        this.targetCellPresent.SetSize(cellSize);
+    }
+
     private void Start() 
     {
-        this.targetCellPresent.SetSize(ground);
+        this.SetUpPresent(this.ground.GetCellSize());
         this.groundMouseDetect.SetOnCellOrdinateChanged(this.OnCellOrdinateChanged);
 
         this.SetEnable(false);
