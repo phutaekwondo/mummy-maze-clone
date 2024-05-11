@@ -22,7 +22,6 @@ public class LevelEditorManager : MonoBehaviour
     private void SetupScene()
     {
         this.editingLevel.BuildLevel();
-        this.levelEditModeManager.Setup(this.editingLevel);
     }
 
     private void OnLevelCreatingFinished(CreateLevelModel createLevelModel)
