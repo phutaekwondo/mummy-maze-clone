@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visibilityChangeableWallPrefab: {fileID: 1499234959133048828, guid: ac804a89947f94740bc8d40b7c51c386, type: 3}
+  wallsParent: {fileID: 492024529}
 --- !u!1 &443083772
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 492024530}
   m_Layer: 0
-  m_Name: Walls
+  m_Name: VisibilityChangableWalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

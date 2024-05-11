@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelEditModeWalls : LevelEditModeBase
 {
     public GameObject visibilityChangeableWallPrefab;
+    [SerializeField] GameObject wallsParent;
     List<LevelEditor.WallBehaviour> wallBehaviours = new List<LevelEditor.WallBehaviour>();
 
     private void SpawnWalls(int groundWidth, int groundHeight)
@@ -77,5 +78,6 @@ public class LevelEditModeWalls : LevelEditModeBase
         visibilityChangeableWall.SetWall(cell_1, cell_2);
 
         this.wallBehaviours.Add(visibilityChangeableWallGameObject.GetComponent<LevelEditor.WallBehaviour>());
+        visibilityChangeableWallGameObject.transform.SetParent(this.wallsParent.transform);
     }
 }
