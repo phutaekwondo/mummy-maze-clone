@@ -15,6 +15,7 @@ public class LevelEditModeWalls : LevelEditModeBase
     public override void Setup(EditingLevel editingLevel)
     {
         int groundSize= editingLevel.GetGroundSize();
+        this.ClearWalls();
         this.SpawnWalls(groundSize, groundSize);
     }
 
@@ -32,6 +33,16 @@ public class LevelEditModeWalls : LevelEditModeBase
         {
             this.wallBehaviours[i].Deactivate();
         }
+    }
+
+    private void ClearWalls()
+    {
+        for (int i = 0; i < this.wallBehaviours.Count; i++)
+        {
+            GameObject.Destroy(this.wallBehaviours[i].gameObject);
+        }
+
+        this.wallBehaviours.Clear();
     }
 
     private void SpawnVisibilityChangeableWalls(int groundWidth, int groundHeight, GameObject visibilityChangeableWallPrefab)
