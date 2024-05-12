@@ -5,20 +5,21 @@ using LevelEditor;
 public class LevelEditModeCharacters : LevelEditModeBase
 {
     [SerializeField] private LevelEditor.CharacterMover playerMover;
+    [SerializeField] private LevelEditor.CharacterMover enemyMover;
     [SerializeField] private CellTargetManager cellTargetManager;
 
-    private void OnPlayerStartBeingHeld(LevelEditor.CharacterMover playerMover)
+    private void OnCharStartBeingHeld(LevelEditor.CharacterMover charMover)
     {
         this.cellTargetManager.SetEnable(true);
-        this.cellTargetManager.RegisterCharacterMover(playerMover);
+        this.cellTargetManager.RegisterCharacterMover(charMover);
     }
 
-    private void OnPlayerStopBeingHeld(LevelEditor.CharacterMover playerMover)
+    private void OnCharStopBeingHeld(LevelEditor.CharacterMover charMover)
     {
-        this.StopHoldingPlayer();
+        this.StopHoldingChars();
     }
 
-    private void StopHoldingPlayer()
+    private void StopHoldingChars()
     {
         this.cellTargetManager.UnregisterCharacterMover();
         this.cellTargetManager.SetEnable(false);
@@ -27,19 +28,24 @@ public class LevelEditModeCharacters : LevelEditModeBase
     public override void Setup(EditingLevel editingLevel)
     {
         this.playerMover.SetCellOrdinate(editingLevel.GetPlayerStartPosition());
+        this.enemyMover.SetCellOrdinate(editingLevel.GetEnemyStartPosition());
         this.cellTargetManager.SetUpPresent(editingLevel.GetGroundCellSize());
     }
 
     public override void Activate()
     {
-        this.playerMover.onStartBeingHeld = this.OnPlayerStartBeingHeld;
-        this.playerMover.onStopBeingHeld = this.OnPlayerStopBeingHeld;
+        this.playerMover.onStartBeingHeld = this.OnCharStartBeingHeld;
+        this.playerMover.onStopBeingHeld = this.OnCharStopBeingHeld;
+        this.enemyMover.onStartBeingHeld = this.OnCharStartBeingHeld;
+        this.enemyMover.onStopBeingHeld = this.OnCharStopBeingHeld;
     }
 
     public override void Deactivate()
     {
-        this.StopHoldingPlayer();
+        this.StopHoldingChars();
         this.playerMover.onStartBeingHeld = null;
         this.playerMover.onStopBeingHeld = null;
+        this.enemyMover.onStartBeingHeld = null;
+        this.enemyMover.onStopBeingHeld = null;
     }
 }
