@@ -8,14 +8,38 @@ public class LevelEditModeCharacters : LevelEditModeBase
     [SerializeField] private LevelEditor.CharacterMover enemyMover;
     [SerializeField] private CellTargetManager cellTargetManager;
 
-    private void OnCharStartBeingHeld(LevelEditor.CharacterMover charMover)
+    private bool isDraggingChar = false;
+
+    private List<LevelEditor.CharacterMover> characterMovers = new List<LevelEditor.CharacterMover>();
+
+    private void Awake()
+    {
+        this.characterMovers.Add(this.playerMover);
+        this.characterMovers.Add(this.enemyMover);
+    }
+
+    private void OnCharMouseEnter(LevelEditor.CharacterMover charMover)
     {
         this.cellTargetManager.SetEnable(true);
+    }
+
+    private void OnCharMouseExit(LevelEditor.CharacterMover charMover)
+    {
+        if (!this.isDraggingChar)
+        {
+            this.cellTargetManager.SetEnable(false);
+        }
+    }
+
+    private void OnCharStartBeingHeld(LevelEditor.CharacterMover charMover)
+    {
+        this.isDraggingChar = true;
         this.cellTargetManager.RegisterCharacterMover(charMover);
     }
 
     private void OnCharStopBeingHeld(LevelEditor.CharacterMover charMover)
     {
+        this.isDraggingChar = false;
         this.StopHoldingChars();
     }
 
@@ -34,18 +58,24 @@ public class LevelEditModeCharacters : LevelEditModeBase
 
     public override void Activate()
     {
-        this.playerMover.onStartBeingHeld = this.OnCharStartBeingHeld;
-        this.playerMover.onStopBeingHeld = this.OnCharStopBeingHeld;
-        this.enemyMover.onStartBeingHeld = this.OnCharStartBeingHeld;
-        this.enemyMover.onStopBeingHeld = this.OnCharStopBeingHeld;
+        for (int i = 0; i < this.characterMovers.Count; i++)
+        {
+            this.characterMovers[i].onMouseEnter = this.OnCharMouseEnter;
+            this.characterMovers[i].onMouseExit = this.OnCharMouseExit;
+            this.characterMovers[i].onStartBeingHeld = this.OnCharStartBeingHeld;
+            this.characterMovers[i].onStopBeingHeld = this.OnCharStopBeingHeld;
+        }
     }
 
     public override void Deactivate()
     {
         this.StopHoldingChars();
-        this.playerMover.onStartBeingHeld = null;
-        this.playerMover.onStopBeingHeld = null;
-        this.enemyMover.onStartBeingHeld = null;
-        this.enemyMover.onStopBeingHeld = null;
+        for (int i = 0; i < this.characterMovers.Count; i++)
+        {
+            this.characterMovers[i].onMouseEnter = null;
+            this.characterMovers[i].onMouseExit = null;
+            this.characterMovers[i].onStartBeingHeld = null;
+            this.characterMovers[i].onStopBeingHeld = null;
+        }
     }
 }

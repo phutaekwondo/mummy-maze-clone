@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LevelEditor
@@ -7,6 +8,8 @@ public class CharacterMover : MonoBehaviour
 {
     private bool isBeingHeld = false;
 
+    public Action<CharacterMover> onMouseEnter { private get; set;}
+    public Action<CharacterMover> onMouseExit { private get; set; }
     public Action<CharacterMover> onStartBeingHeld { private get; set; }
     public Action<CharacterMover> onStopBeingHeld { private get; set; }
 
@@ -27,6 +30,16 @@ public class CharacterMover : MonoBehaviour
         {
             this.StopBeingHeld();
         }
+    }
+
+    private void OnMouseEnter()
+    {
+        this.onMouseEnter?.Invoke(this);
+    }
+
+    private void OnMouseExit()
+    {
+        this.onMouseExit?.Invoke(this);
     }
 
     private void OnMouseOver() 
