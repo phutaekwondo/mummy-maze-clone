@@ -768,7 +768,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &748531992
 GameObject:
@@ -816,7 +816,7 @@ Transform:
   m_Children:
   - {fileID: 1490944174}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &773714124
 GameObject:
@@ -1539,8 +1539,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5404966, y: 1.6618536, z: 0.52363414}
-  m_Center: {x: -0.0021078587, y: 0.8241552, z: 0.12014534}
+  m_Size: {x: 0.8990407, y: 1.6629875, z: 0.8688989}
+  m_Center: {x: 0.004531741, y: 0.8247222, z: 0.033829123}
 --- !u!1 &1395062845
 GameObject:
   m_ObjectHideFlags: 0
@@ -2189,7 +2189,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &1890423877
 PrefabInstance:
@@ -2564,7 +2564,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 66.804, y: 0, z: 0}
 --- !u!1 &2054829816
 GameObject:
@@ -2577,7 +2577,6 @@ GameObject:
   - component: {fileID: 2054829820}
   - component: {fileID: 2054829819}
   - component: {fileID: 2054829818}
-  - component: {fileID: 2054829817}
   m_Layer: 0
   m_Name: GlowCube
   m_TagString: Untagged
@@ -2585,19 +2584,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &2054829817
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054829816}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2054829818
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3914,8 +3900,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5536149, y: 1.7956854, z: 0.33042243}
-  m_Center: {x: -0.008752674, y: 0.88799196, z: 0.015317127}
+  m_Size: {x: 0.85904145, y: 1.8077914, z: 0.8549593}
+  m_Center: {x: 0.011166453, y: 0.89404494, z: -0.0012821853}
 --- !u!4 &4607482936869753027
 Transform:
   m_ObjectHideFlags: 0
