@@ -1137,6 +1137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editingLevel: {fileID: 1243659657}
   createLevelManager: {fileID: 227648025}
+  loadLevelManager: {fileID: 1180418486}
   levelEditModeManager: {fileID: 1490944175}
 --- !u!4 &748531994
 Transform:
@@ -1881,6 +1882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelInfoPathText: {fileID: 516641909}
+  acceptButton: {fileID: 1181251255}
 --- !u!114 &1180418487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1990,7 +1992,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1181251256}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1180418486}
+        m_TargetAssemblyTypeName: LoadLevelManager, Assembly-CSharp
+        m_MethodName: OnAcceptButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1181251256
 MonoBehaviour:
   m_ObjectHideFlags: 0

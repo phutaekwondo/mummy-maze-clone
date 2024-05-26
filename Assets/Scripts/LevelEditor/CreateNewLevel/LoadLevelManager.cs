@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using TMPro;
 using UnityEditor;
@@ -8,7 +9,14 @@ public class LoadLevelManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text levelInfoPathText;
     [SerializeField] Button acceptButton;
+    private Action<LevelInfo> onLevelInfoAccepted;
+
     private string levelInfoPath;
+
+    public void RegisterOnLoadLevelFinished(Action<LevelInfo> onLevelInfoAccepted)
+    {
+        this.onLevelInfoAccepted = onLevelInfoAccepted;
+    }
 
     private void Update()
     {
@@ -22,7 +30,6 @@ public class LoadLevelManager : MonoBehaviour
             return false;
         }
 
-        //check if file exists
         return File.Exists(levelInfoPath);
     }
 
@@ -37,7 +44,7 @@ public class LoadLevelManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(levelInfo);
+            this.onLevelInfoAccepted?.Invoke(levelInfo);
         }
     }
 
