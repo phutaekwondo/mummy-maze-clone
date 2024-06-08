@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class LevelEditorManager : MonoBehaviour
 {
-    [SerializeField] private LevelEditor.EditingLevel editingLevel;
-    [SerializeField] private CreateLevelManager createLevelManager;
-    [SerializeField] private LoadLevelManager loadLevelManager;
-    [SerializeField] private LevelEditModeManager levelEditModeManager;
+    [SerializeField]
+    private LevelEditor.EditingLevel editingLevel;
+
+    [SerializeField]
+    private CreateLevelManager createLevelManager;
+
+    [SerializeField]
+    private LoadLevelManager loadLevelManager;
+
+    [SerializeField]
+    private LevelEditModeManager levelEditModeManager;
 
     private void Start()
     {
