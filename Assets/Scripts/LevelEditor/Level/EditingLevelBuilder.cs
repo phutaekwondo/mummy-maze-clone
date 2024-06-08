@@ -14,7 +14,9 @@ namespace LevelEditor
             ExitDoorType exitDoorType
         )
         {
-            //removed build inside walls, only build around walls
+            //removed build inside walls code, only build around walls
+            //TODO: build inside walls by active the VisibilityChangalbleWalls objects
+
             this.BuildAroundWalls(groundSize, exitDoorCellIndex, exitDoorType);
         }
 

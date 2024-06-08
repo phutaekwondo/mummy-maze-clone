@@ -7,8 +7,14 @@ using UnityEngine.UI;
 
 public class LoadLevelManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text levelInfoPathText;
-    [SerializeField] Button acceptButton;
+    [SerializeField]
+    private GameObject content;
+
+    [SerializeField]
+    private TMP_Text levelInfoPathText;
+
+    [SerializeField]
+    Button acceptButton;
     private Action<LevelInfo> onLevelInfoAccepted;
 
     private string levelInfoPath;

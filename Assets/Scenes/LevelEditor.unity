@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 227648024}
   - component: {fileID: 227648025}
   m_Layer: 5
-  m_Name: CreateLevelMenu
+  m_Name: InitLevelMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1881,6 +1881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51e0012a137c0a458313503d51199ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  content: {fileID: 443083772}
   levelInfoPathText: {fileID: 516641909}
   acceptButton: {fileID: 1181251255}
 --- !u!114 &1180418487
@@ -3382,6 +3383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1940874012}
   - component: {fileID: 1940874013}
+  - component: {fileID: 1940874014}
   m_Layer: 5
   m_Name: CreateNewLevel
   m_TagString: Untagged
@@ -3438,6 +3440,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1940874014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940874011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd8f782e7597c046a7e7b74b2e2f8ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 443083772}
+  groundSizeInputManager: {fileID: 162401957}
+  acceptButton: {fileID: 1683949245}
 --- !u!1 &2034444218
 GameObject:
   m_ObjectHideFlags: 0

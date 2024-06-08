@@ -36,11 +36,17 @@ public class LevelEditorManager : MonoBehaviour
     private void OnLoadLevelFinished(LevelInfo loadedLevelInfo)
     {
         this.editingLevel.ApplyLoadedLevelInfo(loadedLevelInfo);
+        this.OnFinishLevelInitialize();
     }
 
     private void OnLevelCreatingFinished(CreateLevelModel createLevelModel)
     {
         this.editingLevel.ApplyCreateLevelModel(createLevelModel);
+        this.OnFinishLevelInitialize();
+    }
+
+    private void OnFinishLevelInitialize()
+    {
         this.levelEditModeManager.Setup(this.editingLevel);
     }
 }
