@@ -4,23 +4,43 @@ using UnityEngine;
 
 public class LevelBuilder : MonoBehaviour
 {
-    [SerializeField] private Ground ground;
-    [SerializeField] private GameObject wallPrefab;
-    [SerializeField] private GameObject exitDoorPrefab;
+    [SerializeField]
+    private Ground ground;
+
+    [SerializeField]
+    private GameObject wallPrefab;
+
+    [SerializeField]
+    private GameObject exitDoorPrefab;
 
     public void BuildLevel(LevelInfo levelInfo)
     {
         this.ground.SetSize(levelInfo.groundSize, levelInfo.groundSize);
-        this.BuildWalls(levelInfo.walls, (int)levelInfo.groundSize, levelInfo.exitDoorCellIndex, levelInfo.exitDoorType);
+        this.BuildWalls(
+            levelInfo.walls,
+            (int)levelInfo.groundSize,
+            levelInfo.exitDoorCellIndex,
+            levelInfo.exitDoorType
+        );
     }
 
-    private void BuildWalls(List<Vector2Int> wallsLocateOrdinate, int groundSize, int exitDoorCellIndex, ExitDoorType exitDoorType)
+    protected virtual void BuildWalls(
+        List<Vector2Int> wallsLocateOrdinate,
+        int groundSize,
+        int exitDoorCellIndex,
+        ExitDoorType exitDoorType
+    )
     {
-        for(int i = 0; i < wallsLocateOrdinate.Count; i++)
+        for (int i = 0; i < wallsLocateOrdinate.Count; i++)
         {
-            CellOrdinate cell_1 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(groundSize, wallsLocateOrdinate[i].x);
-            CellOrdinate cell_2 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(groundSize, wallsLocateOrdinate[i].y);
-
+            CellOrdinate cell_1 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(
+                groundSize,
+                wallsLocateOrdinate[i].x
+            );
+            CellOrdinate cell_2 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(
+                groundSize,
+                wallsLocateOrdinate[i].y
+            );
 
             this.SpawnAWall(cell_1, cell_2, this.wallPrefab);
         }
@@ -28,14 +48,26 @@ public class LevelBuilder : MonoBehaviour
         this.BuildAroundWalls(groundSize, exitDoorCellIndex, exitDoorType);
     }
 
-    private void BuildAroundWalls(int groundSize, int exitDoorCellIndex, ExitDoorType exitDoorType)
+    protected void BuildAroundWalls(
+        int groundSize,
+        int exitDoorCellIndex,
+        ExitDoorType exitDoorType
+    )
     {
-        List<CellOrdinate> exitDoorCellOrdinates = this.GetExitDoorCellOrdinates(groundSize, exitDoorCellIndex, exitDoorType);
+        List<CellOrdinate> exitDoorCellOrdinates = this.GetExitDoorCellOrdinates(
+            groundSize,
+            exitDoorCellIndex,
+            exitDoorType
+        );
 
-        Action<CellOrdinate, CellOrdinate> spawnWall = (cell_1, cell_2) => 
+        Action<CellOrdinate, CellOrdinate> spawnWall = (cell_1, cell_2) =>
         {
-            if (cell_1.Equals(exitDoorCellOrdinates[0]) || cell_1.Equals(exitDoorCellOrdinates[1]) ||
-                cell_2.Equals(exitDoorCellOrdinates[0]) || cell_2.Equals(exitDoorCellOrdinates[1]))
+            if (
+                cell_1.Equals(exitDoorCellOrdinates[0])
+                || cell_1.Equals(exitDoorCellOrdinates[1])
+                || cell_2.Equals(exitDoorCellOrdinates[0])
+                || cell_2.Equals(exitDoorCellOrdinates[1])
+            )
             {
                 this.SpawnAWall(cell_1, cell_2, this.exitDoorPrefab);
             }
@@ -48,26 +80,26 @@ public class LevelBuilder : MonoBehaviour
         for (int i = 0; i < groundSize; i++)
         {
             //top
-            CellOrdinate cell_in  = new CellOrdinate(i, 0);
+            CellOrdinate cell_in = new CellOrdinate(i, 0);
             CellOrdinate cell_out = new CellOrdinate(i, -1);
 
             spawnWall(cell_in, cell_out);
 
             //left
-            cell_in  = new CellOrdinate(0,  i);
+            cell_in = new CellOrdinate(0, i);
             cell_out = new CellOrdinate(-1, i);
 
             spawnWall(cell_in, cell_out);
 
             //right
-            cell_in  = new CellOrdinate(groundSize - 1, i);
-            cell_out = new CellOrdinate(groundSize    , i);
+            cell_in = new CellOrdinate(groundSize - 1, i);
+            cell_out = new CellOrdinate(groundSize, i);
 
             spawnWall(cell_in, cell_out);
 
             //bot
-            cell_in  = new CellOrdinate(i, groundSize - 1);
-            cell_out = new CellOrdinate(i, groundSize    );
+            cell_in = new CellOrdinate(i, groundSize - 1);
+            cell_out = new CellOrdinate(i, groundSize);
 
             spawnWall(cell_in, cell_out);
         }
@@ -81,9 +113,16 @@ public class LevelBuilder : MonoBehaviour
         return newWall;
     }
 
-    private List<CellOrdinate> GetExitDoorCellOrdinates(int groundSize, int exitDoorCellIndex, ExitDoorType exitDoorType)
+    private List<CellOrdinate> GetExitDoorCellOrdinates(
+        int groundSize,
+        int exitDoorCellIndex,
+        ExitDoorType exitDoorType
+    )
     {
-        CellOrdinate cell_1 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(groundSize, exitDoorCellIndex);
+        CellOrdinate cell_1 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(
+            groundSize,
+            exitDoorCellIndex
+        );
         if (!this.isEdgeCell(cell_1, groundSize))
         {
             throw new Exception("Exit door cell index must be on the edge of the ground!");
@@ -112,23 +151,24 @@ public class LevelBuilder : MonoBehaviour
     }
 
     private CellOrdinate GetOtherExitDoorCellOrdinate(CellOrdinate cell, ExitDoorType exitDoorType)
-    {   
+    {
         bool isCell1LeftOrTop = cell.x == 0 || cell.y == 0;
         int offset = isCell1LeftOrTop ? -1 : 1;
 
-        CellOrdinate otherCell = exitDoorType == ExitDoorType.Horizontal ?
-                new CellOrdinate(cell.x, cell.y + offset) :
-                new CellOrdinate(cell.x + offset, cell.y);
+        CellOrdinate otherCell =
+            exitDoorType == ExitDoorType.Horizontal
+                ? new CellOrdinate(cell.x, cell.y + offset)
+                : new CellOrdinate(cell.x + offset, cell.y);
 
         return otherCell;
     }
 
     private bool isCornerCell(CellOrdinate cell, int groundSize)
     {
-        return cell.x == 0 && cell.y == 0 ||
-               cell.x == 0 && cell.y == groundSize - 1 ||
-               cell.x == groundSize - 1 && cell.y == 0 ||
-               cell.x == groundSize - 1 && cell.y == groundSize - 1;
+        return cell.x == 0 && cell.y == 0
+            || cell.x == 0 && cell.y == groundSize - 1
+            || cell.x == groundSize - 1 && cell.y == 0
+            || cell.x == groundSize - 1 && cell.y == groundSize - 1;
     }
 
     private bool isEdgeCell(CellOrdinate cell, int groundSize)

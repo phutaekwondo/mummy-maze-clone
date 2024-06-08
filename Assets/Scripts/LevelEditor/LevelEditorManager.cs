@@ -35,7 +35,7 @@ public class LevelEditorManager : MonoBehaviour
 
     private void OnLoadLevelFinished(LevelInfo loadedLevelInfo)
     {
-        Debug.Log(loadedLevelInfo);
+        this.editingLevel.ApplyLoadedLevelInfo(loadedLevelInfo);
     }
 
     private void OnLevelCreatingFinished(CreateLevelModel createLevelModel)

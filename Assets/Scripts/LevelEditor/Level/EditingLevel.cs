@@ -1,14 +1,22 @@
 namespace LevelEditor
 {
-    public class EditingLevel: Level
+    public class EditingLevel : Level
     {
         private LevelInfo editingLevelInfo;
         private EditingLevelBuilder editingLevelBuilder;
 
-        private void Start() 
+        private void Start()
         {
             this.editingLevelInfo = this.levelInfo.Clone();
             this.editingLevelBuilder = this.levelBuilder as EditingLevelBuilder;
+        }
+
+        public void ApplyLoadedLevelInfo(LevelInfo loadedLevelInfo)
+        {
+            this.levelInfo = loadedLevelInfo;
+            this.editingLevelInfo = loadedLevelInfo.Clone();
+            this.editingLevelBuilder.ClearWalls();
+            this.BuildLevel();
         }
 
         public void ApplyCreateLevelModel(CreateLevelModel createLevelModel)
