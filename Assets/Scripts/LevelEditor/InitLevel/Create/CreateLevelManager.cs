@@ -4,21 +4,26 @@ using UnityEngine.UI;
 
 namespace LevelEditor
 {
-    public class CreateLevelManager : MonoBehaviour
+    public class CreateLevelManager : InitLevelMode
     {
         private CreateLevelModel createLevelModel = new CreateLevelModel();
 
         private Action<CreateLevelModel> onLevelCreatingFinished;
-        [SerializeField] private GameObject content;
-        [SerializeField] private GroundSizeInputManager groundSizeInputManager;
-        [SerializeField] private Button acceptButton;
 
-        public void RegisterOnLevelCreatingFinished(Action<CreateLevelModel> onLevelCreatingFinished)
+        [SerializeField]
+        private GroundSizeInputManager groundSizeInputManager;
+
+        [SerializeField]
+        private Button acceptButton;
+
+        public void RegisterOnLevelCreatingFinished(
+            Action<CreateLevelModel> onLevelCreatingFinished
+        )
         {
             this.onLevelCreatingFinished = onLevelCreatingFinished;
         }
 
-        private void Start() 
+        private void Start()
         {
             this.groundSizeInputManager.RegisterOnGroundSizeChanged(this.OnGroundSizeChanged);
             this.acceptButton.onClick.AddListener(this.OnAcceptButton);
@@ -28,16 +33,6 @@ namespace LevelEditor
         private void OnGroundSizeChanged(int groundSize)
         {
             this.createLevelModel.groundSize = groundSize;
-        }
-
-        private void Hide()
-        {
-            this.content.SetActive(false);
-        }
-
-        private void Show()
-        {
-            this.content.SetActive(true);
         }
 
         private void OnAcceptButton()
