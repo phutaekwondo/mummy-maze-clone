@@ -11,19 +11,21 @@ abstract public class Character : MonoBehaviour
     private CellOrdinate cellOrdinate;
     protected EnumMoveDirection lookDirection = EnumMoveDirection.None;
 
-    protected virtual void Awake() 
+    protected virtual void Awake()
     {
         this.characterAnimController = this.GetComponent<CharacterAnimController>();
-        if (this.characterAnimController == null){
+        if (this.characterAnimController == null)
+        {
             this.characterAnimController = this.AddComponent<CharacterAnimController>();
         }
         this.characterTransformController = this.GetComponent<CharacterTransformController>();
-        if (this.characterTransformController == null){
+        if (this.characterTransformController == null)
+        {
             this.characterTransformController = this.AddComponent<CharacterTransformController>();
         }
     }
 
-    private void Start() 
+    private void Start()
     {
         this.characterAnimController.PlayIdle();
         if (this.lookDirection == EnumMoveDirection.None)
@@ -34,8 +36,10 @@ abstract public class Character : MonoBehaviour
 
     public void ActBlocked(EnumMoveDirection direction)
     {
-        Action onTurnComplete = () => {
-            this.characterAnimController.PlayBlocked(() => {
+        Action onTurnComplete = () =>
+        {
+            this.characterAnimController.PlayBlocked(() =>
+            {
                 this.characterAnimController.PlayIdle();
             });
         };
@@ -43,9 +47,10 @@ abstract public class Character : MonoBehaviour
         this.TurnToDirection(direction, onTurnComplete);
     }
 
-    public void Move(EnumMoveDirection direction, Action onMoveComplete = null) 
+    public void Move(EnumMoveDirection direction, Action onMoveComplete = null)
     {
-        Action onTurnComplete = () => {
+        Action onTurnComplete = () =>
+        {
             this.MoveToward(onMoveComplete);
         };
 
@@ -71,7 +76,8 @@ abstract public class Character : MonoBehaviour
 
     private void TurnToDirection(EnumMoveDirection direction, Action onTurnComplete = null)
     {
-        Action callOnTurnComplete = () => {
+        Action callOnTurnComplete = () =>
+        {
             if (onTurnComplete != null)
             {
                 onTurnComplete();
@@ -85,7 +91,8 @@ abstract public class Character : MonoBehaviour
         }
 
         ETurnType turnType = EnumMoveDirectionHelper.GetTurnType(this.lookDirection, direction);
-        Action onTurnAnimComplete = () => {
+        Action onTurnAnimComplete = () =>
+        {
             this.SetLookDirection(direction);
             callOnTurnComplete();
         };
@@ -97,11 +104,12 @@ abstract public class Character : MonoBehaviour
         this.characterAnimController.PlayMove();
 
         CellOrdinate desCell = this.cellOrdinate.GetDestinateOrdinate(this.lookDirection);
-        Action onTweenComplete = () => {
+        Action onTweenComplete = () =>
+        {
             this.cellOrdinate = desCell;
             this.characterAnimController.PlayIdle();
 
-            if (onMoveComplete != null) 
+            if (onMoveComplete != null)
             {
                 onMoveComplete();
             }

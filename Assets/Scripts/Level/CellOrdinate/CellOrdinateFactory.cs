@@ -20,7 +20,7 @@ public class CellOrdinateFactory
         return Parse2CellOrdinate(groundSquareSize, groundSquareSize, cellIndex);
     }
 
-    private CellOrdinate Parse2CellOrdinate(int groundWidth,int groundHeight, int cellIndex) 
+    private CellOrdinate Parse2CellOrdinate(int groundWidth, int groundHeight, int cellIndex)
     {
         int xOrdinate = cellIndex % Convert.ToInt32(groundWidth);
         int zOrdinate = cellIndex / Convert.ToInt32(groundHeight);

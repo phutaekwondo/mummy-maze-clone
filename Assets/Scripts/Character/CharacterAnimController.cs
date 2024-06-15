@@ -17,7 +17,7 @@ public class CharacterAnimController : MonoBehaviour
 
     private Dictionary<int, Action> onAnimEndDict = new Dictionary<int, Action>();
 
-    private void Awake() 
+    private void Awake()
     {
         this.animator = this.GetComponent<Animator>();
         this.animIndexRef = Animator.StringToHash("animIndex");
@@ -38,12 +38,12 @@ public class CharacterAnimController : MonoBehaviour
 
     virtual public void PlayTurn(ETurnType turnType, Action onTurnAnimComplete = null)
     {
-        this.PlayAnimByIndex(this.TURN_ANIM_INDEX[turnType],onTurnAnimComplete);
+        this.PlayAnimByIndex(this.TURN_ANIM_INDEX[turnType], onTurnAnimComplete);
     }
 
     virtual public void PlayBlocked(Action onComplete = null)
     {
-        this.PlayAnimByIndex(BLOCKED_ANIM_INDEX,onComplete);
+        this.PlayAnimByIndex(BLOCKED_ANIM_INDEX, onComplete);
     }
 
     protected void PlayAnimByIndex(int animIndex, Action onComplete = null)
@@ -53,7 +53,7 @@ public class CharacterAnimController : MonoBehaviour
         this.playingAnimIndex = animIndex;
     }
 
-    public void CallOnAnimEnd() 
+    public void CallOnAnimEnd()
     {
         if (this.onAnimEndDict.ContainsKey(this.playingAnimIndex))
         {

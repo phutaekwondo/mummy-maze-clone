@@ -26,7 +26,7 @@ public class CharacterTransformController : MonoBehaviour
             this.gameObject.gameObject.transform.position = v.CurrentValue;
         };
 
-        Action<ITween<Vector3>> onTweenComplete = (v) => 
+        Action<ITween<Vector3>> onTweenComplete = (v) =>
         {
             if (onComplete != null)
             {

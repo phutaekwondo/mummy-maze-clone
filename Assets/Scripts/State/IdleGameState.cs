@@ -29,13 +29,14 @@ public class IdleGameState : GameState
 
     private EnumMoveDirection GetMoveDirection(EnumPlayerInput playerInput)
     {
-        if (playerInput == EnumPlayerInput.None) {
+        if (playerInput == EnumPlayerInput.None)
+        {
             throw new System.Exception("Can't get move direction from none input");
         }
 
         EnumMoveDirection moveDirection = EnumMoveDirection.None;
 
-        switch(playerInput)
+        switch (playerInput)
         {
             case EnumPlayerInput.MoveUp:
                 moveDirection = EnumMoveDirection.Up;
@@ -49,7 +50,7 @@ public class IdleGameState : GameState
             case EnumPlayerInput.MoveDown:
                 moveDirection = EnumMoveDirection.Down;
                 break;
-            default: 
+            default:
                 break;
         }
 

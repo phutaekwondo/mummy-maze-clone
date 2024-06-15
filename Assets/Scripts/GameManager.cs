@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
         this.resultChecker = new ResultChecker();
     }
 
-    private void Start() 
+    private void Start()
     {
         this.level.BuildLevel();
         this.player.SetCellOrdinate(this.level.GetPlayerStartPosition());
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
         this.gameStateMachine.Update();
     }
 
-    public void  MoveEnemy(Action onComplete)
+    public void MoveEnemy(Action onComplete)
     {
         this.enemy.MakeBestMove(this.player.GetCellOrdinate(), this.level, onComplete);
     }

@@ -4,79 +4,79 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-public class CharacterMover : MonoBehaviour
-{
-    private bool isBeingHeld = false;
-
-    public Action<CharacterMover> onMouseEnter { private get; set;}
-    public Action<CharacterMover> onMouseExit { private get; set; }
-    public Action<CharacterMover> onStartBeingHeld { private get; set; }
-    public Action<CharacterMover> onStopBeingHeld { private get; set; }
-
-    public void SetCellOrdinate(CellOrdinate cellOrdinate)
+    public class CharacterMover : MonoBehaviour
     {
-        if (cellOrdinate == null)
+        private bool isBeingHeld = false;
+
+        public Action<CharacterMover> onMouseEnter { private get; set; }
+        public Action<CharacterMover> onMouseExit { private get; set; }
+        public Action<CharacterMover> onStartBeingHeld { private get; set; }
+        public Action<CharacterMover> onStopBeingHeld { private get; set; }
+
+        public void SetCellOrdinate(CellOrdinate cellOrdinate)
         {
-            return;
+            if (cellOrdinate == null)
+            {
+                return;
+            }
+
+            Vector3 position = CellTransformGetter.Instance.GetCellPosition(cellOrdinate);
+            this.gameObject.transform.position = position;
         }
 
-        Vector3 position = CellTransformGetter.Instance.GetCellPosition(cellOrdinate);
-        this.gameObject.transform.position = position;
-    }
-
-    private void Update() 
-    {
-        if (Input.GetMouseButtonUp(0))
+        private void Update()
         {
-            this.StopBeingHeld();
-        }
-    }
-
-    private void OnMouseEnter()
-    {
-        this.onMouseEnter?.Invoke(this);
-    }
-
-    private void OnMouseExit()
-    {
-        this.onMouseExit?.Invoke(this);
-    }
-
-    private void OnMouseOver() 
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            this.StartBeingHeld();
-        }
-    }
-
-    private void StopBeingHeld() 
-    {
-        if (!this.isBeingHeld)
-        {
-            return;
+            if (Input.GetMouseButtonUp(0))
+            {
+                this.StopBeingHeld();
+            }
         }
 
-        this.isBeingHeld = false;
-        if (this.onStopBeingHeld != null)
+        private void OnMouseEnter()
         {
-            this.onStopBeingHeld(this);
-        }
-    }
-
-    private void StartBeingHeld() 
-    {
-        if (this.isBeingHeld)
-        {
-            return;
+            this.onMouseEnter?.Invoke(this);
         }
 
-        this.isBeingHeld = true;
-        if (this.onStartBeingHeld != null)
+        private void OnMouseExit()
         {
-            this.onStartBeingHeld(this);
+            this.onMouseExit?.Invoke(this);
+        }
+
+        private void OnMouseOver()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                this.StartBeingHeld();
+            }
+        }
+
+        private void StopBeingHeld()
+        {
+            if (!this.isBeingHeld)
+            {
+                return;
+            }
+
+            this.isBeingHeld = false;
+            if (this.onStopBeingHeld != null)
+            {
+                this.onStopBeingHeld(this);
+            }
+        }
+
+        private void StartBeingHeld()
+        {
+            if (this.isBeingHeld)
+            {
+                return;
+            }
+
+            this.isBeingHeld = true;
+            if (this.onStartBeingHeld != null)
+            {
+                this.onStartBeingHeld(this);
+            }
         }
     }
-}
 }
 

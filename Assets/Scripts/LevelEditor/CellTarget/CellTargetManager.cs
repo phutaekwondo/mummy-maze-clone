@@ -30,7 +30,7 @@ public class CellTargetManager : MonoBehaviour
         this.targetCellPresent.SetSize(cellSize);
     }
 
-    private void Start() 
+    private void Start()
     {
         this.SetUpPresent(this.ground.GetCellSize());
         this.groundMouseDetect.SetOnCellOrdinateChanged(this.OnCellOrdinateChanged);

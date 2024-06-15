@@ -6,7 +6,7 @@ public class GroundMouseDetect : MonoBehaviour
     [SerializeField] private Ground ground;
     private CellOrdinateCalculator cellOrdinateCalculator;
     private CellOrdinate currentCellOrdinate;
-    public bool enable { private get; set;} = false;
+    public bool enable { private get; set; } = false;
     Action<CellOrdinate> onCellOrdinateChanged;
 
     GroundMouseDetect()
@@ -19,7 +19,7 @@ public class GroundMouseDetect : MonoBehaviour
         this.onCellOrdinateChanged = onCellOrdinateChanged;
     }
 
-    private void Update() 
+    private void Update()
     {
         if (this.enable)
         {

@@ -9,8 +9,8 @@ public class EnemyMoveFinder
     public List<EnumMoveDirection> GetSequenceMoves
     (
         int moveLimitEachTurn,
-        CellOrdinate enemyCellOrdinate, 
-        CellOrdinate playerCellOrdinate, 
+        CellOrdinate enemyCellOrdinate,
+        CellOrdinate playerCellOrdinate,
         Level level
     )
     {
@@ -54,8 +54,8 @@ public class EnemyMoveFinder
     private void RecursiveFindMove
     (
         int moveLimitEachTurn,
-        CellOrdinate enemyCellOrdinate, 
-        CellOrdinate playerCellOrdinate, 
+        CellOrdinate enemyCellOrdinate,
+        CellOrdinate playerCellOrdinate,
         Level level,
         List<EnumMoveDirection> currentSequence,
         List<List<EnumMoveDirection>> possibleSequences
@@ -82,11 +82,11 @@ public class EnemyMoveFinder
             List<EnumMoveDirection> nextSequence = new List<EnumMoveDirection>(currentSequence);
             nextSequence.Add(nextMove);
             RecursiveFindMove(
-                moveLimitEachTurn, 
-                enemyCellOrdinate.GetDestinateOrdinate(nextMove), 
-                playerCellOrdinate, 
-                level, 
-                nextSequence, 
+                moveLimitEachTurn,
+                enemyCellOrdinate.GetDestinateOrdinate(nextMove),
+                playerCellOrdinate,
+                level,
+                nextSequence,
                 possibleSequences
             );
         }
@@ -124,7 +124,7 @@ public class EnemyMoveFinder
 
         float currentDistance = (enemyPosition - playerPosition).magnitude;
 
-        foreach (EnumMoveDirection key in Enum.GetValues(typeof(EnumMoveDirection))) 
+        foreach (EnumMoveDirection key in Enum.GetValues(typeof(EnumMoveDirection)))
         {
             CellOrdinate destinate = enemyCellOrdinate.GetDestinateOrdinate(key);
             Vector3 desPosition = CellTransformGetter.Instance.GetCellPosition(destinate);
@@ -136,7 +136,8 @@ public class EnemyMoveFinder
 
     private List<KeyValuePair<EnumMoveDirection, float>> SortDistanceDiffAfterMove(List<KeyValuePair<EnumMoveDirection, float>> distanceDiffs)
     {
-        distanceDiffs.Sort(delegate(KeyValuePair<EnumMoveDirection, float> pair1, KeyValuePair<EnumMoveDirection, float> pair2) {
+        distanceDiffs.Sort(delegate (KeyValuePair<EnumMoveDirection, float> pair1, KeyValuePair<EnumMoveDirection, float> pair2)
+        {
             return pair1.Value.CompareTo(pair2.Value);
         });
 

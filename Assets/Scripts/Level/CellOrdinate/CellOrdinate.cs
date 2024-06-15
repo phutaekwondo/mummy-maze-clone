@@ -1,9 +1,10 @@
 public class CellOrdinate
 {
-    public int x {get; private set;} = 0;
-    public int y {get; private set;} = 0;
+    public int x { get; private set; } = 0;
+    public int y { get; private set; } = 0;
 
-    public CellOrdinate(int x = 0, int y = 0) {
+    public CellOrdinate(int x = 0, int y = 0)
+    {
         this.x = x;
         this.y = y;
     }
@@ -12,7 +13,7 @@ public class CellOrdinate
     {
         CellOrdinate destinate = new CellOrdinate(this.x, this.y);
 
-        switch(direction) 
+        switch (direction)
         {
             case EnumMoveDirection.Up:
                 destinate.y -= 1;
@@ -26,16 +27,16 @@ public class CellOrdinate
             case EnumMoveDirection.Down:
                 destinate.y += 1;
                 break;
-            default: 
+            default:
                 break;
         }
 
         return destinate;
     }
 
-    public void Move(EnumMoveDirection direction) 
+    public void Move(EnumMoveDirection direction)
     {
-        switch(direction) 
+        switch (direction)
         {
             case EnumMoveDirection.Up:
                 this.y -= 1;
@@ -49,16 +50,18 @@ public class CellOrdinate
             case EnumMoveDirection.Down:
                 this.y += 1;
                 break;
-            default: 
+            default:
                 break;
         }
     }
 
-    public void SetX(int x) {
+    public void SetX(int x)
+    {
         this.x = x;
     }
 
-    public void SetY(int y) {
+    public void SetY(int y)
+    {
         this.y = y;
     }
 

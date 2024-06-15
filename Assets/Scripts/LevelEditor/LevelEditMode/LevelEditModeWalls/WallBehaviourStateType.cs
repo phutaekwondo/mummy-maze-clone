@@ -1,4 +1,4 @@
-public enum WallBehaviourStateType 
+public enum WallBehaviourStateType
 {
     IdleShowing,
     IdleHiding,

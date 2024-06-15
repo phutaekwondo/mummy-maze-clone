@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnumMoveDirection 
+public enum EnumMoveDirection
 {
     None,
     Up,
@@ -10,7 +10,8 @@ public enum EnumMoveDirection
     Down
 }
 
-public class EnumMoveDirectionHelper {
+public class EnumMoveDirectionHelper
+{
     public static ETurnType GetTurnType(EnumMoveDirection orgDirection, EnumMoveDirection newDirection)
     {
         if (orgDirection == EnumMoveDirection.None || newDirection == EnumMoveDirection.None)
@@ -28,7 +29,7 @@ public class EnumMoveDirectionHelper {
         int orgIndex = orderedMoveDirection.IndexOf(orgDirection);
         int newIndex = orderedMoveDirection.IndexOf(newDirection);
 
-        switch(newIndex - orgIndex) 
+        switch (newIndex - orgIndex)
         {
             case 1:
             case -3:
@@ -44,9 +45,10 @@ public class EnumMoveDirectionHelper {
         return ETurnType.None;
     }
 
-    public static EnumMoveDirection TurnMoveDirection(EnumMoveDirection direction, ETurnType turnType) 
+    public static EnumMoveDirection TurnMoveDirection(EnumMoveDirection direction, ETurnType turnType)
     {
-        if (direction == EnumMoveDirection.None){
+        if (direction == EnumMoveDirection.None)
+        {
             return EnumMoveDirection.None;
         }
 
@@ -59,7 +61,7 @@ public class EnumMoveDirectionHelper {
 
         int moveDirIndex = orderedMoveDirection.IndexOf(direction);
 
-        switch(turnType) 
+        switch (turnType)
         {
             case ETurnType.Left:
                 moveDirIndex -= 1;
@@ -78,7 +80,7 @@ public class EnumMoveDirectionHelper {
         {
             moveDirIndex += orderedMoveDirection.Count;
         }
-        else if (moveDirIndex >= orderedMoveDirection.Count) 
+        else if (moveDirIndex >= orderedMoveDirection.Count)
         {
             moveDirIndex %= orderedMoveDirection.Count;
         }
@@ -86,9 +88,9 @@ public class EnumMoveDirectionHelper {
         return orderedMoveDirection[moveDirIndex];
     }
 
-    public static Vector3 GetVec3Direction(EnumMoveDirection direction) 
+    public static Vector3 GetVec3Direction(EnumMoveDirection direction)
     {
-        CellOrdinate cell_1 = new CellOrdinate(1,1);
+        CellOrdinate cell_1 = new CellOrdinate(1, 1);
         CellOrdinate cell_2 = cell_1.GetDestinateOrdinate(direction);
 
         return (CellTransformGetter.Instance.GetCellPosition(cell_2) - CellTransformGetter.Instance.GetCellPosition(cell_1)).normalized;

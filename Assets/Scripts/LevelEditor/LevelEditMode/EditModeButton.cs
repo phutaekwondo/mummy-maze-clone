@@ -5,7 +5,7 @@ public class EditModeButton : MonoBehaviour
 {
     [SerializeField] private LevelEditModeType levelEditModeType;
 
-    public Action<LevelEditModeType> OnClickedAction {private get; set;}
+    public Action<LevelEditModeType> OnClickedAction { private get; set; }
 
     public void OnClicked()
     {

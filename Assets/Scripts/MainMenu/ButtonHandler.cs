@@ -6,5 +6,5 @@ namespace MainMenu
     {
         public abstract void OnClick();
     }
-    
+
 }

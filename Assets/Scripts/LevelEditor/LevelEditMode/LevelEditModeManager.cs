@@ -23,7 +23,7 @@ public class LevelEditModeManager : MonoBehaviour
         }
     }
 
-    private void Start() 
+    private void Start()
     {
         this.SetupLevelEditModeButtons();
     }

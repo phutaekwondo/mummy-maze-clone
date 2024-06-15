@@ -8,13 +8,13 @@ public class Enemy : Character
 {
     private EnemySequenceMovesMaker enemySequenceMovesMaker;
 
-    Enemy(): base()
+    Enemy() : base()
     {
         this.enemySequenceMovesMaker = new EnemySequenceMovesMaker(this);
     }
 
-    public void MakeBestMove(CellOrdinate playerCellOrdinate, Level level, Action onMoveComplete = null) 
+    public void MakeBestMove(CellOrdinate playerCellOrdinate, Level level, Action onMoveComplete = null)
     {
-        this.enemySequenceMovesMaker.StartSequenceMoves(playerCellOrdinate, level, onMoveComplete); 
+        this.enemySequenceMovesMaker.StartSequenceMoves(playerCellOrdinate, level, onMoveComplete);
     }
 }

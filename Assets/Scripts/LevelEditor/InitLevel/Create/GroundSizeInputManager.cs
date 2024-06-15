@@ -17,7 +17,7 @@ namespace LevelEditor
         private const int MIN_GROUND_SIZE = 2;
         private const int MAX_GROUND_SIZE = 10;
 
-        private void Start() 
+        private void Start()
         {
             this.UpdateGroundSize(5);
             this.RegisterButtonListeners();

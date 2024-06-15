@@ -10,7 +10,7 @@ public class Wall : MonoBehaviour
 
     public void SetWall(CellOrdinate cell_1, CellOrdinate cell_2)
     {
-        if (!IsAdjacentCells(cell_1,cell_2))
+        if (!IsAdjacentCells(cell_1, cell_2))
         {
             Debug.LogError("Creating Wall with not Adjacent cells");
             return;
@@ -31,11 +31,11 @@ public class Wall : MonoBehaviour
         float scaleX = this.gameObject.transform.forward.x > this.gameObject.transform.forward.z ?
                         cellSize.z :
                         cellSize.x;
-        
+
         scaleX = scaleX / DEFAULT_SIZE;
         float scaleY = this.gameObject.transform.localScale.y / DEFAULT_SIZE;
         float scaleZ = this.thickness / DEFAULT_SIZE;
-        
+
         Vector3 newScale = new Vector3(scaleX, scaleY, scaleZ);
 
         this.gameObject.transform.localScale = newScale;
@@ -61,6 +61,6 @@ public class Wall : MonoBehaviour
 
     private bool IsAdjacentCells(CellOrdinate cell_1, CellOrdinate cell_2)
     {
-        return math.abs(cell_1.x - cell_2.x) + math.abs(cell_1.y- cell_2.y) == 1;
+        return math.abs(cell_1.x - cell_2.x) + math.abs(cell_1.y - cell_2.y) == 1;
     }
 }

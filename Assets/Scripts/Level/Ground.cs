@@ -7,11 +7,11 @@ public class Ground : MonoBehaviour
     private uint widthSize = 5;
     private uint heightSize = 5;
 
-    public Vector3 GetCellPosition(CellOrdinate cellOrdinate) 
+    public Vector3 GetCellPosition(CellOrdinate cellOrdinate)
     {
         return GetCellPosition(cellOrdinate.x, cellOrdinate.y);
     }
-    
+
     public Vector3 GetCellPosition(int x, int y)
     {
         float PLANE_SIZE = UnityDefaultParameter.DEFAULT_PLANE_SIZE;
@@ -19,7 +19,7 @@ public class Ground : MonoBehaviour
         float scaledPlaneSizeZ = PLANE_SIZE * this.gameObject.transform.localScale.z;
 
         float horizontalStepSize = scaledPlaneSizeX / this.widthSize;
-        float verticalStepSize   = scaledPlaneSizeZ / this.heightSize;
+        float verticalStepSize = scaledPlaneSizeZ / this.heightSize;
 
         float leftX = this.gameObject.transform.position.x - (scaledPlaneSizeX / 2) + (horizontalStepSize / 2);
         float topZ = this.gameObject.transform.position.z + (scaledPlaneSizeZ / 2) - (verticalStepSize / 2);
@@ -30,7 +30,7 @@ public class Ground : MonoBehaviour
             topZ - y * verticalStepSize
         );
     }
-    
+
     public void SetSize(uint width, uint height)
     {
         this.widthSize = width;
@@ -56,11 +56,11 @@ public class Ground : MonoBehaviour
         float scaledPlaneSizeZ = PLANE_SIZE * this.gameObject.transform.localScale.z;
 
         float horizontalStepSize = scaledPlaneSizeX / this.widthSize;
-        float verticalStepSize   = scaledPlaneSizeZ / this.heightSize;
+        float verticalStepSize = scaledPlaneSizeZ / this.heightSize;
 
         return new Vector3(
-            horizontalStepSize, 
-            0, 
+            horizontalStepSize,
+            0,
             verticalStepSize
         );
     }

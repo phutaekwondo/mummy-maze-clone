@@ -15,7 +15,7 @@ public class LevelEditModeWalls : LevelEditModeBase
 
     public override void Setup(EditingLevel editingLevel)
     {
-        int groundSize= editingLevel.GetGroundSize();
+        int groundSize = editingLevel.GetGroundSize();
         this.ClearWalls();
         this.SpawnWalls(groundSize, groundSize);
     }

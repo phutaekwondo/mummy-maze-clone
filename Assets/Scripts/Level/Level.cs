@@ -11,32 +11,32 @@ public class Level : MonoBehaviour
         return this.ground.GetCellSize();
     }
 
-    public void BuildLevel() 
+    public void BuildLevel()
     {
         this.levelBuilder.BuildLevel(this.levelInfo);
     }
 
-    public CellOrdinate GetGoalCellOrdinate() 
+    public CellOrdinate GetGoalCellOrdinate()
     {
         return CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex((int)this.levelInfo.groundSize, this.levelInfo.exitDoorCellIndex);
     }
 
-    public int GetGroundSize() 
+    public int GetGroundSize()
     {
         return (int)this.levelInfo.groundSize;
     }
 
-    public CellOrdinate GetPlayerStartPosition() 
+    public CellOrdinate GetPlayerStartPosition()
     {
         return new CellOrdinate(this.levelInfo.playerStartPosition.x, this.levelInfo.playerStartPosition.y);
     }
 
-    public CellOrdinate GetEnemyStartPosition() 
+    public CellOrdinate GetEnemyStartPosition()
     {
         return new CellOrdinate(this.levelInfo.enemyStartPosition.x, this.levelInfo.enemyStartPosition.y);
     }
 
-    public bool IsBlocked(CellOrdinate cell, EnumMoveDirection direction) 
+    public bool IsBlocked(CellOrdinate cell, EnumMoveDirection direction)
     {
         CellOrdinate destinate = cell.GetDestinateOrdinate(direction);
 
@@ -45,7 +45,8 @@ public class Level : MonoBehaviour
 
     public bool IsBlocked(CellOrdinate cell_1, CellOrdinate cell_2)
     {
-        if (this.IsOutOfGround(cell_2)) {
+        if (this.IsOutOfGround(cell_2))
+        {
             return true;
         }
 
@@ -75,7 +76,7 @@ public class Level : MonoBehaviour
         );
     }
 
-    private int Parse2CellIndex(CellOrdinate cell) 
+    private int Parse2CellIndex(CellOrdinate cell)
     {
         return cell.y * (int)this.levelInfo.groundSize + cell.x;
     }

@@ -1,6 +1,6 @@
 namespace MainMenu
 {
-    public class PlayButtonHandler: ButtonHandler
+    public class PlayButtonHandler : ButtonHandler
     {
         public override void OnClick()
         {

@@ -14,12 +14,13 @@ public class PlayerInputGetter
         this.keyMap[KeyCode.DownArrow] = EnumPlayerInput.MoveDown;
     }
 
-    public EnumPlayerInput GetPlayerInput() 
+    public EnumPlayerInput GetPlayerInput()
     {
         KeyCode[] keys = this.keyMap.Keys.ToArray<KeyCode>();
-        for (int i = 0; i < keys.Length; i++) 
+        for (int i = 0; i < keys.Length; i++)
         {
-            if (Input.GetKeyDown(keys[i])) {
+            if (Input.GetKeyDown(keys[i]))
+            {
                 return this.keyMap[keys[i]];
             }
         }

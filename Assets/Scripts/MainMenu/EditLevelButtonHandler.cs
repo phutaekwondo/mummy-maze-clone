@@ -1,6 +1,6 @@
 namespace MainMenu
 {
-    public class EditLevelButtonHandler: ButtonHandler
+    public class EditLevelButtonHandler : ButtonHandler
     {
         public override void OnClick()
         {
