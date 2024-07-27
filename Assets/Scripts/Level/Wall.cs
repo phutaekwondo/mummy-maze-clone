@@ -1,12 +1,11 @@
-using System;
 using Unity.Mathematics;
 using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
     [SerializeField] float thickness = 0.2f;
-    private CellOrdinate blockedCell_1;
-    private CellOrdinate blockedCell_2;
+
+    private BlockedCells blockedCells;
 
     public void SetWall(CellOrdinate cell_1, CellOrdinate cell_2)
     {
@@ -16,8 +15,7 @@ public class Wall : MonoBehaviour
             return;
         }
 
-        this.blockedCell_1 = cell_1;
-        this.blockedCell_2 = cell_2;
+        this.blockedCells = new BlockedCells(cell_1, cell_2);
 
         this.SetPosition();
         this.SetRotation();
@@ -43,16 +41,16 @@ public class Wall : MonoBehaviour
 
     private void SetRotation()
     {
-        Vector3 cell1Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCell_1);
-        Vector3 cell2Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCell_2);
+        Vector3 cell1Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCells.cell_1);
+        Vector3 cell2Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCells.cell_2);
 
         this.gameObject.transform.forward = (cell1Position - cell2Position).normalized;
     }
 
     private void SetPosition()
     {
-        Vector3 cell1Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCell_1);
-        Vector3 cell2Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCell_2);
+        Vector3 cell1Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCells.cell_1);
+        Vector3 cell2Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCells.cell_2);
 
         Vector3 centerPosition = (cell1Position + cell2Position) / 2;
 
