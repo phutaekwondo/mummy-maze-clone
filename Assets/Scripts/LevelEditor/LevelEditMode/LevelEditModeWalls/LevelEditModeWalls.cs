@@ -10,7 +10,7 @@ public class LevelEditModeWalls : LevelEditModeBase
 
     private void SpawnWalls(int groundWidth, int groundHeight)
     {
-        this.SpawnVisibilityChangeableWalls(groundWidth, groundHeight, this.visibilityChangeableWallPrefab);
+        this.SpawnWalls(groundWidth, groundHeight, this.visibilityChangeableWallPrefab);
     }
 
     public override void Setup(EditingLevel editingLevel)
@@ -46,7 +46,7 @@ public class LevelEditModeWalls : LevelEditModeBase
         this.wallBehaviours.Clear();
     }
 
-    private void SpawnVisibilityChangeableWalls(int groundWidth, int groundHeight, GameObject visibilityChangeableWallPrefab)
+    private void SpawnWalls(int groundWidth, int groundHeight, GameObject visibilityChangeableWallPrefab)
     {
         for (int i = 0; i < groundWidth; i++)
         {
@@ -55,7 +55,7 @@ public class LevelEditModeWalls : LevelEditModeBase
                 CellOrdinate cell_1 = new CellOrdinate(i, j);
                 CellOrdinate cell_2 = new CellOrdinate(i, j + 1);
 
-                this.SpawnOneVisibilityChangeableWall(cell_1, cell_2, visibilityChangeableWallPrefab);
+                this.SpawnOneWall(cell_1, cell_2, visibilityChangeableWallPrefab);
             }
         }
 
@@ -66,12 +66,12 @@ public class LevelEditModeWalls : LevelEditModeBase
                 CellOrdinate cell_1 = new CellOrdinate(i, j);
                 CellOrdinate cell_2 = new CellOrdinate(i + 1, j);
 
-                this.SpawnOneVisibilityChangeableWall(cell_1, cell_2, visibilityChangeableWallPrefab);
+                this.SpawnOneWall(cell_1, cell_2, visibilityChangeableWallPrefab);
             }
         }
     }
 
-    private void SpawnOneVisibilityChangeableWall(CellOrdinate cell_1, CellOrdinate cell_2, GameObject visibilityChangeableWallPrefab)
+    private void SpawnOneWall(CellOrdinate cell_1, CellOrdinate cell_2, GameObject visibilityChangeableWallPrefab)
     {
         GameObject visibilityChangeableWallGameObject = GameObject.Instantiate(visibilityChangeableWallPrefab);
         Wall visibilityChangeableWall = visibilityChangeableWallGameObject.GetComponent<Wall>();
