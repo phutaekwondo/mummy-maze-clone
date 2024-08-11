@@ -14,6 +14,8 @@ namespace LevelEditor
         private WallBehaviourStateMachine stateMachine;
         private WallBehaviourStateColorize stateColorize;
 
+        public bool initVisible { set; private get; } = false;
+
         private void Start()
         {
             this.stateColorize = new WallBehaviourStateColorize(
@@ -24,7 +26,11 @@ namespace LevelEditor
                 this.targetToDestroyMaterial
             );
 
-            this.stateMachine = new WallBehaviourStateMachine(WallBehaviourStateType.IdleHiding, this.OnStateChanged);
+            this.stateMachine = new WallBehaviourStateMachine
+            (
+                this.initVisible ? WallBehaviourStateType.IdleShowing : WallBehaviourStateType.IdleHiding,
+                this.OnStateChanged
+            );
         }
 
         private void OnMouseOver()

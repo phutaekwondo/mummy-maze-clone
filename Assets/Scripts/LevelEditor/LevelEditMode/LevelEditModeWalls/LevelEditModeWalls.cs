@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using LevelEditor;
 using UnityEngine;
@@ -8,16 +9,16 @@ public class LevelEditModeWalls : LevelEditModeBase
     [SerializeField] GameObject wallsParent;
     List<LevelEditor.WallBehaviour> wallBehaviours = new List<LevelEditor.WallBehaviour>();
 
-    private void SpawnWalls(int groundWidth, int groundHeight)
+    private void SpawnWalls(int groundWidth, int groundHeight, List<BlockedCell> blockedCells)
     {
-        this.SpawnWalls(groundWidth, groundHeight, this.visibilityChangeableWallPrefab);
+        this.SpawnWalls(groundWidth, groundHeight, blockedCells, this.visibilityChangeableWallPrefab);
     }
 
     public override void Setup(EditingLevel editingLevel)
     {
         int groundSize = editingLevel.GetGroundSize();
         this.ClearWalls();
-        this.SpawnWalls(groundSize, groundSize);
+        this.SpawnWalls(groundSize, groundSize, editingLevel.GetBlockedCells());
     }
 
     public override void Activate()
@@ -46,16 +47,40 @@ public class LevelEditModeWalls : LevelEditModeBase
         this.wallBehaviours.Clear();
     }
 
-    private void SpawnWalls(int groundWidth, int groundHeight, GameObject visibilityChangeableWallPrefab)
+    private void SpawnWalls(
+        int groundWidth,
+        int groundHeight,
+        List<BlockedCell> blockedCells,
+        GameObject visibilityChangeableWallPrefab
+    )
     {
+        Func<BlockedCell, bool> calIsVisible = (blockedCell) =>
+        {
+            for (int i = 0; i < blockedCells.Count; i++)
+            {
+                if (blockedCell.Equals(blockedCells[i]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
+        Action<CellOrdinate, CellOrdinate> spawnWall = (cell_1, cell_2) =>
+        {
+            BlockedCell blockedCell = new BlockedCell(cell_1, cell_2);
+            bool isVisible = calIsVisible(blockedCell);
+            this.SpawnOneWall(blockedCell, isVisible, visibilityChangeableWallPrefab);
+        };
+
         for (int i = 0; i < groundWidth; i++)
         {
             for (int j = 0; j < groundHeight - 1; j++)
             {
                 CellOrdinate cell_1 = new CellOrdinate(i, j);
                 CellOrdinate cell_2 = new CellOrdinate(i, j + 1);
-
-                this.SpawnOneWall(cell_1, cell_2, visibilityChangeableWallPrefab);
+                spawnWall(cell_1, cell_2);
             }
         }
 
@@ -65,19 +90,23 @@ public class LevelEditModeWalls : LevelEditModeBase
             {
                 CellOrdinate cell_1 = new CellOrdinate(i, j);
                 CellOrdinate cell_2 = new CellOrdinate(i + 1, j);
-
-                this.SpawnOneWall(cell_1, cell_2, visibilityChangeableWallPrefab);
+                spawnWall(cell_1, cell_2);
             }
         }
     }
 
-    private void SpawnOneWall(CellOrdinate cell_1, CellOrdinate cell_2, GameObject visibilityChangeableWallPrefab)
+    private void SpawnOneWall(
+        BlockedCell blockedCell,
+        bool isVisible,
+        GameObject visibilityChangeableWallPrefab)
     {
         GameObject visibilityChangeableWallGameObject = GameObject.Instantiate(visibilityChangeableWallPrefab);
         Wall visibilityChangeableWall = visibilityChangeableWallGameObject.GetComponent<Wall>();
-        visibilityChangeableWall.SetWall(cell_1, cell_2);
-
-        this.wallBehaviours.Add(visibilityChangeableWallGameObject.GetComponent<LevelEditor.WallBehaviour>());
+        visibilityChangeableWall.SetWall(blockedCell);
         visibilityChangeableWallGameObject.transform.SetParent(this.wallsParent.transform);
+
+        WallBehaviour wallBehaviour = visibilityChangeableWallGameObject.GetComponent<WallBehaviour>();
+        this.wallBehaviours.Add(wallBehaviour);
+        wallBehaviour.initVisible = isVisible;
     }
 }

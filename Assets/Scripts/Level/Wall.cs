@@ -5,17 +5,17 @@ public class Wall : MonoBehaviour
 {
     [SerializeField] float thickness = 0.2f;
 
-    private BlockedCells blockedCells;
+    private BlockedCell blockedCell;
 
-    public void SetWall(CellOrdinate cell_1, CellOrdinate cell_2)
+    public void SetWall(BlockedCell blockedCells)
     {
-        if (!IsAdjacentCells(cell_1, cell_2))
+        if (!IsAdjacentCells(blockedCells.cell_1, blockedCells.cell_2))
         {
             Debug.LogError("Creating Wall with not Adjacent cells");
             return;
         }
 
-        this.blockedCells = new BlockedCells(cell_1, cell_2);
+        this.blockedCell = blockedCells;
 
         this.SetPosition();
         this.SetRotation();
@@ -41,16 +41,16 @@ public class Wall : MonoBehaviour
 
     private void SetRotation()
     {
-        Vector3 cell1Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCells.cell_1);
-        Vector3 cell2Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCells.cell_2);
+        Vector3 cell1Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCell.cell_1);
+        Vector3 cell2Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCell.cell_2);
 
         this.gameObject.transform.forward = (cell1Position - cell2Position).normalized;
     }
 
     private void SetPosition()
     {
-        Vector3 cell1Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCells.cell_1);
-        Vector3 cell2Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCells.cell_2);
+        Vector3 cell1Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCell.cell_1);
+        Vector3 cell2Position = CellTransformGetter.Instance.GetCellPosition(this.blockedCell.cell_2);
 
         Vector3 centerPosition = (cell1Position + cell2Position) / 2;
 

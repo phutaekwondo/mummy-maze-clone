@@ -1,9 +1,34 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace LevelEditor
 {
     public class EditingLevel : Level
     {
         private LevelInfo editingLevelInfo;
         private EditingLevelBuilder editingLevelBuilder;
+
+        public List<BlockedCell> GetBlockedCells()
+        {
+            List<Vector2Int> wallsLocateOrdinate = this.editingLevelInfo.walls;
+            List<BlockedCell> blockedCells = new List<BlockedCell>();
+
+            for (int i = 0; i < wallsLocateOrdinate.Count; i++)
+            {
+                CellOrdinate cell_1 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(
+                    (int)this.editingLevelInfo.groundSize,
+                    wallsLocateOrdinate[i].x
+                );
+                CellOrdinate cell_2 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(
+                    (int)this.editingLevelInfo.groundSize,
+                    wallsLocateOrdinate[i].y
+                );
+
+                blockedCells.Add(new BlockedCell(cell_1, cell_2));
+            }
+
+            return blockedCells;
+        }
 
         private void Start()
         {
