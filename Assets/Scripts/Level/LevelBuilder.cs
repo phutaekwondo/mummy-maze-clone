@@ -13,6 +13,9 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField]
     private GameObject exitDoorPrefab;
 
+    [SerializeField]
+    private GameObject aroundWallsParent;
+
     public void BuildLevel(LevelInfo levelInfo)
     {
         this.ground.SetSize(levelInfo.groundSize, levelInfo.groundSize);
@@ -62,6 +65,7 @@ public class LevelBuilder : MonoBehaviour
 
         Action<CellOrdinate, CellOrdinate> spawnWall = (cell_1, cell_2) =>
         {
+            Wall wall;
             if (
                 cell_1.Equals(exitDoorCellOrdinates[0])
                 || cell_1.Equals(exitDoorCellOrdinates[1])
@@ -69,11 +73,16 @@ public class LevelBuilder : MonoBehaviour
                 || cell_2.Equals(exitDoorCellOrdinates[1])
             )
             {
-                this.SpawnAWall(cell_1, cell_2, this.exitDoorPrefab);
+                wall = this.SpawnAWall(cell_1, cell_2, this.exitDoorPrefab);
             }
             else
             {
-                this.SpawnAWall(cell_1, cell_2, this.wallPrefab);
+                wall = this.SpawnAWall(cell_1, cell_2, this.wallPrefab);
+            }
+
+            if (this.aroundWallsParent != null)
+            {
+                wall.gameObject.transform.SetParent(this.aroundWallsParent.transform);
             }
         };
 
