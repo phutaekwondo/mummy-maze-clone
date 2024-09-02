@@ -73,7 +73,7 @@ public class LevelBuilder : MonoBehaviour
                 || cell_2.Equals(exitDoorCellOrdinates[1])
             )
             {
-                wall = this.SpawnAWall(cell_1, cell_2, this.exitDoorPrefab);
+                wall = this.SpawnExitDoor(cell_1, cell_2);
             }
             else
             {
@@ -112,6 +112,13 @@ public class LevelBuilder : MonoBehaviour
 
             spawnWall(cell_in, cell_out);
         }
+    }
+
+    protected virtual ExitDoor SpawnExitDoor(CellOrdinate cell_1, CellOrdinate cell_2)
+    {
+        Wall wall = this.SpawnAWall(cell_1, cell_2, this.exitDoorPrefab);
+
+        return wall.GetComponent<ExitDoor>();
     }
 
     protected virtual Wall SpawnAWall(CellOrdinate cell_1, CellOrdinate cell_2, GameObject prefab)

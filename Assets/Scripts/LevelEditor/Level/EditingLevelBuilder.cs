@@ -5,6 +5,7 @@ namespace LevelEditor
 {
     public class EditingLevelBuilder : LevelBuilder
     {
+        [SerializeField] EditExitDoorManager editExitDoorManager;
         private List<Wall> existingWalls = new List<Wall>();
 
         protected override void BuildWalls(
@@ -15,6 +16,13 @@ namespace LevelEditor
         )
         {
             this.BuildAroundWalls(groundSize, exitDoorCellIndex, exitDoorType);
+        }
+
+        protected override ExitDoor SpawnExitDoor(CellOrdinate cell_1, CellOrdinate cell_2)
+        {
+            ExitDoor exitDoor = base.SpawnExitDoor(cell_1, cell_2);
+            this.editExitDoorManager.ReceiveSpawnedExitDoor(exitDoor);
+            return exitDoor;
         }
 
         protected override Wall SpawnAWall(

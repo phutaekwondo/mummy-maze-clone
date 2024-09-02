@@ -7,6 +7,7 @@ public class LevelEditModeWalls : LevelEditModeBase
 {
     public GameObject visibilityChangeableWallPrefab;
     [SerializeField] GameObject wallsParent;
+    [SerializeField] ExitDoorTargetsSpawner exitDoorTargetsSpawner;
     List<LevelEditor.WallBehaviour> wallBehaviours = new List<LevelEditor.WallBehaviour>();
 
     private void SpawnWalls(int groundWidth, int groundHeight, List<BlockedCell> blockedCells)
@@ -19,6 +20,7 @@ public class LevelEditModeWalls : LevelEditModeBase
         int groundSize = editingLevel.GetGroundSize();
         this.ClearWalls();
         this.SpawnWalls(groundSize, groundSize, editingLevel.GetBlockedCells());
+        this.exitDoorTargetsSpawner.Spawn(groundSize);
     }
 
     public override void Activate()
