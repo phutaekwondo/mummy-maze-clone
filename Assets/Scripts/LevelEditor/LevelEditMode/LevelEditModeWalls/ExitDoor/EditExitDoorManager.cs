@@ -22,13 +22,11 @@ public class EditExitDoorManager : MonoBehaviour
 
     private void HandleExitDoorMouseDown()
     {
-        Debug.Log("Exit door mouse down");
         this.exitDoorTargetsPanel.SetEnabled(true);
     }
 
     private void HandleExitDoorMouseUp()
     {
-        Debug.Log("Exit door mouse up");
         this.exitDoorTargetsPanel.SetEnabled(false);
     }
 
