@@ -260,7 +260,9 @@ GameObject:
   - component: {fileID: 4760347718082658411}
   - component: {fileID: 8688976614422645225}
   - component: {fileID: 6386403076653387560}
+  - component: {fileID: 4713656498093329908}
   - component: {fileID: 3196312826772657076}
+  - component: {fileID: 8687801503873519122}
   m_Layer: 0
   m_Name: LevelEditorExitDoor
   m_TagString: Untagged
@@ -313,6 +315,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2027526, y: 3.994111, z: 1}
   m_Center: {x: 0, y: 1.003644, z: 0}
+--- !u!114 &4713656498093329908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760347718082658410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f43396263db67c47a1b23e715f4422f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3196312826772657076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,6 +339,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798236476ca79c6429b046a20fc069a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8687801503873519122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760347718082658410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1be4f2fdef6dd74184126f7f56ea33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderers:
+  - {fileID: 4760347717400115666}
+  - {fileID: 4760347718022964168}
+  - {fileID: 4760347717935302122}
+  - {fileID: 4760347718261981729}
+  defaultMaterial: {fileID: 2100000, guid: 41f12c0d4cf7e9e4d938354ab5b693d1, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 2ef1457c90d5fcf4597ee12dbfce0645, type: 2}
+  holdMaterial: {fileID: 2100000, guid: 41f12c0d4cf7e9e4d938354ab5b693d1, type: 2}
 --- !u!1 &4760347718261981730
 GameObject:
   m_ObjectHideFlags: 0
