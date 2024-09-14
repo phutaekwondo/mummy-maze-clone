@@ -15,9 +15,9 @@ public class EditExitDoorManager : MonoBehaviour
     public void ReceiveSpawnedExitDoor(ExitDoor levelEditorExitDoor)
     {
         this.levelEditorExitDoor = levelEditorExitDoor;
-        ExitDoorMouseHandler exitDoorMouseHandler = this.levelEditorExitDoor.GetComponent<ExitDoorMouseHandler>();
-        exitDoorMouseHandler.onMouseDown = this.HandleExitDoorMouseDown;
-        exitDoorMouseHandler.onMouseUp = this.HandleExitDoorMouseUp;
+        ExitDoorMouseEventPanel eventPanel = this.levelEditorExitDoor.GetComponent<ExitDoorMouseEventPanel>();
+        eventPanel.onMouseDown += this.HandleExitDoorMouseDown;
+        eventPanel.onMouseUp += this.HandleExitDoorMouseUp;
     }
 
     private void HandleExitDoorMouseDown()
