@@ -15,19 +15,25 @@ public class EditExitDoorManager : MonoBehaviour
     public void ReceiveSpawnedExitDoor(ExitDoor levelEditorExitDoor)
     {
         this.levelEditorExitDoor = levelEditorExitDoor;
-        ExitDoorMouseEventPanel eventPanel = this.levelEditorExitDoor.GetComponent<ExitDoorMouseEventPanel>();
-        eventPanel.onMouseDown += this.HandleExitDoorMouseDown;
-        eventPanel.onMouseUp += this.HandleExitDoorMouseUp;
+        ExitDoorStateMachine stateMachine = levelEditorExitDoor.GetComponent<ExitDoorStateMachine>();
+        stateMachine.onStateChange += this.HandleEditDoorState;
     }
 
-    private void HandleExitDoorMouseDown()
+    public void HandleEditDoorState(ExitDoorState state)
     {
-        this.exitDoorTargetsPanel.SetEnabled(true);
-    }
+        bool enableTarget = false;
+        switch (state)
+        {
+            case ExitDoorState.Hold:
+                enableTarget = true;
+                break;
+            case ExitDoorState.Default:
+            case ExitDoorState.Hover:
+                enableTarget = false;
+                break;
+        }
 
-    private void HandleExitDoorMouseUp()
-    {
-        this.exitDoorTargetsPanel.SetEnabled(false);
+        this.exitDoorTargetsPanel.SetEnabled(enableTarget);
     }
 
     private void HandleTargetMouseEnter(BlockedCell blockedCell)
