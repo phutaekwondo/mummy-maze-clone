@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 
 public class Wall : MonoBehaviour
@@ -9,12 +8,6 @@ public class Wall : MonoBehaviour
 
     public void SetWall(BlockedCell blockedCells)
     {
-        if (!IsAdjacentCells(blockedCells.cell_1, blockedCells.cell_2))
-        {
-            Debug.LogError("Creating Wall with not Adjacent cells");
-            return;
-        }
-
         this.blockedCell = blockedCells;
 
         this.SetPosition();
@@ -55,10 +48,5 @@ public class Wall : MonoBehaviour
         Vector3 centerPosition = (cell1Position + cell2Position) / 2;
 
         this.gameObject.transform.position = centerPosition;
-    }
-
-    private bool IsAdjacentCells(CellOrdinate cell_1, CellOrdinate cell_2)
-    {
-        return math.abs(cell_1.x - cell_2.x) + math.abs(cell_1.y - cell_2.y) == 1;
     }
 }
