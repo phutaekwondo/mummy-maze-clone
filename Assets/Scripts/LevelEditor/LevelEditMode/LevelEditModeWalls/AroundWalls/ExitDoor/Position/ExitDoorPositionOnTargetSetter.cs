@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LevelEditor
@@ -6,7 +5,7 @@ namespace LevelEditor
     public class ExitDoorPositionOnTargetSetter : MonoBehaviour
     {
         [SerializeField] ExitDoorTargetsPanel exitDoorTargetsPanel;
-        public ExitDoor levelEditorExitDoor { private get; set; }
+        [SerializeField] AroundWallsManager aroundWallsManager;
 
         private void Awake()
         {
@@ -21,7 +20,7 @@ namespace LevelEditor
 
         private void HandleTargetMouseEnter(BlockedCell blockedCell)
         {
-            this.levelEditorExitDoor.SetWall(blockedCell);
+            this.aroundWallsManager.SetExitDoor(blockedCell);
         }
     }
 }

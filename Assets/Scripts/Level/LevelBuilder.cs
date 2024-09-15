@@ -8,10 +8,10 @@ public class LevelBuilder : MonoBehaviour
     private Ground ground;
 
     [SerializeField]
-    private GameObject wallPrefab;
+    protected GameObject wallPrefab;
 
     [SerializeField]
-    private GameObject exitDoorPrefab;
+    protected GameObject exitDoorPrefab;
 
     [SerializeField]
     private GameObject aroundWallsParent;

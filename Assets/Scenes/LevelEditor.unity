@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exitDoorTargetsPanel: {fileID: 1451417034}
+  aroundWallsManager: {fileID: 522391697}
 --- !u!1 &135255520
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +968,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 522391696}
+  - component: {fileID: 522391697}
   m_Layer: 0
   m_Name: AroundWallls
   m_TagString: Untagged
@@ -989,6 +991,18 @@ Transform:
   m_Father: {fileID: 1243659656}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522391697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522391695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dbc5c12e6d42e418bd2cb2b269796d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &612831586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,6 +1904,7 @@ MonoBehaviour:
   exitDoorPrefab: {fileID: 4760347718082658410, guid: d6039f8f1b4c0fe40b4525c7d44dcc63, type: 3}
   aroundWallsParent: {fileID: 522391695}
   editExitDoorManager: {fileID: 1652721408}
+  aroundWallsManager: {fileID: 522391697}
 --- !u!1 &1116999616
 GameObject:
   m_ObjectHideFlags: 0

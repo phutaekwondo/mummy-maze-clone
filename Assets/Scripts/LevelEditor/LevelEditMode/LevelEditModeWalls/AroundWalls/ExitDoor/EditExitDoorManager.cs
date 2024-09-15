@@ -11,7 +11,6 @@ public class EditExitDoorManager : MonoBehaviour
 
     public void ReceiveSpawnedExitDoor(ExitDoor levelEditorExitDoor)
     {
-        this.exitDoorPositionOnTargetSetter.levelEditorExitDoor = levelEditorExitDoor;
         ExitDoorStateMachine stateMachine = levelEditorExitDoor.GetComponent<ExitDoorStateMachine>();
         stateMachine.onStateChange += this.HandleEditDoorState;
     }

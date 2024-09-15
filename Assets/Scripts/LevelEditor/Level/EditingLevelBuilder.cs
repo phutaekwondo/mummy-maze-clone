@@ -6,7 +6,7 @@ namespace LevelEditor
     public class EditingLevelBuilder : LevelBuilder
     {
         [SerializeField] EditExitDoorManager editExitDoorManager;
-        private List<Wall> existingWalls = new List<Wall>();
+        [SerializeField] AroundWallsManager aroundWallsManager;
 
         protected override void BuildWalls(
             List<Vector2Int> wallsLocateOrdinate,
@@ -20,6 +20,8 @@ namespace LevelEditor
 
         protected override ExitDoor SpawnExitDoor(CellOrdinate cell_1, CellOrdinate cell_2)
         {
+            this.SpawnAWall(cell_1, cell_2, this.wallPrefab);
+
             ExitDoor exitDoor = base.SpawnExitDoor(cell_1, cell_2);
             this.editExitDoorManager.ReceiveSpawnedExitDoor(exitDoor);
             return exitDoor;
@@ -32,19 +34,14 @@ namespace LevelEditor
         )
         {
             Wall newWall = base.SpawnAWall(cell_1, cell_2, wallPrefab);
-            this.existingWalls.Add(newWall);
+            this.aroundWallsManager.AddWall(newWall);
 
             return newWall;
         }
 
         public void ClearWalls()
         {
-            foreach (var wall in this.existingWalls)
-            {
-                Destroy(wall.gameObject);
-            }
-
-            this.existingWalls.Clear();
+            this.aroundWallsManager.ClearWalls();
         }
     }
 }
