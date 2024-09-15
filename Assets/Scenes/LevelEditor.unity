@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,38 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &14156950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 14156951}
+  m_Layer: 0
+  m_Name: Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &14156951
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14156950}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1451417033}
+  m_Father: {fileID: 1652721405}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &135255520
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visibilityChangeableWallPrefab: {fileID: 1499234959133048828, guid: ac804a89947f94740bc8d40b7c51c386, type: 3}
   wallsParent: {fileID: 492024529}
-  exitDoorTargetsSpawner: {fileID: 1652721406}
+  exitDoorTargetsSpawner: {fileID: 1451417035}
 --- !u!1 &443083772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2663,6 +2695,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1451417033}
+  - component: {fileID: 1451417035}
+  - component: {fileID: 1451417034}
   m_Layer: 0
   m_Name: ExitDoorTargets
   m_TagString: Untagged
@@ -2682,9 +2716,34 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1652721405}
+  m_Father: {fileID: 14156951}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1451417034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451417032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b471ba37d17cb42b93c6bae094bfe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1451417035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451417032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d9f45ca48bd2a4aa744fd70afca8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exitDoorTargetPrefab: {fileID: 801954738243839094, guid: 43cb60e05e4814c4a95eeae08391d859, type: 3}
 --- !u!224 &1456581519 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8405918638378943083, guid: 1e165cd9a8413ff4dbf80f16f6080609, type: 3}
@@ -3007,8 +3066,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1652721405}
-  - component: {fileID: 1652721406}
-  - component: {fileID: 1652721407}
   - component: {fileID: 1652721408}
   m_Layer: 0
   m_Name: EditExitDoor
@@ -3029,37 +3086,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1451417033}
+  - {fileID: 14156951}
   m_Father: {fileID: 319257131}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1652721406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652721404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d9f45ca48bd2a4aa744fd70afca8c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  exitDoorTargetPrefab: {fileID: 801954738243839094, guid: 43cb60e05e4814c4a95eeae08391d859, type: 3}
-  exitDoorTargetsParent: {fileID: 1451417032}
---- !u!114 &1652721407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652721404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52b471ba37d17cb42b93c6bae094bfe0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  exitDoorTargetsParent: {fileID: 1451417032}
 --- !u!114 &1652721408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3072,6 +3102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d140dbe1e4df44199461a431971a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exitDoorTargetsPanel: {fileID: 1451417034}
 --- !u!1 &1683949243
 GameObject:
   m_ObjectHideFlags: 0

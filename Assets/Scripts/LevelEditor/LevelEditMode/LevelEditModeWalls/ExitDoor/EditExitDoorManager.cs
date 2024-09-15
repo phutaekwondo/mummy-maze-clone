@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class EditExitDoorManager : MonoBehaviour
 {
-    ExitDoorTargetsPanel exitDoorTargetsPanel;
+    [SerializeField] ExitDoorTargetsPanel exitDoorTargetsPanel;
     private ExitDoor levelEditorExitDoor;
     private void Awake()
     {
-        this.exitDoorTargetsPanel = this.GetComponent<ExitDoorTargetsPanel>();
         this.exitDoorTargetsPanel.SetEnabled(false);
         this.exitDoorTargetsPanel.handleTargetMouseEnter = this.HandleTargetMouseEnter;
     }

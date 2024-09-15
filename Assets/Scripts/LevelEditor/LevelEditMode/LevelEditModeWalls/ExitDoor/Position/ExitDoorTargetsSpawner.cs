@@ -1,15 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Scripting;
 
 public class ExitDoorTargetsSpawner : MonoBehaviour
 {
     [SerializeField] GameObject exitDoorTargetPrefab;
-    [SerializeField] GameObject exitDoorTargetsParent;
+    private GameObject exitDoorTargetsParent;
+
     private ExitDoorTargetsPanel exitDoorTargetsEventListener;
 
     private void Awake()
     {
+        this.exitDoorTargetsParent = this.gameObject;
         this.exitDoorTargetsEventListener = this.GetComponent<ExitDoorTargetsPanel>();
     }
 

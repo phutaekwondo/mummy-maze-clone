@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class ExitDoorTargetsPanel : MonoBehaviour
 {
-    [SerializeField] GameObject exitDoorTargetsParent;
+    GameObject exitDoorTargetsParent;
+
+    private void Awake()
+    {
+        this.exitDoorTargetsParent = this.gameObject;
+    }
 
     public void SetEnabled(bool enabled)
     {
