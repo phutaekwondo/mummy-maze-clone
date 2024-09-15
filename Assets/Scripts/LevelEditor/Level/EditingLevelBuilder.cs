@@ -20,10 +20,12 @@ namespace LevelEditor
 
         protected override ExitDoor SpawnExitDoor(CellOrdinate cell_1, CellOrdinate cell_2)
         {
-            this.SpawnAWall(cell_1, cell_2, this.wallPrefab);
+            Wall wall = this.SpawnAWall(cell_1, cell_2, this.wallPrefab);
+            wall.gameObject.SetActive(false);
 
             ExitDoor exitDoor = base.SpawnExitDoor(cell_1, cell_2);
             this.editExitDoorManager.ReceiveSpawnedExitDoor(exitDoor);
+            this.aroundWallsManager.SetExitDoor(exitDoor);
             return exitDoor;
         }
 

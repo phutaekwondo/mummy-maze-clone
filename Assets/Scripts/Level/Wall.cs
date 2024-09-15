@@ -6,6 +6,11 @@ public class Wall : MonoBehaviour
 
     protected BlockedCell blockedCell;
 
+    public bool IsBlock(BlockedCell blockedCell)
+    {
+        return this.blockedCell.Equals(blockedCell);
+    }
+
     public void SetWall(BlockedCell blockedCells)
     {
         this.blockedCell = blockedCells;
