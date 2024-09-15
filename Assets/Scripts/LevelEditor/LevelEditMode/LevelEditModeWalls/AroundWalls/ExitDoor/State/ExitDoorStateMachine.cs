@@ -121,6 +121,8 @@ namespace LevelEditor
 
     class StateHold : ExitDoorStateBehaviour
     {
+        private bool isMouseOver = true;
+
         public StateHold()
         {
             this.state = ExitDoorState.Hold;
@@ -128,7 +130,26 @@ namespace LevelEditor
 
         public override ExitDoorStateBehaviour OnMouseUp()
         {
-            return new StateHover();
+            if (this.isMouseOver)
+            {
+                return new StateHover();
+            }
+            else
+            {
+                return new StateDefault();
+            }
+        }
+
+        public override ExitDoorStateBehaviour OnMouseExit()
+        {
+            this.isMouseOver = false;
+            return this;
+        }
+
+        public override ExitDoorStateBehaviour OnMouseEnter()
+        {
+            this.isMouseOver = true;
+            return this;
         }
     }
 }
