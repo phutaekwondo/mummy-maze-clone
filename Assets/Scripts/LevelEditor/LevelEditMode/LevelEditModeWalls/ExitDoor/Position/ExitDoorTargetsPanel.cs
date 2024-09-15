@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class ExitDoorTargetsPanel : MonoBehaviour
 {
-    GameObject exitDoorTargetsParent;
-
-    private void Awake()
-    {
-        this.exitDoorTargetsParent = this.gameObject;
-    }
+    [SerializeField] GameObject targetsParent;
+    private List<ExitDoorTarget> exitDoorTargets = new List<ExitDoorTarget>();
+    public Action<BlockedCell> handleTargetMouseEnter;
 
     public void SetEnabled(bool enabled)
     {
-        this.exitDoorTargetsParent.SetActive(enabled);
+        this.targetsParent.SetActive(enabled);
     }
 
-    private List<ExitDoorTarget> exitDoorTargets = new List<ExitDoorTarget>();
-    public Action<BlockedCell> handleTargetMouseEnter;
     public void AddExitDoorTarget(ExitDoorTarget exitDoorTarget)
     {
         this.exitDoorTargets.Add(exitDoorTarget);

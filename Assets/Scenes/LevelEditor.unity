@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 14156951}
+  - component: {fileID: 14156952}
   m_Layer: 0
   m_Name: Position
   m_TagString: Untagged
@@ -155,6 +156,19 @@ Transform:
   m_Father: {fileID: 1652721405}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &14156952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14156950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c617305c24b3f85479d62536c0f5c728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exitDoorTargetsPanel: {fileID: 1451417034}
 --- !u!1 &135255520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1823,6 +1837,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087566481}
   m_CullTransparentMesh: 1
+--- !u!1 &1092317648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1092317649}
+  m_Layer: 0
+  m_Name: TargetsParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1092317649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092317648}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1451417033}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1092423311 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1377864747336266251, guid: 3372c9d29aeb20541a3e161f693fba58, type: 3}
@@ -2698,7 +2743,7 @@ GameObject:
   - component: {fileID: 1451417035}
   - component: {fileID: 1451417034}
   m_Layer: 0
-  m_Name: ExitDoorTargets
+  m_Name: ExitDoorTargetsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2715,7 +2760,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1092317649}
   m_Father: {fileID: 14156951}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2731,6 +2777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b471ba37d17cb42b93c6bae094bfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetsParent: {fileID: 1092317648}
 --- !u!114 &1451417035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2744,6 +2791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exitDoorTargetPrefab: {fileID: 801954738243839094, guid: 43cb60e05e4814c4a95eeae08391d859, type: 3}
+  targetsParent: {fileID: 1092317648}
 --- !u!224 &1456581519 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8405918638378943083, guid: 1e165cd9a8413ff4dbf80f16f6080609, type: 3}
@@ -3102,7 +3150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d140dbe1e4df44199461a431971a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitDoorTargetsPanel: {fileID: 1451417034}
+  exitDoorPositionOnTargetSetter: {fileID: 14156952}
 --- !u!1 &1683949243
 GameObject:
   m_ObjectHideFlags: 0

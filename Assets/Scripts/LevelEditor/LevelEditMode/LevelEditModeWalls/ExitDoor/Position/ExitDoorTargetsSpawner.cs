@@ -1,21 +1,22 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ExitDoorTargetsSpawner : MonoBehaviour
 {
     [SerializeField] GameObject exitDoorTargetPrefab;
-    private GameObject exitDoorTargetsParent;
+    [SerializeField] GameObject targetsParent;
 
-    private ExitDoorTargetsPanel exitDoorTargetsEventListener;
+    private ExitDoorTargetsPanel exitDoorTargetsPanel;
 
     private void Awake()
     {
-        this.exitDoorTargetsParent = this.gameObject;
-        this.exitDoorTargetsEventListener = this.GetComponent<ExitDoorTargetsPanel>();
+        this.exitDoorTargetsPanel = this.GetComponent<ExitDoorTargetsPanel>();
     }
 
     private void Clear()
     {
-        foreach (Transform child in this.exitDoorTargetsParent.transform)
+        foreach (Transform child in this.targetsParent.transform)
         {
             Destroy(child.gameObject);
         }
@@ -24,7 +25,7 @@ public class ExitDoorTargetsSpawner : MonoBehaviour
     public void Spawn(int groundSize)
     {
         this.Clear();
-        this.exitDoorTargetsEventListener.ClearExitDoorTargets();
+        this.exitDoorTargetsPanel.ClearExitDoorTargets();
         for (int i = 0; i < groundSize; i++)
         {
             //top
@@ -55,9 +56,9 @@ public class ExitDoorTargetsSpawner : MonoBehaviour
 
     private void SpawnATarget(CellOrdinate cell_1, CellOrdinate cell_2)
     {
-        ExitDoorTarget newTarget = Instantiate(this.exitDoorTargetPrefab, this.exitDoorTargetsParent.transform).GetComponent<ExitDoorTarget>();
+        ExitDoorTarget newTarget = Instantiate(this.exitDoorTargetPrefab, this.targetsParent.transform).GetComponent<ExitDoorTarget>();
         newTarget.SetWall(new BlockedCell(cell_1, cell_2));
-        this.exitDoorTargetsEventListener.AddExitDoorTarget(newTarget);
+        this.exitDoorTargetsPanel.AddExitDoorTarget(newTarget);
     }
 }
 

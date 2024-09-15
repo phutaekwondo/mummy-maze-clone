@@ -3,17 +3,15 @@ using UnityEngine;
 
 public class EditExitDoorManager : MonoBehaviour
 {
-    [SerializeField] ExitDoorTargetsPanel exitDoorTargetsPanel;
-    private ExitDoor levelEditorExitDoor;
+    [SerializeField] ExitDoorPositionOnTargetSetter exitDoorPositionOnTargetSetter;
     private void Awake()
     {
-        this.exitDoorTargetsPanel.SetEnabled(false);
-        this.exitDoorTargetsPanel.handleTargetMouseEnter = this.HandleTargetMouseEnter;
+        this.exitDoorPositionOnTargetSetter.SetEnabled(false);
     }
 
     public void ReceiveSpawnedExitDoor(ExitDoor levelEditorExitDoor)
     {
-        this.levelEditorExitDoor = levelEditorExitDoor;
+        this.exitDoorPositionOnTargetSetter.levelEditorExitDoor = levelEditorExitDoor;
         ExitDoorStateMachine stateMachine = levelEditorExitDoor.GetComponent<ExitDoorStateMachine>();
         stateMachine.onStateChange += this.HandleEditDoorState;
     }
@@ -32,11 +30,7 @@ public class EditExitDoorManager : MonoBehaviour
                 break;
         }
 
-        this.exitDoorTargetsPanel.SetEnabled(enableTarget);
+        this.exitDoorPositionOnTargetSetter.SetEnabled(enableTarget);
     }
 
-    private void HandleTargetMouseEnter(BlockedCell blockedCell)
-    {
-        this.levelEditorExitDoor.SetWall(blockedCell);
-    }
 }
