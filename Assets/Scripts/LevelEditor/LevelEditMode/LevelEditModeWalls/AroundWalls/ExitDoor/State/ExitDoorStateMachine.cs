@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LevelEditor
@@ -15,6 +14,17 @@ namespace LevelEditor
     {
         public Action<ExitDoorState> onStateChange;
         private ExitDoorStateBehaviour stateBehaviour = new StateDefault();
+        private bool isActive = false;
+
+        public void SetIsActive(bool enabled)
+        {
+            this.isActive = enabled;
+
+            if (!this.isActive)
+            {
+                this.HandleStateChange(new StateDefault());
+            }
+        }
 
         private void Awake()
         {
@@ -33,6 +43,11 @@ namespace LevelEditor
 
         private void HandleStateChange(ExitDoorStateBehaviour newState)
         {
+            if (!this.isActive)
+            {
+                return;
+            }
+
             if (this.stateBehaviour == newState)
             {
                 return;
