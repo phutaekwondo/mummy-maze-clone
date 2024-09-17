@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelEditModeWalls : LevelEditModeBase
 {
     public GameObject visibilityChangeableWallPrefab;
+    [SerializeField] EditExitDoorManager editExitDoorManager;
     [SerializeField] GameObject wallsParent;
     [SerializeField] ExitDoorTargetsSpawner exitDoorTargetsSpawner;
     List<LevelEditor.WallBehaviour> wallBehaviours = new List<LevelEditor.WallBehaviour>();
@@ -29,6 +30,7 @@ public class LevelEditModeWalls : LevelEditModeBase
         {
             this.wallBehaviours[i].Activate();
         }
+        this.editExitDoorManager.SetEnabled(true);
     }
 
     public override void Deactivate()
@@ -37,6 +39,7 @@ public class LevelEditModeWalls : LevelEditModeBase
         {
             this.wallBehaviours[i].Deactivate();
         }
+        this.editExitDoorManager.SetEnabled(false);
     }
 
     private void ClearWalls()
