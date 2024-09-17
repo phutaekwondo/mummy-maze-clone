@@ -1,7 +1,9 @@
-using UnityEngine.Timeline;
-
-public interface LevelEditMode
+namespace LevelEditor
 {
-    public void Activate();
-    public void Deactivate();
+    public interface LevelEditMode
+    {
+        public void Activate();
+        public void Deactivate();
+        public void Setup(EditingLevel editingLevel);
+    }
 }
