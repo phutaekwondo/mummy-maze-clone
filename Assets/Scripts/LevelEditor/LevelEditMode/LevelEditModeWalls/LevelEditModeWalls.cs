@@ -16,7 +16,7 @@ public class LevelEditModeWalls : LevelEditModeBase
         this.SpawnWalls(groundWidth, groundHeight, blockedCells, this.visibilityChangeableWallPrefab);
     }
 
-    public override void Setup(EditingLevel editingLevel)
+    public override void Setup(LevelEditorLevel editingLevel)
     {
         int groundSize = editingLevel.GetGroundSize();
         this.ClearWalls();

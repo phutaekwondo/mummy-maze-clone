@@ -4,6 +4,6 @@ namespace LevelEditor
     {
         public void Activate();
         public void Deactivate();
-        public void Setup(EditingLevel editingLevel);
+        public void Setup(LevelEditorLevel editingLevel);
     }
 }

@@ -15,7 +15,7 @@ public class LevelEditModeManager : MonoBehaviour
     [SerializeField] private List<LevelEditModePair> levelEditModePairs = new List<LevelEditModePair>();
     [SerializeField] List<EditModeButton> editModeButtons = new List<EditModeButton>();
 
-    public void Setup(EditingLevel editingLevel)
+    public void Setup(LevelEditorLevel editingLevel)
     {
         for (int i = 0; i < this.levelEditModePairs.Count; i++)
         {

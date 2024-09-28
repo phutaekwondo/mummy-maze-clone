@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    public class EditingLevel : Level
+    public class LevelEditorLevel : Level
     {
         private LevelInfo editingLevelInfo;
-        private EditingLevelBuilder editingLevelBuilder;
+        private LevelEditorLevelBuilder editingLevelBuilder;
 
         public List<BlockedCell> GetBlockedCells()
         {
@@ -33,7 +33,7 @@ namespace LevelEditor
         private void Start()
         {
             this.editingLevelInfo = this.levelInfo.Clone();
-            this.editingLevelBuilder = this.levelBuilder as EditingLevelBuilder;
+            this.editingLevelBuilder = this.levelBuilder as LevelEditorLevelBuilder;
         }
 
         public void ApplyLoadedLevelInfo(LevelInfo loadedLevelInfo)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelEditorManager : MonoBehaviour
 {
     [SerializeField]
-    private LevelEditor.EditingLevel editingLevel;
+    private LevelEditor.LevelEditorLevel editingLevel;
 
     [SerializeField]
     private CreateLevelManager createLevelManager;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    public class EditingLevelBuilder : LevelBuilder
+    public class LevelEditorLevelBuilder : LevelBuilder
     {
         [SerializeField] EditExitDoorManager editExitDoorManager;
         [SerializeField] AroundWallsManager aroundWallsManager;

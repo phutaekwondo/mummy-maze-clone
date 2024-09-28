@@ -49,7 +49,7 @@ public class LevelEditModeCharacters : LevelEditModeBase
         this.cellTargetManager.SetEnable(false);
     }
 
-    public override void Setup(EditingLevel editingLevel)
+    public override void Setup(LevelEditorLevel editingLevel)
     {
         this.playerMover.SetCellOrdinate(editingLevel.GetPlayerStartPosition());
         this.enemyMover.SetCellOrdinate(editingLevel.GetEnemyStartPosition());
