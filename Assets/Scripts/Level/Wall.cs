@@ -4,7 +4,7 @@ public class Wall : MonoBehaviour
 {
     [SerializeField] float thickness = 0.2f;
 
-    protected BlockedCell blockedCell;
+    public BlockedCell blockedCell { get; protected set; }
 
     public bool IsBlock(BlockedCell blockedCell)
     {
