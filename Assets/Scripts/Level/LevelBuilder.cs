@@ -16,68 +16,45 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField]
     private GameObject aroundWallsParent;
 
-    public void BuildLevel(LevelInfo levelInfo)
+    public void BuildLevel(LevelData levelData)
     {
-        this.ground.SetSize(levelInfo.groundSize, levelInfo.groundSize);
+        this.ground.SetSize((uint)levelData.groundSize, (uint)levelData.groundSize);
         this.BuildWalls(
-            levelInfo.walls,
-            (int)levelInfo.groundSize,
-            levelInfo.exitDoorCellIndex,
-            levelInfo.exitDoorType
+            levelData.walls,
+            (int)levelData.groundSize,
+            levelData.exitDoor
         );
     }
 
     protected virtual void BuildWalls(
-        List<Vector2Int> wallsLocateOrdinate,
+        List<BlockedCell> walls,
         int groundSize,
-        int exitDoorCellIndex,
-        ExitDoorType exitDoorType
+        BlockedCell exitDoor
     )
     {
-        for (int i = 0; i < wallsLocateOrdinate.Count; i++)
+        for (int i = 0; i < walls.Count; i++)
         {
-            CellOrdinate cell_1 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(
-                groundSize,
-                wallsLocateOrdinate[i].x
-            );
-            CellOrdinate cell_2 = CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex(
-                groundSize,
-                wallsLocateOrdinate[i].y
-            );
-
-            this.SpawnAWall(cell_1, cell_2, this.wallPrefab);
+            this.SpawnAWall(walls[i], this.wallPrefab);
         }
 
-        this.BuildAroundWalls(groundSize, exitDoorCellIndex, exitDoorType);
+        this.BuildAroundWalls(groundSize, exitDoor);
     }
 
     protected void BuildAroundWalls(
         int groundSize,
-        int exitDoorCellIndex,
-        ExitDoorType exitDoorType
+        BlockedCell exitDoor
     )
     {
-        List<CellOrdinate> exitDoorCellOrdinates = this.GetExitDoorCellOrdinates(
-            groundSize,
-            exitDoorCellIndex,
-            exitDoorType
-        );
-
-        Action<CellOrdinate, CellOrdinate> spawnWall = (cell_1, cell_2) =>
+        Action<BlockedCell> spawnWall = (blockedCell) =>
         {
             Wall wall;
-            if (
-                cell_1.Equals(exitDoorCellOrdinates[0])
-                || cell_1.Equals(exitDoorCellOrdinates[1])
-                || cell_2.Equals(exitDoorCellOrdinates[0])
-                || cell_2.Equals(exitDoorCellOrdinates[1])
-            )
+            if (blockedCell.Equals(exitDoor))
             {
-                wall = this.SpawnExitDoor(cell_1, cell_2);
+                wall = this.SpawnExitDoor(exitDoor);
             }
             else
             {
-                wall = this.SpawnAWall(cell_1, cell_2, this.wallPrefab);
+                wall = this.SpawnAWall(blockedCell, this.wallPrefab);
             }
 
             if (this.aroundWallsParent != null)
@@ -92,39 +69,38 @@ public class LevelBuilder : MonoBehaviour
             CellOrdinate cell_in = new CellOrdinate(i, 0);
             CellOrdinate cell_out = new CellOrdinate(i, -1);
 
-            spawnWall(cell_in, cell_out);
+            spawnWall(new BlockedCell(cell_in, cell_out));
 
             //left
             cell_in = new CellOrdinate(0, i);
             cell_out = new CellOrdinate(-1, i);
 
-            spawnWall(cell_in, cell_out);
-
+            spawnWall(new BlockedCell(cell_in, cell_out));
             //right
             cell_in = new CellOrdinate(groundSize - 1, i);
             cell_out = new CellOrdinate(groundSize, i);
 
-            spawnWall(cell_in, cell_out);
+            spawnWall(new BlockedCell(cell_in, cell_out));
 
             //bot
             cell_in = new CellOrdinate(i, groundSize - 1);
             cell_out = new CellOrdinate(i, groundSize);
 
-            spawnWall(cell_in, cell_out);
+            spawnWall(new BlockedCell(cell_in, cell_out));
         }
     }
 
-    protected virtual ExitDoor SpawnExitDoor(CellOrdinate cell_1, CellOrdinate cell_2)
+    protected virtual ExitDoor SpawnExitDoor(BlockedCell blockedCell)
     {
-        Wall wall = this.SpawnAWall(cell_1, cell_2, this.exitDoorPrefab);
+        Wall wall = this.SpawnAWall(blockedCell, this.exitDoorPrefab);
 
         return wall.GetComponent<ExitDoor>();
     }
 
-    protected virtual Wall SpawnAWall(CellOrdinate cell_1, CellOrdinate cell_2, GameObject prefab)
+    protected virtual Wall SpawnAWall(BlockedCell blockedCell, GameObject prefab)
     {
         Wall newWall = Instantiate(prefab, this.gameObject.transform.parent).GetComponent<Wall>();
-        newWall.SetWall(new BlockedCell(cell_1, cell_2));
+        newWall.SetWall(blockedCell);
 
         return newWall;
     }

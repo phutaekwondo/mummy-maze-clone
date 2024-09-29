@@ -1,10 +1,17 @@
 using UnityEngine;
+using UnityEngine.Scripting;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField] protected LevelInfo levelInfo;
     [SerializeField] protected LevelBuilder levelBuilder;
     [SerializeField] protected Ground ground;
+    [SerializeField] protected LevelDataGetter levelDataGetter;
+    private LevelData data;
+
+    private void Awake()
+    {
+        this.data = this.levelDataGetter.Get(LevelName.Level_1);
+    }
 
     public Vector3 GetGroundCellSize()
     {
@@ -13,31 +20,42 @@ public class Level : MonoBehaviour
 
     public void BuildLevel()
     {
-        this.levelBuilder.BuildLevel(this.levelInfo);
+        this.levelBuilder.BuildLevel(this.data);
     }
 
     public CellOrdinate GetGoalCellOrdinate()
     {
-        return CellOrdinateFactory.Instance.GetCellOrdinateFromCellIndex((int)this.levelInfo.groundSize, this.levelInfo.exitDoorCellIndex);
+        CellOrdinate exitDoorCell1 = this.data.exitDoor.cell_1;
+        CellOrdinate exitDoorCell2 = this.data.exitDoor.cell_2;
+        if (IsOutOfGround(exitDoorCell1))
+        {
+            return exitDoorCell2;
+        }
+        return exitDoorCell1;
     }
 
     public int GetGroundSize()
     {
-        return (int)this.levelInfo.groundSize;
+        return this.data.groundSize;
     }
 
     public CellOrdinate GetPlayerStartPosition()
     {
-        return new CellOrdinate(this.levelInfo.playerStartPosition.x, this.levelInfo.playerStartPosition.y);
+        return this.data.playerStartPosition;
     }
 
     public CellOrdinate GetEnemyStartPosition()
     {
-        return new CellOrdinate(this.levelInfo.enemyStartPosition.x, this.levelInfo.enemyStartPosition.y);
+        return this.data.enemyStartPosition;
     }
 
     public bool IsBlocked(CellOrdinate cell, EnumMoveDirection direction)
     {
+        if (direction == EnumMoveDirection.None)
+        {
+            return false;
+        }
+
         CellOrdinate destinate = cell.GetDestinateOrdinate(direction);
 
         return this.IsBlocked(cell, destinate);
@@ -49,15 +67,11 @@ public class Level : MonoBehaviour
         {
             return true;
         }
+        BlockedCell checkingBlockedCell = new BlockedCell(cell_1, cell_2);
 
-        int cellIndex_1 = this.Parse2CellIndex(cell_1);
-        int cellIndex_2 = this.Parse2CellIndex(cell_2);
-
-        for (int i = 0; i < this.levelInfo.walls.Count; i++)
+        for (int i = 0; i < this.data.walls.Count; i++)
         {
-            Vector2Int wall = this.levelInfo.walls[i];
-
-            if ((wall.x == cellIndex_1 && wall.y == cellIndex_2) || (wall.y == cellIndex_1 && wall.x == cellIndex_2))
+            if (this.data.walls[i].Equals(checkingBlockedCell))
             {
                 return true;
             }
@@ -71,13 +85,8 @@ public class Level : MonoBehaviour
         return (
             cellOrdinate.x < 0 ||
             cellOrdinate.y < 0 ||
-            cellOrdinate.x >= this.levelInfo.groundSize ||
-            cellOrdinate.y >= this.levelInfo.groundSize
+            cellOrdinate.x >= this.data.groundSize ||
+            cellOrdinate.y >= this.data.groundSize
         );
-    }
-
-    private int Parse2CellIndex(CellOrdinate cell)
-    {
-        return cell.y * (int)this.levelInfo.groundSize + cell.x;
     }
 }
