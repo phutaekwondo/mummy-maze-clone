@@ -6,11 +6,12 @@ public class Level : MonoBehaviour
     [SerializeField] protected LevelBuilder levelBuilder;
     [SerializeField] protected Ground ground;
     [SerializeField] protected LevelDataGetter levelDataGetter;
+    [SerializeField] protected LevelName levelName;
     private LevelData data;
 
     private void Awake()
     {
-        this.data = this.levelDataGetter.Get(LevelName.Level_1);
+        this.data = this.levelDataGetter.Get(levelName);
     }
 
     public Vector3 GetGroundCellSize()
