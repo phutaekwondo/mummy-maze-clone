@@ -8,34 +8,42 @@ namespace LevelEditor
         [SerializeField] EditExitDoorManager editExitDoorManager;
         [SerializeField] AroundWallsManager aroundWallsManager;
 
-        protected override void BuildWalls(
-            List<Vector2Int> wallsLocateOrdinate,
-            int groundSize,
-            int exitDoorCellIndex,
-            ExitDoorType exitDoorType
-        )
+        public override void BuildLevel(LevelData data)
         {
-            this.BuildAroundWalls(groundSize, exitDoorCellIndex, exitDoorType);
+            if (data == null)
+            {
+                return;
+            }
+
+            base.BuildLevel(data);
         }
 
-        protected override ExitDoor SpawnExitDoor(CellOrdinate cell_1, CellOrdinate cell_2)
+        protected override void BuildWalls(
+            List<BlockedCell> walls,
+            int groundSize,
+            BlockedCell exitDoor
+        )
         {
-            Wall wall = this.SpawnAWall(cell_1, cell_2, this.wallPrefab);
+            this.BuildAroundWalls(groundSize, exitDoor);
+        }
+
+        protected override ExitDoor SpawnExitDoor(BlockedCell blockedCell)
+        {
+            Wall wall = this.SpawnAWall(blockedCell, this.wallPrefab);
             wall.gameObject.SetActive(false);
 
-            ExitDoor exitDoor = base.SpawnExitDoor(cell_1, cell_2);
+            ExitDoor exitDoor = base.SpawnExitDoor(blockedCell);
             this.editExitDoorManager.ReceiveSpawnedExitDoor(exitDoor);
             this.aroundWallsManager.SetExitDoor(exitDoor);
             return exitDoor;
         }
 
         protected override Wall SpawnAWall(
-            CellOrdinate cell_1,
-            CellOrdinate cell_2,
+            BlockedCell blockedCell,
             GameObject wallPrefab
         )
         {
-            Wall newWall = base.SpawnAWall(cell_1, cell_2, wallPrefab);
+            Wall newWall = base.SpawnAWall(blockedCell, wallPrefab);
             this.aroundWallsManager.AddWall(newWall);
 
             return newWall;

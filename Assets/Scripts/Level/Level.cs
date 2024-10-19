@@ -7,7 +7,7 @@ public class Level : MonoBehaviour
     [SerializeField] protected Ground ground;
     [SerializeField] protected LevelDataGetter levelDataGetter;
     [SerializeField] protected LevelName levelName;
-    private LevelData data;
+    protected LevelData data;
 
     public Vector3 GetGroundCellSize()
     {

@@ -16,7 +16,7 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField]
     private GameObject aroundWallsParent;
 
-    public void BuildLevel(LevelData levelData)
+    public virtual void BuildLevel(LevelData levelData)
     {
         this.ground.SetSize((uint)levelData.groundSize, (uint)levelData.groundSize);
         this.BuildWalls(

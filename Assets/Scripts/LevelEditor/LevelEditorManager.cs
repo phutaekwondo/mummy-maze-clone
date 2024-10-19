@@ -15,6 +15,7 @@ public class LevelEditorManager : MonoBehaviour
 
     [SerializeField]
     private LevelEditModeManager levelEditModeManager;
+    private LevelInfoConverter levelInfoConverter = new LevelInfoConverter();
 
     private void Start()
     {
@@ -35,7 +36,7 @@ public class LevelEditorManager : MonoBehaviour
 
     private void OnLoadLevelFinished(LevelInfo loadedLevelInfo)
     {
-        this.editingLevel.ApplyLoadedLevelInfo(loadedLevelInfo);
+        this.editingLevel.ApplyLoadedLevelData(levelInfoConverter.Convert(loadedLevelInfo));
         this.OnFinishLevelInitialize();
     }
 
