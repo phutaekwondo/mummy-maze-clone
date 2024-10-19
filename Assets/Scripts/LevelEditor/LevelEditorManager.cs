@@ -24,8 +24,8 @@ public class LevelEditorManager : MonoBehaviour
 
     private void RegisterEvents()
     {
-        this.createLevelManager.RegisterOnLevelCreatingFinished(this.HandleLevelCreatingFinished);
-        this.loadLevelManager.RegisterOnLoadLevelFinished(this.HandleLoadLevelFinished);
+        this.createLevelManager.RegisterOnLevelCreatingFinished(this.HandleInitLevelFinished);
+        this.loadLevelManager.RegisterOnLoadLevelFinished(this.HandleInitLevelFinished);
     }
 
     private void SetupScene()
@@ -33,15 +33,9 @@ public class LevelEditorManager : MonoBehaviour
         this.editingLevel.BuildLevel();
     }
 
-    private void HandleLoadLevelFinished(LevelData levelData)
+    private void HandleInitLevelFinished(LevelData levelData)
     {
         this.editingLevel.ApplyLoadedLevelData(levelData);
-        this.OnFinishLevelInitialize();
-    }
-
-    private void HandleLevelCreatingFinished(CreateLevelModel createLevelModel)
-    {
-        this.editingLevel.ApplyCreateLevelModel(createLevelModel);
         this.OnFinishLevelInitialize();
     }
 

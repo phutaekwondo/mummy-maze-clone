@@ -24,17 +24,6 @@ namespace LevelEditor
             this.BuildLevel();
         }
 
-        public void ApplyCreateLevelModel(CreateLevelModel createLevelModel)
-        {
-            this.StoreCreatedLevelInfo(createLevelModel);
-            this.ApplyEditingLevelInfoToScene();
-        }
-
-        private void StoreCreatedLevelInfo(CreateLevelModel createLevelModel)
-        {
-            this.data.groundSize = createLevelModel.groundSize;
-        }
-
         private void ApplyEditingLevelInfoToScene()
         {
             this.editingLevelBuilder.ClearWalls();

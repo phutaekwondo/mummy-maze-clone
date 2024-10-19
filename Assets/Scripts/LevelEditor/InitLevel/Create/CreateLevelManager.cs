@@ -8,7 +8,7 @@ namespace LevelEditor
     {
         private CreateLevelModel createLevelModel = new CreateLevelModel();
 
-        private Action<CreateLevelModel> onLevelCreatingFinished;
+        private Action<LevelData> onLevelCreatingFinished;
 
         [SerializeField]
         private GroundSizeInputManager groundSizeInputManager;
@@ -17,7 +17,7 @@ namespace LevelEditor
         private Button acceptButton;
 
         public void RegisterOnLevelCreatingFinished(
-            Action<CreateLevelModel> onLevelCreatingFinished
+            Action<LevelData> onLevelCreatingFinished
         )
         {
             this.onLevelCreatingFinished = onLevelCreatingFinished;
@@ -38,7 +38,15 @@ namespace LevelEditor
         private void OnAcceptButton()
         {
             this.Hide();
-            this.onLevelCreatingFinished?.Invoke(this.createLevelModel);
+            this.onLevelCreatingFinished?.Invoke(CreateLevelData(createLevelModel));
+        }
+
+        private LevelData CreateLevelData(CreateLevelModel createLevelModel)
+        {
+            LevelData levelData = new LevelData();
+            levelData.groundSize = createLevelModel.groundSize;
+
+            return levelData;
         }
     }
 }
