@@ -36,10 +36,10 @@ public class LevelEditorManager : MonoBehaviour
     private void HandleInitLevelFinished(LevelData levelData)
     {
         this.editingLevel.ApplyLoadedLevelData(levelData);
-        this.OnFinishLevelInitialize();
+        this.SetupEditModes();
     }
 
-    private void OnFinishLevelInitialize()
+    private void SetupEditModes()
     {
         this.levelEditModeManager.Setup(this.editingLevel);
     }
