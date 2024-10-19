@@ -15,7 +15,6 @@ public class LevelEditorManager : MonoBehaviour
 
     [SerializeField]
     private LevelEditModeManager levelEditModeManager;
-    private LevelInfoConverter levelInfoConverter = new LevelInfoConverter();
 
     private void Start()
     {
@@ -25,8 +24,8 @@ public class LevelEditorManager : MonoBehaviour
 
     private void RegisterEvents()
     {
-        this.createLevelManager.RegisterOnLevelCreatingFinished(this.OnLevelCreatingFinished);
-        this.loadLevelManager.RegisterOnLoadLevelFinished(this.OnLoadLevelFinished);
+        this.createLevelManager.RegisterOnLevelCreatingFinished(this.HandleLevelCreatingFinished);
+        this.loadLevelManager.RegisterOnLoadLevelFinished(this.HandleLoadLevelFinished);
     }
 
     private void SetupScene()
@@ -34,13 +33,13 @@ public class LevelEditorManager : MonoBehaviour
         this.editingLevel.BuildLevel();
     }
 
-    private void OnLoadLevelFinished(LevelInfo loadedLevelInfo)
+    private void HandleLoadLevelFinished(LevelData levelData)
     {
-        this.editingLevel.ApplyLoadedLevelData(levelInfoConverter.Convert(loadedLevelInfo));
+        this.editingLevel.ApplyLoadedLevelData(levelData);
         this.OnFinishLevelInitialize();
     }
 
-    private void OnLevelCreatingFinished(CreateLevelModel createLevelModel)
+    private void HandleLevelCreatingFinished(CreateLevelModel createLevelModel)
     {
         this.editingLevel.ApplyCreateLevelModel(createLevelModel);
         this.OnFinishLevelInitialize();

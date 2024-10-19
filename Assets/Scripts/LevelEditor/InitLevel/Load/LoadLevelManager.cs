@@ -14,11 +14,11 @@ namespace LevelEditor
 
         [SerializeField]
         Button acceptButton;
-        private Action<LevelInfo> onLevelInfoAccepted;
-
+        private Action<LevelData> onLevelInfoAccepted;
         private string levelInfoPath;
+        private LevelInfoConverter levelInfoConverter = new LevelInfoConverter();
 
-        public void RegisterOnLoadLevelFinished(Action<LevelInfo> onLevelInfoAccepted)
+        public void RegisterOnLoadLevelFinished(Action<LevelData> onLevelInfoAccepted)
         {
             this.onLevelInfoAccepted = onLevelInfoAccepted;
         }
@@ -50,7 +50,7 @@ namespace LevelEditor
             else
             {
                 this.Hide();
-                this.onLevelInfoAccepted?.Invoke(levelInfo);
+                this.onLevelInfoAccepted?.Invoke(levelInfoConverter.Convert(levelInfo));
             }
         }
 
