@@ -1,46 +1,47 @@
-using System.Collections.Generic;
-using LevelEditor;
 using UnityEngine;
 
-public class LevelEditorManager : MonoBehaviour
+namespace LevelEditor
 {
-    [SerializeField]
-    private LevelEditor.LevelEditorLevel editingLevel;
-
-    [SerializeField]
-    private CreateLevelManager createLevelManager;
-
-    [SerializeField]
-    private LoadLevelManager loadLevelManager;
-
-    [SerializeField]
-    private LevelEditModeManager levelEditModeManager;
-
-    private void Start()
+    public class LevelEditorManager : MonoBehaviour
     {
-        this.SetupScene();
-        this.RegisterEvents();
-    }
+        [SerializeField]
+        private LevelEditorLevel editingLevel;
 
-    private void RegisterEvents()
-    {
-        this.createLevelManager.RegisterOnLevelCreatingFinished(this.HandleInitLevelFinished);
-        this.loadLevelManager.RegisterOnLoadLevelFinished(this.HandleInitLevelFinished);
-    }
+        [SerializeField]
+        private CreateLevelManager createLevelManager;
 
-    private void SetupScene()
-    {
-        this.editingLevel.BuildLevel();
-    }
+        [SerializeField]
+        private LoadLevelManager loadLevelManager;
 
-    private void HandleInitLevelFinished(LevelData levelData)
-    {
-        this.editingLevel.ApplyLoadedLevelData(levelData);
-        this.SetupEditModes();
-    }
+        [SerializeField]
+        private LevelEditModeManager levelEditModeManager;
 
-    private void SetupEditModes()
-    {
-        this.levelEditModeManager.Setup(this.editingLevel);
+        private void Start()
+        {
+            this.SetupScene();
+            this.RegisterEvents();
+        }
+
+        private void RegisterEvents()
+        {
+            this.createLevelManager.RegisterOnLevelCreatingFinished(this.HandleInitLevelFinished);
+            this.loadLevelManager.RegisterOnLoadLevelFinished(this.HandleInitLevelFinished);
+        }
+
+        private void SetupScene()
+        {
+            this.editingLevel.BuildLevel();
+        }
+
+        private void HandleInitLevelFinished(LevelData levelData)
+        {
+            this.editingLevel.ApplyLoadedLevelData(levelData);
+            this.SetupEditModes();
+        }
+
+        private void SetupEditModes()
+        {
+            this.levelEditModeManager.Setup(this.editingLevel);
+        }
     }
 }
