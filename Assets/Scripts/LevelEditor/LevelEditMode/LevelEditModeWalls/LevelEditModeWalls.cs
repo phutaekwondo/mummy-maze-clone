@@ -1,117 +1,119 @@
 using System;
 using System.Collections.Generic;
-using LevelEditor;
 using UnityEngine;
 
-public class LevelEditModeWalls : LevelEditModeBase
+namespace LevelEditor
 {
-    public GameObject visibilityChangeableWallPrefab;
-    [SerializeField] EditExitDoorManager editExitDoorManager;
-    [SerializeField] GameObject wallsParent;
-    [SerializeField] ExitDoorTargetsSpawner exitDoorTargetsSpawner;
-    List<LevelEditor.WallBehaviour> wallBehaviours = new List<LevelEditor.WallBehaviour>();
-
-    private void SpawnWalls(int groundWidth, int groundHeight, List<BlockedCell> blockedCells)
+    public class LevelEditModeWalls : LevelEditModeBase
     {
-        this.SpawnWalls(groundWidth, groundHeight, blockedCells, this.visibilityChangeableWallPrefab);
-    }
+        public GameObject visibilityChangeableWallPrefab;
+        [SerializeField] EditExitDoorManager editExitDoorManager;
+        [SerializeField] GameObject wallsParent;
+        [SerializeField] ExitDoorTargetsSpawner exitDoorTargetsSpawner;
+        List<LevelEditor.WallBehaviour> wallBehaviours = new List<LevelEditor.WallBehaviour>();
 
-    public override void Setup(LevelEditorLevel editingLevel)
-    {
-        int groundSize = editingLevel.GetGroundSize();
-        this.ClearWalls();
-        this.SpawnWalls(groundSize, groundSize, editingLevel.GetBlockedCells());
-        this.exitDoorTargetsSpawner.Spawn(groundSize);
-    }
-
-    public override void Activate()
-    {
-        for (int i = 0; i < this.wallBehaviours.Count; i++)
+        private void SpawnWalls(int groundWidth, int groundHeight, List<BlockedCell> blockedCells)
         {
-            this.wallBehaviours[i].Activate();
-        }
-        this.editExitDoorManager.SetEnabled(true);
-    }
-
-    public override void Deactivate()
-    {
-        for (int i = 0; i < this.wallBehaviours.Count; i++)
-        {
-            this.wallBehaviours[i].Deactivate();
-        }
-        this.editExitDoorManager.SetEnabled(false);
-    }
-
-    private void ClearWalls()
-    {
-        for (int i = 0; i < this.wallBehaviours.Count; i++)
-        {
-            GameObject.Destroy(this.wallBehaviours[i].gameObject);
+            this.SpawnWalls(groundWidth, groundHeight, blockedCells, this.visibilityChangeableWallPrefab);
         }
 
-        this.wallBehaviours.Clear();
-    }
-
-    private void SpawnWalls(
-        int groundWidth,
-        int groundHeight,
-        List<BlockedCell> blockedCells,
-        GameObject visibilityChangeableWallPrefab
-    )
-    {
-        Func<BlockedCell, bool> calIsVisible = (blockedCell) =>
+        public override void Setup(LevelEditorLevel editingLevel)
         {
-            for (int i = 0; i < blockedCells.Count; i++)
+            int groundSize = editingLevel.GetGroundSize();
+            this.ClearWalls();
+            this.SpawnWalls(groundSize, groundSize, editingLevel.GetBlockedCells());
+            this.exitDoorTargetsSpawner.Spawn(groundSize);
+        }
+
+        public override void Activate()
+        {
+            for (int i = 0; i < this.wallBehaviours.Count; i++)
             {
-                if (blockedCell.Equals(blockedCells[i]))
+                this.wallBehaviours[i].Activate();
+            }
+            this.editExitDoorManager.SetEnabled(true);
+        }
+
+        public override void Deactivate()
+        {
+            for (int i = 0; i < this.wallBehaviours.Count; i++)
+            {
+                this.wallBehaviours[i].Deactivate();
+            }
+            this.editExitDoorManager.SetEnabled(false);
+        }
+
+        private void ClearWalls()
+        {
+            for (int i = 0; i < this.wallBehaviours.Count; i++)
+            {
+                GameObject.Destroy(this.wallBehaviours[i].gameObject);
+            }
+
+            this.wallBehaviours.Clear();
+        }
+
+        private void SpawnWalls(
+            int groundWidth,
+            int groundHeight,
+            List<BlockedCell> blockedCells,
+            GameObject visibilityChangeableWallPrefab
+        )
+        {
+            Func<BlockedCell, bool> calIsVisible = (blockedCell) =>
+            {
+                for (int i = 0; i < blockedCells.Count; i++)
                 {
-                    return true;
+                    if (blockedCell.Equals(blockedCells[i]))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            };
+
+            Action<CellOrdinate, CellOrdinate> spawnWall = (cell_1, cell_2) =>
+            {
+                BlockedCell blockedCell = new BlockedCell(cell_1, cell_2);
+                bool isVisible = calIsVisible(blockedCell);
+                this.SpawnOneWall(blockedCell, isVisible, visibilityChangeableWallPrefab);
+            };
+
+            for (int i = 0; i < groundWidth; i++)
+            {
+                for (int j = 0; j < groundHeight - 1; j++)
+                {
+                    CellOrdinate cell_1 = new CellOrdinate(i, j);
+                    CellOrdinate cell_2 = new CellOrdinate(i, j + 1);
+                    spawnWall(cell_1, cell_2);
                 }
             }
 
-            return false;
-        };
-
-        Action<CellOrdinate, CellOrdinate> spawnWall = (cell_1, cell_2) =>
-        {
-            BlockedCell blockedCell = new BlockedCell(cell_1, cell_2);
-            bool isVisible = calIsVisible(blockedCell);
-            this.SpawnOneWall(blockedCell, isVisible, visibilityChangeableWallPrefab);
-        };
-
-        for (int i = 0; i < groundWidth; i++)
-        {
-            for (int j = 0; j < groundHeight - 1; j++)
+            for (int i = 0; i < groundWidth - 1; i++)
             {
-                CellOrdinate cell_1 = new CellOrdinate(i, j);
-                CellOrdinate cell_2 = new CellOrdinate(i, j + 1);
-                spawnWall(cell_1, cell_2);
+                for (int j = 0; j < groundHeight; j++)
+                {
+                    CellOrdinate cell_1 = new CellOrdinate(i, j);
+                    CellOrdinate cell_2 = new CellOrdinate(i + 1, j);
+                    spawnWall(cell_1, cell_2);
+                }
             }
         }
 
-        for (int i = 0; i < groundWidth - 1; i++)
+        private void SpawnOneWall(
+            BlockedCell blockedCell,
+            bool isVisible,
+            GameObject visibilityChangeableWallPrefab)
         {
-            for (int j = 0; j < groundHeight; j++)
-            {
-                CellOrdinate cell_1 = new CellOrdinate(i, j);
-                CellOrdinate cell_2 = new CellOrdinate(i + 1, j);
-                spawnWall(cell_1, cell_2);
-            }
+            GameObject visibilityChangeableWallGameObject = GameObject.Instantiate(visibilityChangeableWallPrefab);
+            Wall visibilityChangeableWall = visibilityChangeableWallGameObject.GetComponent<Wall>();
+            visibilityChangeableWall.SetWall(blockedCell);
+            visibilityChangeableWallGameObject.transform.SetParent(this.wallsParent.transform);
+
+            WallBehaviour wallBehaviour = visibilityChangeableWallGameObject.GetComponent<WallBehaviour>();
+            this.wallBehaviours.Add(wallBehaviour);
+            wallBehaviour.initVisible = isVisible;
         }
-    }
-
-    private void SpawnOneWall(
-        BlockedCell blockedCell,
-        bool isVisible,
-        GameObject visibilityChangeableWallPrefab)
-    {
-        GameObject visibilityChangeableWallGameObject = GameObject.Instantiate(visibilityChangeableWallPrefab);
-        Wall visibilityChangeableWall = visibilityChangeableWallGameObject.GetComponent<Wall>();
-        visibilityChangeableWall.SetWall(blockedCell);
-        visibilityChangeableWallGameObject.transform.SetParent(this.wallsParent.transform);
-
-        WallBehaviour wallBehaviour = visibilityChangeableWallGameObject.GetComponent<WallBehaviour>();
-        this.wallBehaviours.Add(wallBehaviour);
-        wallBehaviour.initVisible = isVisible;
     }
 }
