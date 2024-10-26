@@ -1,41 +1,43 @@
-using LevelEditor;
 using UnityEngine;
 
-public class EditExitDoorManager : MonoBehaviour
+namespace LevelEditor
 {
-    [SerializeField] ExitDoorPositionOnTargetSetter exitDoorPositionOnTargetSetter;
-    private ExitDoorStateMachine exitDoorStateMachine;
-    private void Awake()
+    public class EditExitDoorManager : MonoBehaviour
     {
-        this.exitDoorPositionOnTargetSetter.SetEnabled(false);
-    }
-
-    public void SetEnabled(bool enabled)
-    {
-        this.exitDoorStateMachine.SetIsActive(enabled);
-    }
-
-    public void ReceiveSpawnedExitDoor(ExitDoor levelEditorExitDoor)
-    {
-        this.exitDoorStateMachine = levelEditorExitDoor.GetComponent<ExitDoorStateMachine>();
-        this.exitDoorStateMachine.onStateChange += this.HandleEditDoorState;
-    }
-
-    public void HandleEditDoorState(ExitDoorState state)
-    {
-        bool enableTarget = false;
-        switch (state)
+        [SerializeField] ExitDoorPositionOnTargetSetter exitDoorPositionOnTargetSetter;
+        private ExitDoorStateMachine exitDoorStateMachine;
+        private void Awake()
         {
-            case ExitDoorState.Hold:
-                enableTarget = true;
-                break;
-            case ExitDoorState.Default:
-            case ExitDoorState.Hover:
-                enableTarget = false;
-                break;
+            this.exitDoorPositionOnTargetSetter.SetEnabled(false);
         }
 
-        this.exitDoorPositionOnTargetSetter.SetEnabled(enableTarget);
-    }
+        public void SetEnabled(bool enabled)
+        {
+            this.exitDoorStateMachine.SetIsActive(enabled);
+        }
 
+        public void ReceiveSpawnedExitDoor(ExitDoor levelEditorExitDoor)
+        {
+            this.exitDoorStateMachine = levelEditorExitDoor.GetComponent<ExitDoorStateMachine>();
+            this.exitDoorStateMachine.onStateChange += this.HandleEditDoorState;
+        }
+
+        public void HandleEditDoorState(ExitDoorState state)
+        {
+            bool enableTarget = false;
+            switch (state)
+            {
+                case ExitDoorState.Hold:
+                    enableTarget = true;
+                    break;
+                case ExitDoorState.Default:
+                case ExitDoorState.Hover:
+                    enableTarget = false;
+                    break;
+            }
+
+            this.exitDoorPositionOnTargetSetter.SetEnabled(enableTarget);
+        }
+
+    }
 }
