@@ -16,6 +16,11 @@ namespace LevelEditor
         [SerializeField]
         private LevelEditModeManager levelEditModeManager;
 
+        public void OnSaveButton()
+        {
+            Debug.Log(LevelEditorModel.Instance.Data.ToString());
+        }
+
         private void Start()
         {
             this.SetupScene();
@@ -36,6 +41,7 @@ namespace LevelEditor
         private void HandleInitLevelFinished(LevelData levelData)
         {
             this.editingLevel.ApplyLoadedLevelData(levelData);
+            LevelEditorModel.Instance.Data = levelData;
             this.SetupEditModes();
         }
 

@@ -7,11 +7,17 @@ namespace LevelEditor
     public class CharacterMover : MonoBehaviour
     {
         private bool isBeingHeld = false;
+        private CellOrdinate cellOrdinate;
 
         public Action<CharacterMover> onMouseEnter { private get; set; }
         public Action<CharacterMover> onMouseExit { private get; set; }
         public Action<CharacterMover> onStartBeingHeld { private get; set; }
         public Action<CharacterMover> onStopBeingHeld { private get; set; }
+
+        public CellOrdinate GetCellOrdinate()
+        {
+            return cellOrdinate;
+        }
 
         public void SetCellOrdinate(CellOrdinate cellOrdinate)
         {
@@ -20,6 +26,7 @@ namespace LevelEditor
                 return;
             }
 
+            this.cellOrdinate = cellOrdinate;
             Vector3 position = CellTransformGetter.Instance.GetCellPosition(cellOrdinate);
             this.gameObject.transform.position = position;
         }

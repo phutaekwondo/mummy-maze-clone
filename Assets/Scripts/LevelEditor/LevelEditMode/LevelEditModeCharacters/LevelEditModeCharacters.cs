@@ -42,12 +42,27 @@ namespace LevelEditor
         {
             this.isDraggingChar = false;
             this.StopHoldingChars();
+            UpdateLevelEditModel(charMover);
         }
 
         private void StopHoldingChars()
         {
             this.cellTargetManager.UnregisterCharacterMover();
             this.cellTargetManager.SetEnable(false);
+        }
+
+        private void UpdateLevelEditModel(CharacterMover charMover)
+        {
+            CellOrdinate charPos = charMover.GetCellOrdinate();
+
+            if (charMover == playerMover)
+            {
+                LevelEditorModel.Instance.Data.playerStartPosition = charPos;
+            }
+            else if (charMover == enemyMover)
+            {
+                LevelEditorModel.Instance.Data.enemyStartPosition = charPos;
+            }
         }
 
         public override void Setup(LevelEditorLevel editingLevel)
