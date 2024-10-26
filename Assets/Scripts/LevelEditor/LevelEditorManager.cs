@@ -15,10 +15,11 @@ namespace LevelEditor
 
         [SerializeField]
         private LevelEditModeManager levelEditModeManager;
+        private LevelDataSaver saver = new LevelInfoSaver();
 
         public void OnSaveButton()
         {
-            Debug.Log(LevelEditorModel.Instance.Data.ToString());
+            saver.Save(LevelEditorModel.Instance.Data);
         }
 
         private void Start()
