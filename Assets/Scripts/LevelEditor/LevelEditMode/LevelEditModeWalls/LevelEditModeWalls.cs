@@ -10,7 +10,7 @@ namespace LevelEditor
         [SerializeField] EditExitDoorManager editExitDoorManager;
         [SerializeField] GameObject wallsParent;
         [SerializeField] ExitDoorTargetsSpawner exitDoorTargetsSpawner;
-        List<LevelEditor.WallBehaviour> wallBehaviours = new List<LevelEditor.WallBehaviour>();
+        List<WallBehaviour> wallBehaviours = new List<WallBehaviour>();
 
         private void SpawnWalls(int groundWidth, int groundHeight, List<BlockedCell> blockedCells)
         {
