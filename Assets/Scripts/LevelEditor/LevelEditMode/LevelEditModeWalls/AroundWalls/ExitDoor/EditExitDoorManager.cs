@@ -1,3 +1,5 @@
+using System.Data.Common;
+using TMPro;
 using UnityEngine;
 
 namespace LevelEditor
@@ -20,6 +22,12 @@ namespace LevelEditor
         {
             this.exitDoorStateMachine = levelEditorExitDoor.GetComponent<ExitDoorStateMachine>();
             this.exitDoorStateMachine.onStateChange += this.HandleEditDoorState;
+            this.exitDoorPositionOnTargetSetter.onSetExitDoorPosition += HandleExitDoorPositionChange;
+        }
+
+        private void HandleExitDoorPositionChange(BlockedCell newExitDoorPosition)
+        {
+            LevelEditorModel.Instance.Data.exitDoor = newExitDoorPosition;
         }
 
         public void HandleEditDoorState(ExitDoorState state)

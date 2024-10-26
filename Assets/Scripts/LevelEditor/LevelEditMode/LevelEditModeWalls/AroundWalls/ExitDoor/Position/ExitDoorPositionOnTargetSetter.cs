@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace LevelEditor
@@ -6,6 +7,7 @@ namespace LevelEditor
     {
         [SerializeField] ExitDoorTargetsPanel exitDoorTargetsPanel;
         [SerializeField] AroundWallsManager aroundWallsManager;
+        public Action<BlockedCell> onSetExitDoorPosition;
 
         private void Awake()
         {
@@ -21,6 +23,10 @@ namespace LevelEditor
         private void HandleTargetMouseEnter(BlockedCell blockedCell)
         {
             this.aroundWallsManager.SetExitDoor(blockedCell);
+            if (onSetExitDoorPosition != null)
+            {
+                onSetExitDoorPosition(blockedCell);
+            }
         }
     }
 }
