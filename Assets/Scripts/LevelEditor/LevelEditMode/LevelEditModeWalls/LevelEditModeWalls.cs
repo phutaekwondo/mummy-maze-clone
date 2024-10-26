@@ -113,7 +113,22 @@ namespace LevelEditor
 
             WallBehaviour wallBehaviour = visibilityChangeableWallGameObject.GetComponent<WallBehaviour>();
             this.wallBehaviours.Add(wallBehaviour);
+            wallBehaviour.onChangeVisible = HandleWallVisibleChange;
             wallBehaviour.initVisible = isVisible;
+        }
+
+        private void HandleWallVisibleChange(bool visible)
+        {
+            List<BlockedCell> updatedWalls = new List<BlockedCell>();
+            foreach (var wallBehaviour in wallBehaviours)
+            {
+                if (wallBehaviour.IsVisible)
+                {
+                    updatedWalls.Add(wallBehaviour.BlockedCell);
+                }
+            }
+
+            LevelEditorModel.Instance.Data.walls = updatedWalls;
         }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace LevelEditor
 {
@@ -7,6 +6,11 @@ namespace LevelEditor
     {
         WallBehaviourStateType state;
         Action<WallBehaviourStateType> onEnterState;
+
+        public WallBehaviourStateType CurrentState
+        {
+            get { return state; }
+        }
 
         public WallBehaviourStateMachine(WallBehaviourStateType state, Action<WallBehaviourStateType> onEnterState = null)
         {
