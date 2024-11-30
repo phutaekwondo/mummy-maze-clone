@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Unity.Mathematics;
+using UnityEditor;
 
 enum ChangePageType
 {
@@ -13,20 +14,23 @@ enum ChangePageType
 }
 
 [RequireComponent(typeof(RectTransform))]
-public class SwiperPage : MonoBehaviour, IDragHandler, IEndDragHandler
+public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] List<RectTransform> children = new List<RectTransform>();
     [SerializeField] float fullLengthEaseDuration = 0.5f;
+    [SerializeField] Texture2D grabberCursor;
     private int currentPageIndex = 0;
     private const float X_DIFF_PERCENTAGE_THRESHOLD = 0.2f;
     private bool isEasing = false;
+
+    public Action<int> OnChangePageIndex;
 
     private void Start()
     {
         SetPageIndex(currentPageIndex);
     }
 
-    private void SetPageIndex(int pageIndex)
+    public void SetPageIndex(int pageIndex)
     {
         if (pageIndex < 0 || pageIndex >= children.Count)
         {
@@ -42,6 +46,11 @@ public class SwiperPage : MonoBehaviour, IDragHandler, IEndDragHandler
             Vector2 oldPosition = children[index].anchoredPosition;
             float newX = firstX + (pageWidth * index);
             children[index].anchoredPosition = new Vector2(newX, oldPosition.y);
+        }
+
+        if (OnChangePageIndex != null)
+        {
+            OnChangePageIndex(pageIndex);
         }
     }
 
@@ -147,5 +156,15 @@ public class SwiperPage : MonoBehaviour, IDragHandler, IEndDragHandler
             default:
                 return currentPageIndex;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Cursor.SetCursor(grabberCursor, PlayerSettings.cursorHotspot, CursorMode.Auto);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Cursor.SetCursor(PlayerSettings.defaultCursor, PlayerSettings.cursorHotspot, CursorMode.Auto);
     }
 }

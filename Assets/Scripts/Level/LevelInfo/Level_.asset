@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d987c35c30901549a9b5d441500324d, type: 3}
   m_Name: Level_
   m_EditorClassIdentifier: 
-  groundSize: 0
+  groundSize: 5
   playerStartPosition: {x: 0, y: 0}
   enemyStartPosition: {x: 0, y: 0}
   walls: []
-  exitDoorCellIndex: 0
-  exitDoorType: 0
+  exitDoorCellIndex: 10
+  exitDoorType: 1
