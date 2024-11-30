@@ -80,7 +80,6 @@ public class SwiperPage : MonoBehaviour, IDragHandler, IEndDragHandler
         float targetXDiff = changePageType == ChangePageType.None ? 0 : changePageType == ChangePageType.Left ? pageWidth : -pageWidth;
 
         float neededDuration = fullLengthEaseDuration * math.abs(targetXDiff - startXDiff) / pageWidth;
-        Debug.Log(neededDuration);
         float progress = 0f;
         while (progress <= 1f)
         {
